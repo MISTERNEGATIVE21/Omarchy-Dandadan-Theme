@@ -98,47 +98,11 @@ install_hooks() {
 THEME="$1"
 
 if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
-  DANDADAN_DIR="$HOME/.config/omarchy/themes/dandadan-theme"
-
-  # Backup original Omarchy waybar config if not already backed up
-  if [[ ! -f "$HOME/.config/waybar/config.jsonc.omarchy-backup" ]]; then
-    if [[ -f "$HOME/.config/waybar/config.jsonc" ]]; then
-      cp -f "$HOME/.config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc.omarchy-backup"
-    fi
-  fi
-  if [[ ! -f "$HOME/.config/waybar/style.css.omarchy-backup" ]]; then
-    if [[ -f "$HOME/.config/waybar/style.css" ]]; then
-      cp -f "$HOME/.config/waybar/style.css" "$HOME/.config/waybar/style.css.omarchy-backup"
-    fi
-  fi
-
-  # Deploy Dandadan waybar config + style
-  [[ -f "$DANDADAN_DIR/waybar_config.jsonc" ]] && \
-    cp -f "$DANDADAN_DIR/waybar_config.jsonc" "$HOME/.config/waybar/config.jsonc"
-  [[ -f "$DANDADAN_DIR/style.css" ]] && \
-    cp -f "$DANDADAN_DIR/style.css" "$HOME/.config/waybar/style.css"
-
-  # Update colors asynchronously so theme selector UI never hangs
   (python3 "$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py" >/dev/null 2>&1) &
-else
-  # Restore standard Omarchy waybar config for ALL OTHER themes!
-  if [[ -f "$HOME/.config/waybar/config.jsonc.omarchy-backup" ]]; then
-    cp -f "$HOME/.config/waybar/config.jsonc.omarchy-backup" "$HOME/.config/waybar/config.jsonc"
-  elif [[ -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" ]]; then
-    cp -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
-  fi
-
-  if [[ -f "$HOME/.config/waybar/style.css.omarchy-backup" ]]; then
-    cp -f "$HOME/.config/waybar/style.css.omarchy-backup" "$HOME/.config/waybar/style.css"
-  elif [[ -f "$HOME/.local/share/omarchy/config/waybar/style.css" ]]; then
-    cp -f "$HOME/.local/share/omarchy/config/waybar/style.css" "$HOME/.config/waybar/style.css"
-  fi
 fi
-
-(omarchy-restart-waybar >/dev/null 2>&1) &
 HOOK
   chmod +x "$THEME_SET_HOOK"
-  log "theme-set hook installed (isolated Waybar config for Dandadan)"
+  log "theme-set hook installed (native non-intrusive Waybar integration)"
 
   # ── bg-set hook (fires on every wallpaper change) ─────────────────────────
   BG_SET_HOOK="$HOOKS_DIR/bg-set"
