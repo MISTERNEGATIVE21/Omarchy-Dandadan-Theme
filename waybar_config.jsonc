@@ -30,6 +30,7 @@
     "orientation": "inherit",
     "modules": [
       "custom/mpris",
+      "custom/hyprwhispr",
       "custom/idle-indicator",
       "custom/notification-silencing-indicator",
       "custom/screenrecording-indicator",
@@ -162,7 +163,35 @@
   "battery": {
     "format": "{icon} {capacity}%",
     "format-charging": "󰂄 {capacity}%",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    "format-plugged": " {capacity}%",
+    "format-full": "󰂅 {capacity}%",
+    "format-icons": {
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "on-click": "omarchy-menu power 2>/dev/null || true",
+    "on-click-right": "notify-send -u low \"$(omarchy-battery-status 2>/dev/null || echo Battery: {capacity}%)\"",
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+
+  "custom/hyprwhispr": {
+    "exec": "hyprwhispr status 2>/dev/null || omarchy-voxtype-status 2>/dev/null",
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "idle": "󰍬",
+      "recording": "󰍬",
+      "transcribing": "󰔟"
+    },
+    "tooltip": true,
+    "on-click": "hyprwhispr toggle 2>/dev/null || omarchy-voxtype-model 2>/dev/null",
+    "on-click-right": "hyprwhispr config 2>/dev/null || omarchy-voxtype-config 2>/dev/null"
   },
 
   "tray": {

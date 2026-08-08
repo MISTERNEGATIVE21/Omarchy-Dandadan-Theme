@@ -274,7 +274,21 @@ window#waybar.hidden {{ opacity: 0.2; }}
 }}
 #custom-mpris:hover, #mpris:hover {{ color: {accent}; }}
 
-/* ── Indicators ──────────────────────────────────────────────────── */
+/* ── Indicators & Hyprwhispr Voice ───────────────────────────────── */
+#custom-hyprwhispr,
+#custom-voxtype {{
+  color: {accent};
+  padding: 0 6px;
+  margin: 0 1px;
+  font-size: 13px;
+  transition: color 0.3s;
+}}
+#custom-hyprwhispr.recording,
+#custom-voxtype.recording {{
+  color: #FF454F;
+  text-shadow: 0 0 8px #FF454F;
+  animation: blink 1s step-end infinite;
+}}
 #custom-idle-indicator,
 #custom-notification-silencing-indicator,
 #custom-update {{
