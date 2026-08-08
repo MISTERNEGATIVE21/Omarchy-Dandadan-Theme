@@ -1,12 +1,5 @@
 @import "../omarchy/current/theme/wallpapers.css";
 
-/* GTK Color Fallbacks for DANDADAN Theme */
-@define-color background #14161E;
-@define-color foreground #F0F4FC;
-@define-color accent #D8B3FE;
-@define-color cursor #E1477A;
-@define-color highlight #E8759B;
-
 * {
   border: none;
   border-radius: 0;
@@ -19,7 +12,7 @@
 /* Apple-style Frosted Glass Top Bar Container */
 window#waybar {
   background-color: rgba(20, 22, 32, 0.45);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 2px solid @cursor;
   border-top: none;
   margin: 0;
   padding: 0;
