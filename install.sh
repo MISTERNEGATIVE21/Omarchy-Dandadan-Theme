@@ -1,7 +1,7 @@
 #!/bin/bash
 # DANDADAN Omarchy Theme Installer
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/misternegative21/omarchy-Dandadan-Theme/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/misternegative21/omarchy-Dandadan-Theme/master/install.sh | bash
 #   OR:
 #   bash install.sh [--update] [--uninstall]
 

@@ -3,7 +3,7 @@
 > **Dynamic anime-inspired dark theme for [Omarchy](https://github.com/basecamp/omarchy)**  
 > 52 wallpapers · 21 app targets · per-image accent + complementary color theming
 
-![Dandadan Theme Preview](https://raw.githubusercontent.com/misternegative21/omarchy-Dandadan-Theme/main/preview.png)
+![Dandadan Theme Preview](./preview.png)
 
 ---
 
@@ -55,7 +55,7 @@ omarchy-theme-set dandadan-theme
 ### Method 2 — One-liner install script
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/misternegative21/omarchy-Dandadan-Theme/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/misternegative21/omarchy-Dandadan-Theme/master/install.sh | bash
 ```
 
 ---
