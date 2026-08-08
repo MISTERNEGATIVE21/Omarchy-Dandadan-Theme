@@ -1,6 +1,6 @@
 /**
  * @name Dandadan
- * @description Dynamic Dandadan theme — Wallpaper 48: Final Form Crimson & Cyber Teal
+ * @description Dynamic Dandadan theme — Wallpaper 01: Okarun & Turbo Granny Golden Spark
  * @version 1.0.0
  * @author misternegative21
 */
@@ -37,51 +37,51 @@ body {
     --bg-3: #14161E;
     --bg-4: #111219;
 
-    --accent-1: #E62828;
-    --accent-2: #951A1A;
-    --accent-3: #E62828;
-    --accent-4: #B82020;
-    --accent-5: #A11C1C;
+    --accent-1: #08F503;
+    --accent-2: #059F01;
+    --accent-3: #08F503;
+    --accent-4: #06C402;
+    --accent-5: #05AB02;
 
-    --mention: linear-gradient(to right, #E6282822 40%, transparent);
-    --mention-hover: linear-gradient(to right, #E6282833 40%, transparent);
-    --reply: linear-gradient(to right, #28C4E622 40%, transparent);
-    --reply-hover: linear-gradient(to right, #28C4E633 40%, transparent);
+    --mention: linear-gradient(to right, #08F50322 40%, transparent);
+    --mention-hover: linear-gradient(to right, #08F50333 40%, transparent);
+    --reply: linear-gradient(to right, #EA0B0822 40%, transparent);
+    --reply-hover: linear-gradient(to right, #EA0B0833 40%, transparent);
 
-    --border-light: #E6282833;
-    --border: #E6282855;
-    --border-hover: #E6282888;
-    --active: #E6282822;
-    --hover: #E6282815;
-    --selected: #E6282822;
+    --border-light: #08F50333;
+    --border: #08F50355;
+    --border-hover: #08F50388;
+    --active: #08F50322;
+    --hover: #08F50315;
+    --selected: #08F50322;
 
     --header-primary: #F0F4FC;
     --header-secondary: #F0F4FCBB;
     --interactive-normal: #F0F4FC;
-    --interactive-hover: #E62828;
-    --interactive-active: #E62828;
+    --interactive-hover: #08F503;
+    --interactive-active: #08F503;
     --interactive-muted: #616367;
 
     --background-primary: #14161E;
     --background-secondary: #1A1C26;
     --background-secondary-alt: #1E2030;
     --background-tertiary: #111219;
-    --background-accent: #E6282822;
-    --background-message-hover: #E6282808;
+    --background-accent: #08F50322;
+    --background-message-hover: #08F50308;
 
-    --brand-experiment: #E62828;
-    --brand-experiment-100: #E628281A;
-    --brand-experiment-200: #E6282833;
-    --brand-experiment-300: #E628284D;
-    --brand-experiment-400: #E6282866;
-    --brand-experiment-500: #E62828;
-    --brand-experiment-600: #C32222;
+    --brand-experiment: #08F503;
+    --brand-experiment-100: #08F5031A;
+    --brand-experiment-200: #08F50333;
+    --brand-experiment-300: #08F5034D;
+    --brand-experiment-400: #08F50366;
+    --brand-experiment-500: #08F503;
+    --brand-experiment-600: #06D002;
 
-    --status-positive-text: #28C4E6;
-    --status-warning-text: #E68628;
-    --status-danger-text: #E62828;
+    --status-positive-text: #EA0B08;
+    --status-warning-text: #02F576;
+    --status-danger-text: #08F503;
 
-    --scrollbar-thin-thumb: #E6282844;
-    --scrollbar-auto-thumb: #E6282855;
+    --scrollbar-thin-thumb: #08F50344;
+    --scrollbar-auto-thumb: #08F50355;
     --scrollbar-auto-track: transparent;
 }

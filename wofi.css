@@ -1,9 +1,9 @@
-/* DANDADAN Wofi — Wallpaper 48: Final Form Crimson & Cyber Teal */
+/* DANDADAN Wofi — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
 @define-color bg     #14161E;
 @define-color fg     #F0F4FC;
-@define-color accent #E62828;
-@define-color hover  #E6282822;
-@define-color border #E6282866;
+@define-color accent #08F503;
+@define-color hover  #08F50322;
+@define-color border #08F50366;
 
 window {
   background-color: alpha(@bg, 0.95);
@@ -22,7 +22,7 @@ window {
   font-size: 14px;
 }
 
-#input:focus { border-color: #E62828; }
+#input:focus { border-color: #08F503; }
 
 #inner-box {
   background-color: transparent;
@@ -44,16 +44,16 @@ window {
 
 #entry:selected {
   background-color: @hover;
-  color: #E62828;
-  box-shadow: inset 0 0 0 1px #E6282855;
+  color: #08F503;
+  box-shadow: inset 0 0 0 1px #08F50355;
 }
 
 #text { color: @fg; }
-#text:selected { color: #E62828; font-weight: bold; }
+#text:selected { color: #08F503; font-weight: bold; }
 
 scrollbar { background-color: transparent; }
 scrollbar slider {
-  background-color: #E6282844;
+  background-color: #08F50344;
   border-radius: 6px;
 }
-scrollbar slider:hover { background-color: #E6282877; }
+scrollbar slider:hover { background-color: #08F50377; }

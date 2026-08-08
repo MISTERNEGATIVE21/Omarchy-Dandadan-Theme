@@ -1,20 +1,20 @@
-/* DANDADAN GTK Theme — Wallpaper 48: Final Form Crimson & Cyber Teal */
-@define-color accent_color #E62828;
-@define-color accent_bg_color #E62828;
+/* DANDADAN GTK Theme — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
+@define-color accent_color #08F503;
+@define-color accent_bg_color #08F503;
 @define-color accent_fg_color #ffffff;
-@define-color destructive_color #E62828;
-@define-color destructive_bg_color #E62828;
+@define-color destructive_color #08F503;
+@define-color destructive_bg_color #08F503;
 @define-color destructive_fg_color #ffffff;
-@define-color success_color #28C4E6;
-@define-color warning_color #E68628;
-@define-color error_color #E62828;
+@define-color success_color #EA0B08;
+@define-color warning_color #02F576;
+@define-color error_color #08F503;
 @define-color window_bg_color #14161E;
 @define-color window_fg_color #F0F4FC;
 @define-color view_bg_color #1A1C26;
 @define-color view_fg_color #F0F4FC;
 @define-color headerbar_bg_color #14161E;
 @define-color headerbar_fg_color #F0F4FC;
-@define-color headerbar_border_color #E6282855;
+@define-color headerbar_border_color #08F50355;
 @define-color headerbar_backdrop_color #14161E;
 @define-color headerbar_shade_color rgba(0,0,0,0.2);
 @define-color card_bg_color #1E2030;
@@ -34,4 +34,4 @@
 @define-color thumbnail_fg_color #F0F4FC;
 
 /* ── Selection highlight ─── */
-selection { background-color: #E6282855; color: #F0F4FC; }
+selection { background-color: #08F50355; color: #F0F4FC; }

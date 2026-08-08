@@ -1,8 +1,8 @@
 @define-color background-color #14161E;
-@define-color border-color #E62828;
+@define-color border-color #08F503;
 @define-color label #F0F4FC;
-@define-color image #E62828;
-@define-color progress #E62828;
+@define-color image #08F503;
+@define-color progress #08F503;
 
 window {
   border-radius: 14px;

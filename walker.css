@@ -1,12 +1,12 @@
-/* DANDADAN Walker — Wallpaper 48: Final Form Crimson & Cyber Teal */
-@define-color selected-text #E62828;
+/* DANDADAN Walker — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
+@define-color selected-text #08F503;
 @define-color text          #F0F4FC;
 @define-color base          #14161E;
-@define-color border        #E62828;
+@define-color border        #08F503;
 @define-color foreground    #F0F4FC;
 @define-color background    #14161E;
-@define-color hover         #28E6E6;
-@define-color selected-box  #E62828;
+@define-color hover         #EF02F5;
+@define-color selected-box  #08F503;
 
 window { background: transparent; }
 

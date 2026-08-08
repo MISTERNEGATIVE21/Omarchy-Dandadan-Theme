@@ -1,11 +1,11 @@
-/* DANDADAN Firefox/Zen — Wallpaper 48: Final Form Crimson & Cyber Teal */
+/* DANDADAN Firefox/Zen — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
 :root {
-  --lwt-accent-color: #E62828;
-  --lwt-toolbar-field-focus: #E62828;
-  --toolbar-field-border-color: #E62828;
+  --lwt-accent-color: #08F503;
+  --lwt-toolbar-field-focus: #08F503;
+  --toolbar-field-border-color: #08F503;
   --toolbar-field-background-color: #14161E;
   --toolbar-field-color: #F0F4FC;
   --lwt-tab-text: #F0F4FC;
-  --lwt-selected-tab-background-color: #E62828;
-  --tab-line-color: #E62828;
+  --lwt-selected-tab-background-color: #08F503;
+  --tab-line-color: #08F503;
 }

@@ -7,7 +7,7 @@
 
 set -e
 
-THEME_NAME="dandadan"
+THEME_NAME="dandadan-theme"
 REPO_URL="https://github.com/misternegative21/omarchy-Dandadan-Theme"
 THEME_DIR="$HOME/.config/omarchy/themes/$THEME_NAME"
 HOOKS_DIR="$HOME/.config/omarchy/hooks"
@@ -26,6 +26,7 @@ cat << 'EOF'
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
 
    Omarchy Theme by misternegative21 – Dynamic Wallpaper Accent Edition
+   52 wallpapers · 21 app targets · per-image accent + complement theming
    https://github.com/misternegative21/omarchy-Dandadan-Theme
 
 EOF
@@ -50,6 +51,7 @@ check_deps() {
     warn "Pillow not found. Installing..."
     pip3 install Pillow -q || true
   fi
+  log "Pillow ✓"
 }
 
 backup_waybar() {
@@ -85,22 +87,23 @@ install_theme() {
   log "Theme files installed to $THEME_DIR"
 }
 
-install_hook() {
+install_hooks() {
   step "Installing Omarchy hooks"
   mkdir -p "$HOOKS_DIR"
 
-  # theme-set hook
-  THEME_SET="$HOOKS_DIR/theme-set"
-  if [[ ! -f "$THEME_SET" ]]; then
-    cat > "$THEME_SET" << 'HOOK'
+  # ── theme-set hook ────────────────────────────────────────────────────────
+  THEME_SET_HOOK="$HOOKS_DIR/theme-set"
+  if [[ ! -f "$THEME_SET_HOOK" ]]; then
+    cat > "$THEME_SET_HOOK" << 'HOOK'
 #!/bin/bash
 THEME="$1"
-if [[ "$THEME" == "dandadan" ]]; then
-  python3 "$HOME/.config/omarchy/themes/dandadan/update_wallpaper_colors.py" 2>/dev/null
-  [[ -f "$HOME/.config/omarchy/themes/dandadan/config.jsonc" ]] && \
-    cp -f "$HOME/.config/omarchy/themes/dandadan/config.jsonc" "$HOME/.config/waybar/config.jsonc"
-  [[ -f "$HOME/.config/omarchy/themes/dandadan/style.css" ]] && \
-    cp -f "$HOME/.config/omarchy/themes/dandadan/style.css" "$HOME/.config/waybar/style.css"
+if [[ "$THEME" == "dandadan-theme" ]]; then
+  python3 "$HOME/.config/omarchy/themes/dandadan-theme/update_wallpaper_colors.py" 2>/dev/null
+  # Deploy waybar layout
+  [[ -f "$HOME/.config/omarchy/themes/dandadan-theme/waybar_config.jsonc" ]] && \
+    cp -f "$HOME/.config/omarchy/themes/dandadan-theme/waybar_config.jsonc" "$HOME/.config/waybar/config.jsonc"
+  [[ -f "$HOME/.config/omarchy/themes/dandadan-theme/style.css" ]] && \
+    cp -f "$HOME/.config/omarchy/themes/dandadan-theme/style.css" "$HOME/.config/waybar/style.css"
 else
   [[ -f "$HOME/.config/waybar/config.jsonc.default" ]] && \
     cp -f "$HOME/.config/waybar/config.jsonc.default" "$HOME/.config/waybar/config.jsonc"
@@ -109,28 +112,28 @@ else
 fi
 omarchy-restart-waybar >/dev/null 2>&1 &
 HOOK
-    chmod +x "$THEME_SET"
+    chmod +x "$THEME_SET_HOOK"
     log "theme-set hook installed"
   else
     log "theme-set hook already exists – skipping"
   fi
 
-  # bg-set hook
-  BG_SET="$HOOKS_DIR/bg-set"
-  cat > "$BG_SET" << 'HOOK'
+  # ── bg-set hook (fires on every wallpaper change) ─────────────────────────
+  BG_SET_HOOK="$HOOKS_DIR/bg-set"
+  cat > "$BG_SET_HOOK" << 'HOOK'
 #!/bin/bash
 THEME=$(cat "$HOME/.config/omarchy/current/theme.name" 2>/dev/null)
-if [[ "$THEME" == "dandadan" ]]; then
-  python3 "$HOME/.config/omarchy/themes/dandadan/update_wallpaper_colors.py"
+if [[ "$THEME" == "dandadan-theme" ]]; then
+  python3 "$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py" 2>/dev/null
   pkill -SIGUSR2 waybar 2>/dev/null || true
 fi
 HOOK
-  chmod +x "$BG_SET"
-  log "bg-set hook installed"
+  chmod +x "$BG_SET_HOOK"
+  log "bg-set hook installed (auto-recolors on wallpaper switch)"
 }
 
 extract_colors() {
-  step "Extracting per-wallpaper accent colors"
+  step "Extracting per-wallpaper accent colors (52 wallpapers)"
   if [[ -d "$THEME_DIR/backgrounds" ]]; then
     python3 "$THEME_DIR/extract_wallpaper_colors.py"
     log "Accent palette generated from wallpapers"
@@ -143,18 +146,19 @@ install_vscode_theme() {
   step "Installing VS Code / Codium / Antigravity IDE theme"
   VSCODE_THEME_DIR="$HOME/.vscode/extensions/dandadan-theme/themes"
   CODIUM_THEME_DIR="$HOME/.config/VSCodium/User/extensions/dandadan-theme/themes"
+  AGY_THEME_DIR="$HOME/.config/antigravity/extensions/dandadan-theme/themes"
 
-  for dir in "$VSCODE_THEME_DIR" "$CODIUM_THEME_DIR"; do
-    if [[ -d "$(dirname "$dir")" ]] || [[ -d "$(dirname "$(dirname "$dir")")" ]]; then
+  for dir in "$VSCODE_THEME_DIR" "$CODIUM_THEME_DIR" "$AGY_THEME_DIR"; do
+    parent="$(dirname "$(dirname "$dir")")"
+    if [[ -d "$parent" ]] || [[ -d "$(dirname "$dir")" ]]; then
       mkdir -p "$dir"
       cp -f "$THEME_DIR/vscode.json" "$dir/dandadan-color-theme.json"
-      # Create package.json for the extension
       cat > "$(dirname "$dir")/package.json" << 'PKG'
 {
   "name": "dandadan-theme",
   "displayName": "Dandadan Theme",
-  "description": "Dynamic Dandadan anime-inspired dark theme for VS Code",
-  "version": "1.0.0",
+  "description": "Dynamic Dandadan anime-inspired dark theme",
+  "version": "2.0.0",
   "publisher": "misternegative21",
   "engines": { "vscode": "^1.60.0" },
   "categories": ["Themes"],
@@ -172,22 +176,70 @@ PKG
   done
 }
 
+install_zellij_theme() {
+  step "Installing Zellij theme"
+  if command -v zellij &>/dev/null || [[ -d "$HOME/.config/zellij" ]]; then
+    mkdir -p "$HOME/.config/zellij/themes"
+    cp -f "$THEME_DIR/zellij.kdl" "$HOME/.config/zellij/themes/dandadan.kdl"
+    log "Zellij theme installed at ~/.config/zellij/themes/dandadan.kdl"
+  else
+    log "Zellij not found – skipping"
+  fi
+}
+
+install_warp_theme() {
+  step "Installing Warp terminal theme"
+  WARP_THEMES_DIR="$HOME/.local/share/warp-terminal/themes"
+  if [[ -d "$(dirname "$WARP_THEMES_DIR")" ]]; then
+    mkdir -p "$WARP_THEMES_DIR"
+    cp -f "$THEME_DIR/warp.yaml" "$WARP_THEMES_DIR/dandadan.yaml"
+    log "Warp theme installed at $WARP_THEMES_DIR/dandadan.yaml"
+  else
+    log "Warp not found – skipping"
+  fi
+}
+
+install_wofi_theme() {
+  step "Installing Wofi launcher theme"
+  if command -v wofi &>/dev/null || [[ -d "$HOME/.config/wofi" ]]; then
+    mkdir -p "$HOME/.config/wofi"
+    cp -f "$THEME_DIR/wofi.css" "$HOME/.config/wofi/style.css"
+    log "Wofi theme installed at ~/.config/wofi/style.css"
+  else
+    log "Wofi not found – skipping"
+  fi
+}
+
+install_vencord_theme() {
+  step "Installing Vencord / Vesktop theme"
+  for vesktop_path in \
+    "$HOME/.config/vesktop/themes" \
+    "$HOME/.var/app/dev.vencord.Vesktop/config/vesktop/themes"
+  do
+    parent="$(dirname "$vesktop_path")"
+    if [[ -d "$parent" ]]; then
+      mkdir -p "$vesktop_path"
+      cp -f "$THEME_DIR/vencord.theme.css" "$vesktop_path/dandadan.theme.css"
+      log "Vencord theme installed at $vesktop_path"
+    fi
+  done
+}
+
 activate_theme() {
   step "Activating Dandadan theme"
   if command -v omarchy-theme-set &>/dev/null; then
-    omarchy-theme-set dandadan
+    omarchy-theme-set dandadan-theme
     log "Theme activated via omarchy-theme-set"
   else
-    log "Run: omarchy-theme-set dandadan"
+    warn "omarchy-theme-set not found – copy files manually to ~/.config/omarchy/current/theme/"
   fi
-  waybar >/dev/null 2>&1 &
-  log "Waybar restarted"
 }
 
 uninstall_theme() {
   step "Uninstalling Dandadan theme"
   [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR" && log "Removed $THEME_DIR"
   [[ -f "$HOOKS_DIR/bg-set" ]] && rm -f "$HOOKS_DIR/bg-set" && log "Removed bg-set hook"
+  [[ -f "$HOOKS_DIR/theme-set" ]] && rm -f "$HOOKS_DIR/theme-set" && log "Removed theme-set hook"
   log "Uninstall complete. Run: omarchy-theme-set <your-theme>"
   exit 0
 }
@@ -201,22 +253,32 @@ case "${1:-}" in
     check_deps
     install_theme --update
     extract_colors
+    install_vscode_theme
+    install_zellij_theme
+    install_warp_theme
+    install_wofi_theme
+    install_vencord_theme
     activate_theme
     ;;
   *)
     check_deps
     backup_waybar
     install_theme
-    install_hook
+    install_hooks
     extract_colors
     install_vscode_theme
+    install_zellij_theme
+    install_warp_theme
+    install_wofi_theme
+    install_vencord_theme
     activate_theme
     ;;
 esac
 
 echo ""
 echo -e "${BOLD}${GREEN}✓ Dandadan theme installed successfully!${NC}"
-echo -e "  GitHub : $REPO_URL"
-echo -e "  Wallpapers cycle: ${CYAN}omarchy theme bg next${NC}"
-echo -e "  Activate theme  : ${CYAN}omarchy-theme-set dandadan${NC}"
+echo -e "  GitHub      : $REPO_URL"
+echo -e "  Wallpapers  : ${CYAN}omarchy theme bg next${NC}  ← auto-recolors everything"
+echo -e "  Activate    : ${CYAN}omarchy-theme-set dandadan-theme${NC}"
+echo -e "  Recolor now : ${CYAN}python3 ~/.config/omarchy/current/theme/update_wallpaper_colors.py${NC}"
 echo ""

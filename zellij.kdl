@@ -1,16 +1,16 @@
-// DANDADAN Zellij Theme — Wallpaper 48: Final Form Crimson & Cyber Teal
+// DANDADAN Zellij Theme — Wallpaper 01: Okarun & Turbo Granny Golden Spark
 themes {
     dandadan {
         fg "#F0F4FC"
         bg "#14161E"
         black "#14161E"
-        red "#E62828"
-        green "#28C4E6"
-        yellow "#E68628"
-        blue "#28E628"
-        magenta "#E62828"
-        cyan "#2828E6"
+        red "#08F503"
+        green "#EA0B08"
+        yellow "#02F576"
+        blue "#0208F5"
+        magenta "#08F503"
+        cyan "#F50208"
         white "#F0F4FC"
-        orange "#E62886"
+        orange "#80F502"
     }
 }
