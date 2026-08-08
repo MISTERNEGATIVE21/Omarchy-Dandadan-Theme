@@ -289,11 +289,11 @@ window#waybar.hidden {{ opacity: 0.2; }}
   text-shadow: 0 0 8px #FF454F;
 }}
 
-/* ── Clock ───────────────────────────────────────────────────────── */
+/* ── Clock (Single Line Horizontal) ──────────────────────────────── */
 #clock, #custom-clock {{
   color: {accent};
-  padding: 0 10px;
-  margin: 0 2px;
+  padding: 0 12px;
+  margin: 0 4px;
   font-weight: bold;
   font-size: 13px;
   transition: color 0.3s;
@@ -348,19 +348,19 @@ window#waybar.hidden {{ opacity: 0.2; }}
 }}
 @keyframes blink {{ 50% {{ opacity: 0; }} }}
 
-/* ── Network & Bluetooth Icons (Center Aligned, Balanced Spacing) ── */
+/* ── Network & Bluetooth Icons (Generous Spacing & Centered Icons) ── */
 #network, #bluetooth {{
   color: {fg};
-  padding: 0 6px;
-  margin: 0 2px;
-  min-width: 16px;
+  padding: 0 8px;
+  margin: 0 4px;
+  min-width: 18px;
 }}
 #network.disconnected {{ color: alpha(white, 0.3); }}
 #bluetooth.connected {{ color: {accent}; }}
 #bluetooth.disabled {{ color: alpha(white, 0.28); }}
 
 /* ── Tray ────────────────────────────────────────────────────────── */
-#tray {{ margin: 0 6px; padding: 0 4px; }}
+#tray {{ margin: 0 8px 0 6px; padding: 0 6px; }}
 #tray > .passive {{ -gtk-icon-effect: dim; }}
 #tray > .needs-attention {{
   -gtk-icon-effect: highlight;
