@@ -10,6 +10,18 @@ text = "#FFFFFF"
 background = "#E8759B"
 foreground = "#14161E"
 
+[colors.search.matches]
+foreground = "#FFFFFF"
+background = "#E1477A"
+
+[colors.search.focused_match]
+foreground = "#14161E"
+background = "#D8B3FE"
+
+[colors.footer_bar]
+background = "#1E2230"
+foreground = "#F0F4FC"
+
 [colors.normal]
 black = "#14161E"
 red = "#A63330"

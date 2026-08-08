@@ -1,0 +1,40 @@
+// DANDADAN Telegram Desktop Theme Palette
+windowBg: #14161E;
+windowFg: #F0F4FC;
+windowBgOver: #1D212F;
+windowBgRipple: #2A2F42;
+windowFgActive: #FFFFFF;
+
+activeButtonBg: #E1477A;
+activeButtonBgOver: #E85A8A;
+activeButtonBgRipple: #C63666;
+activeButtonFg: #FFFFFF;
+
+dialogsBg: #14161E;
+dialogsNameFg: #F0F4FC;
+dialogsChatIconFg: #D8B3FE;
+dialogsDateFg: #616367;
+dialogsTextFg: #A0A5B5;
+dialogsTextFgService: #D8B3FE;
+dialogsUnreadBg: #E1477A;
+dialogsUnreadBgMuted: #616367;
+dialogsUnreadFg: #FFFFFF;
+
+msgInBg: #1E2230;
+msgInBgSelected: #2A2F42;
+msgInFg: #F0F4FC;
+msgInDateFg: #A0A5B5;
+
+msgOutBg: #E1477A;
+msgOutBgSelected: #C63666;
+msgOutFg: #FFFFFF;
+msgOutDateFg: #FCE4EC;
+
+historyTextInFg: #F0F4FC;
+historyTextOutFg: #FFFFFF;
+historyLinkInFg: #D8B3FE;
+historyLinkOutFg: #FFFFFF;
+
+sideBarBg: #14161E;
+sideBarTextFg: #F0F4FC;
+sideBarIconFg: #D8B3FE;
