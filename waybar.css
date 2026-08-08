@@ -1,15 +1,15 @@
-/* DANDADAN Waybar — Wallpaper 05: Seiko Shrine Magenta Magic
-   accent=#C71275  cursor=#C71275  highlight=#AB38C8  comp=#11C764
+/* DANDADAN Waybar — Wallpaper 07: High Octane Electric Cyan & Crimson
+   accent=#0DCAF9  cursor=#0DCAF9  highlight=#DC121A  comp=#F93B0D
 */
 
 /* ── Core color variables ─────────────────────────────────────────── */
 @define-color background  #14161E;
 @define-color foreground  #F0F4FC;
-@define-color accent      #C71275;
-@define-color cursor      #C71275;
-@define-color highlight   #AB38C8;
-@define-color comp        #11C764;
-@define-color accent_dark #8B0C51;
+@define-color accent      #0DCAF9;
+@define-color cursor      #0DCAF9;
+@define-color highlight   #DC121A;
+@define-color comp        #F93B0D;
+@define-color accent_dark #098DAE;
 
 * {
   border: none;
@@ -20,11 +20,13 @@
   font-weight: bold;
 }
 
-/* ── Bar window (Full Width Layout) ─────────────────────────────── */
+/* ── Bar window (Full Width Glassmorphism Layout) ───────────────── */
 window#waybar {
-  background-color: alpha(@background, 0.85);
-  border-bottom: 2px solid alpha(@accent, 0.60);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+  background-color: alpha(@background, 0.60);
+  backdrop-filter: blur(16px);
+  border-bottom: 2px solid alpha(@accent, 0.50);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
+              inset 0 -1px 0 alpha(white, 0.10);
   transition: background-color 0.5s ease, border-color 0.5s ease;
 }
 
@@ -36,7 +38,7 @@ window#waybar.hidden { opacity: 0.2; }
   border: none;
   border-radius: 0;
   margin: 0;
-  padding: 2px 12px 2px 18px;
+  padding: 2px 8px 2px 16px;
   box-shadow: none;
 }
 
@@ -45,7 +47,7 @@ window#waybar.hidden { opacity: 0.2; }
   border: none;
   border-radius: 0;
   margin: 0;
-  padding: 2px 16px;
+  padding: 2px 12px;
   box-shadow: none;
 }
 
@@ -54,31 +56,31 @@ window#waybar.hidden { opacity: 0.2; }
   border: none;
   border-radius: 0;
   margin: 0;
-  padding: 2px 20px 2px 12px;
+  padding: 2px 16px 2px 8px;
   box-shadow: none;
 }
 
 /* ── Omarchy logo ────────────────────────────────────────────────── */
 #custom-omarchy {
-  color: #C71275;
+  color: #0DCAF9;
   font-size: 17px;
-  padding: 0 14px 0 6px;
-  margin-right: 10px;
+  padding: 0 12px 0 4px;
+  margin-right: 8px;
   border-right: 1px solid alpha(white, 0.20);
   transition: color 0.2s, text-shadow 0.2s;
 }
 #custom-omarchy:hover {
-  color: #C71275;
-  text-shadow: 0 0 14px #C71275, 0 0 28px #C71275;
+  color: #0DCAF9;
+  text-shadow: 0 0 14px #0DCAF9, 0 0 28px #0DCAF9;
 }
 
 /* ── Workspaces ──────────────────────────────────────────────────── */
-#workspaces { padding: 0 8px; margin: 0 6px; background: transparent; }
+#workspaces { padding: 0 6px; margin: 0 4px; background: transparent; }
 
 #workspaces button {
   color: alpha(white, 0.65);
   font-size: 14px;
-  padding: 0 8px; margin: 0 4px;
+  padding: 0 6px; margin: 0 2px;
   background: transparent;
   border: none; box-shadow: none;
   transition: all 0.2s ease;
@@ -86,12 +88,12 @@ window#waybar.hidden { opacity: 0.2; }
 }
 #workspaces button:hover {
   color: white;
-  background: alpha(#C71275, 0.12);
+  background: alpha(#0DCAF9, 0.12);
 }
 #workspaces button.active {
-  color: #C71275;
+  color: #0DCAF9;
   font-size: 15px; font-weight: 900;
-  text-shadow: 0 0 12px #C71275, 0 0 24px #C71275;
+  text-shadow: 0 0 12px #0DCAF9, 0 0 24px #0DCAF9;
 }
 #workspaces button.urgent {
   color: #FF454F;
@@ -102,59 +104,59 @@ window#waybar.hidden { opacity: 0.2; }
 /* ── Active window ───────────────────────────────────────────────── */
 #custom-active_window, #hyprland-window {
   color: alpha(white, 0.88);
-  padding-left: 14px;
-  margin-left: 6px;
-  border-left: 1px solid alpha(#C71275, 0.35);
+  padding-left: 12px;
+  margin-left: 4px;
+  border-left: 1px solid alpha(#0DCAF9, 0.35);
   font-size: 12px; font-weight: 400;
 }
 
 /* ── Media / MPRIS ───────────────────────────────────────────────── */
 #custom-mpris, #mpris {
-  color: #AB38C8;
+  color: #DC121A;
   font-style: italic;
   font-weight: 600;
-  padding: 0 16px;
+  padding: 0 14px;
   transition: color 0.3s;
 }
-#custom-mpris:hover, #mpris:hover { color: #C71275; }
+#custom-mpris:hover, #mpris:hover { color: #0DCAF9; }
 
 /* ── Indicators ──────────────────────────────────────────────────── */
 #custom-idle-indicator,
 #custom-notification-silencing-indicator,
 #custom-update {
-  color: #11C764;
-  padding: 0 8px;
-  margin: 0 2px;
+  color: #F93B0D;
+  padding: 0 6px;
+  margin: 0 1px;
 }
 #custom-screenrecording-indicator {
   color: #FF454F;
-  padding: 0 8px;
-  margin: 0 2px;
+  padding: 0 6px;
+  margin: 0 1px;
   text-shadow: 0 0 8px #FF454F;
 }
 
 /* ── Clock ───────────────────────────────────────────────────────── */
 #clock, #custom-clock {
-  color: #C71275;
-  padding: 0 12px;
-  margin: 0 4px;
+  color: #0DCAF9;
+  padding: 0 10px;
+  margin: 0 2px;
   font-weight: bold;
   font-size: 13px;
   transition: color 0.3s;
 }
-#clock:hover, #custom-clock:hover { color: #C71275; }
+#clock:hover, #custom-clock:hover { color: #0DCAF9; }
 
 /* ── Weather ─────────────────────────────────────────────────────── */
 #custom-weather {
-  color: #11C764;
-  padding: 0 10px;
-  margin: 0 4px;
+  color: #F93B0D;
+  padding: 0 8px;
+  margin: 0 2px;
 }
 
 /* ── CPU ─────────────────────────────────────────────────────────── */
 #cpu {
-  color: #AB38C8;
-  margin: 0 8px;
+  color: #DC121A;
+  margin: 0 6px;
   transition: color 0.3s;
 }
 #cpu.warning { color: #FFA726; }
@@ -162,8 +164,8 @@ window#waybar.hidden { opacity: 0.2; }
 
 /* ── Memory ──────────────────────────────────────────────────────── */
 #memory {
-  color: #C71275;
-  margin: 0 8px;
+  color: #0DCAF9;
+  margin: 0 6px;
   transition: color 0.3s;
 }
 #memory.warning { color: #FFA726; }
@@ -171,16 +173,16 @@ window#waybar.hidden { opacity: 0.2; }
 
 /* ── Audio ───────────────────────────────────────────────────────── */
 #pulseaudio, #wireplumber {
-  color: #C71275;
-  margin: 0 8px;
+  color: #0DCAF9;
+  margin: 0 6px;
   transition: color 0.3s;
 }
 #pulseaudio.muted, #wireplumber.muted { color: alpha(white, 0.35); }
 
 /* ── Battery ─────────────────────────────────────────────────────── */
 #battery {
-  color: #C71275;
-  margin: 0 8px;
+  color: #0DCAF9;
+  margin: 0 6px;
   transition: color 0.4s;
 }
 #battery.charging { color: #4CAF50; text-shadow: 0 0 8px #4CAF50; }
@@ -192,26 +194,31 @@ window#waybar.hidden { opacity: 0.2; }
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* ── Network / Bluetooth ─────────────────────────────────────────── */
-#network { color: white; margin: 0 10px; padding: 0 4px; }
+/* ── Network & Bluetooth Icons (Center Aligned, Balanced Spacing) ── */
+#network, #bluetooth {
+  color: #F0F4FC;
+  padding: 0 6px;
+  margin: 0 2px;
+  min-width: 16px;
+  text-align: center;
+}
 #network.disconnected { color: alpha(white, 0.3); }
-#bluetooth { color: white; margin: 0 10px 0 8px; padding: 0 4px; }
-#bluetooth.connected { color: #C71275; }
+#bluetooth.connected { color: #0DCAF9; }
 #bluetooth.disabled { color: alpha(white, 0.28); }
 
 /* ── Tray ────────────────────────────────────────────────────────── */
-#tray { margin: 0 12px 0 10px; padding-right: 6px; }
+#tray { margin: 0 6px; padding: 0 4px; }
 #tray > .passive { -gtk-icon-effect: dim; }
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-  background-color: alpha(#C71275, 0.18);
+  background-color: alpha(#0DCAF9, 0.18);
   border-radius: 4px;
 }
 
 /* ── Tooltip ─────────────────────────────────────────────────────── */
 tooltip {
   background: alpha(#14161E, 0.96);
-  border: 1px solid #C71275;
+  border: 1px solid #0DCAF9;
   border-radius: 10px;
   box-shadow: 0 6px 22px rgba(0,0,0,0.5);
 }

@@ -159,11 +159,13 @@ waybar_css = f"""/* DANDADAN Waybar — Wallpaper {active_idx}: {vibe}
   font-weight: bold;
 }}
 
-/* ── Bar window (Full Width Layout) ─────────────────────────────── */
+/* ── Bar window (Full Width Glassmorphism Layout) ───────────────── */
 window#waybar {{
-  background-color: alpha(@background, 0.85);
-  border-bottom: 2px solid alpha(@accent, 0.60);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+  background-color: alpha(@background, 0.60);
+  backdrop-filter: blur(16px);
+  border-bottom: 2px solid alpha(@accent, 0.50);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
+              inset 0 -1px 0 alpha(white, 0.10);
   transition: background-color 0.5s ease, border-color 0.5s ease;
 }}
 
@@ -175,7 +177,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
   border: none;
   border-radius: 0;
   margin: 0;
-  padding: 2px 12px 2px 18px;
+  padding: 2px 8px 2px 16px;
   box-shadow: none;
 }}
 
@@ -184,7 +186,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
   border: none;
   border-radius: 0;
   margin: 0;
-  padding: 2px 16px;
+  padding: 2px 12px;
   box-shadow: none;
 }}
 
@@ -193,7 +195,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
   border: none;
   border-radius: 0;
   margin: 0;
-  padding: 2px 20px 2px 12px;
+  padding: 2px 16px 2px 8px;
   box-shadow: none;
 }}
 
@@ -201,8 +203,8 @@ window#waybar.hidden {{ opacity: 0.2; }}
 #custom-omarchy {{
   color: {accent};
   font-size: 17px;
-  padding: 0 14px 0 6px;
-  margin-right: 10px;
+  padding: 0 12px 0 4px;
+  margin-right: 8px;
   border-right: 1px solid alpha(white, 0.20);
   transition: color 0.2s, text-shadow 0.2s;
 }}
@@ -212,12 +214,12 @@ window#waybar.hidden {{ opacity: 0.2; }}
 }}
 
 /* ── Workspaces ──────────────────────────────────────────────────── */
-#workspaces {{ padding: 0 8px; margin: 0 6px; background: transparent; }}
+#workspaces {{ padding: 0 6px; margin: 0 4px; background: transparent; }}
 
 #workspaces button {{
   color: alpha(white, 0.65);
   font-size: 14px;
-  padding: 0 8px; margin: 0 4px;
+  padding: 0 6px; margin: 0 2px;
   background: transparent;
   border: none; box-shadow: none;
   transition: all 0.2s ease;
@@ -241,8 +243,8 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Active window ───────────────────────────────────────────────── */
 #custom-active_window, #hyprland-window {{
   color: alpha(white, 0.88);
-  padding-left: 14px;
-  margin-left: 6px;
+  padding-left: 12px;
+  margin-left: 4px;
   border-left: 1px solid alpha({accent}, 0.35);
   font-size: 12px; font-weight: 400;
 }}
@@ -252,7 +254,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
   color: {highlight};
   font-style: italic;
   font-weight: 600;
-  padding: 0 16px;
+  padding: 0 14px;
   transition: color 0.3s;
 }}
 #custom-mpris:hover, #mpris:hover {{ color: {accent}; }}
@@ -262,21 +264,21 @@ window#waybar.hidden {{ opacity: 0.2; }}
 #custom-notification-silencing-indicator,
 #custom-update {{
   color: {accent_comp};
-  padding: 0 8px;
-  margin: 0 2px;
+  padding: 0 6px;
+  margin: 0 1px;
 }}
 #custom-screenrecording-indicator {{
   color: #FF454F;
-  padding: 0 8px;
-  margin: 0 2px;
+  padding: 0 6px;
+  margin: 0 1px;
   text-shadow: 0 0 8px #FF454F;
 }}
 
 /* ── Clock ───────────────────────────────────────────────────────── */
 #clock, #custom-clock {{
   color: {accent};
-  padding: 0 12px;
-  margin: 0 4px;
+  padding: 0 10px;
+  margin: 0 2px;
   font-weight: bold;
   font-size: 13px;
   transition: color 0.3s;
@@ -286,14 +288,14 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Weather ─────────────────────────────────────────────────────── */
 #custom-weather {{
   color: {accent_comp};
-  padding: 0 10px;
-  margin: 0 4px;
+  padding: 0 8px;
+  margin: 0 2px;
 }}
 
 /* ── CPU ─────────────────────────────────────────────────────────── */
 #cpu {{
   color: {highlight};
-  margin: 0 8px;
+  margin: 0 6px;
   transition: color 0.3s;
 }}
 #cpu.warning {{ color: #FFA726; }}
@@ -302,7 +304,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Memory ──────────────────────────────────────────────────────── */
 #memory {{
   color: {cursor};
-  margin: 0 8px;
+  margin: 0 6px;
   transition: color 0.3s;
 }}
 #memory.warning {{ color: #FFA726; }}
@@ -311,7 +313,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Audio ───────────────────────────────────────────────────────── */
 #pulseaudio, #wireplumber {{
   color: {accent};
-  margin: 0 8px;
+  margin: 0 6px;
   transition: color 0.3s;
 }}
 #pulseaudio.muted, #wireplumber.muted {{ color: alpha(white, 0.35); }}
@@ -319,7 +321,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Battery ─────────────────────────────────────────────────────── */
 #battery {{
   color: {cursor};
-  margin: 0 8px;
+  margin: 0 6px;
   transition: color 0.4s;
 }}
 #battery.charging {{ color: #4CAF50; text-shadow: 0 0 8px #4CAF50; }}
@@ -331,15 +333,20 @@ window#waybar.hidden {{ opacity: 0.2; }}
 }}
 @keyframes blink {{ 50% {{ opacity: 0; }} }}
 
-/* ── Network / Bluetooth ─────────────────────────────────────────── */
-#network {{ color: white; margin: 0 10px; padding: 0 4px; }}
+/* ── Network & Bluetooth Icons (Center Aligned, Balanced Spacing) ── */
+#network, #bluetooth {{
+  color: {fg};
+  padding: 0 6px;
+  margin: 0 2px;
+  min-width: 16px;
+  text-align: center;
+}}
 #network.disconnected {{ color: alpha(white, 0.3); }}
-#bluetooth {{ color: white; margin: 0 10px 0 8px; padding: 0 4px; }}
 #bluetooth.connected {{ color: {accent}; }}
 #bluetooth.disabled {{ color: alpha(white, 0.28); }}
 
 /* ── Tray ────────────────────────────────────────────────────────── */
-#tray {{ margin: 0 12px 0 10px; padding-right: 6px; }}
+#tray {{ margin: 0 6px; padding: 0 4px; }}
 #tray > .passive {{ -gtk-icon-effect: dim; }}
 #tray > .needs-attention {{
   -gtk-icon-effect: highlight;

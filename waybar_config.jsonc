@@ -153,7 +153,7 @@
   },
 
   "bluetooth": {
-    "format": "",
+    "format": "",
     "format-disabled": "󰂲",
     "format-connected": "󰂱",
     "on-click": "omarchy-launch-bluetooth"
@@ -171,7 +171,7 @@
   },
 
   "custom/update": {
-    "format": "",
+    "format": "",
     "exec": "omarchy-update-available",
     "on-click": "omarchy-launch-floating-terminal-with-presentation omarchy-update",
     "signal": 7,
