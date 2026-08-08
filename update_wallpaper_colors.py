@@ -176,8 +176,8 @@ window#waybar.hidden {{ opacity: 0.2; }}
   border: 1px solid alpha(@accent, 0.30);
   border-top: none;
   border-radius: 0 0 20px 20px;
-  margin: 0 8px 4px 8px;
-  padding: 2px 16px;
+  margin: 0 10px 4px 10px;
+  padding: 4px 20px;
   box-shadow: 0 8px 28px rgba(0,0,0,0.38),
               inset 0 1px 0 alpha(@accent, 0.15);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -196,8 +196,8 @@ window#waybar.hidden {{ opacity: 0.2; }}
 #custom-omarchy {{
   color: {accent};
   font-size: 17px;
-  padding: 0 10px 0 4px;
-  margin-right: 6px;
+  padding: 0 14px 0 6px;
+  margin-right: 10px;
   border-right: 1px solid alpha(white, 0.20);
   transition: color 0.2s, text-shadow 0.2s;
 }}
@@ -207,12 +207,12 @@ window#waybar.hidden {{ opacity: 0.2; }}
 }}
 
 /* ── Workspaces ──────────────────────────────────────────────────── */
-#workspaces {{ padding: 0 6px; margin: 0 4px; background: transparent; }}
+#workspaces {{ padding: 0 8px; margin: 0 6px; background: transparent; }}
 
 #workspaces button {{
   color: alpha(white, 0.65);
   font-size: 14px;
-  padding: 0 6px; margin: 0 2px;
+  padding: 0 8px; margin: 0 4px;
   background: transparent;
   border: none; box-shadow: none;
   transition: all 0.2s ease;
@@ -236,7 +236,8 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Active window ───────────────────────────────────────────────── */
 #custom-active_window, #hyprland-window {{
   color: alpha(white, 0.88);
-  padding-left: 10px;
+  padding-left: 14px;
+  margin-left: 6px;
   border-left: 1px solid alpha({accent}, 0.35);
   font-size: 12px; font-weight: 400;
 }}
@@ -246,7 +247,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
   color: {highlight};
   font-style: italic;
   font-weight: 600;
-  padding: 0 10px;
+  padding: 0 16px;
   transition: color 0.3s;
 }}
 #custom-mpris:hover, #mpris:hover {{ color: {accent}; }}
@@ -256,18 +257,21 @@ window#waybar.hidden {{ opacity: 0.2; }}
 #custom-notification-silencing-indicator,
 #custom-update {{
   color: {accent_comp};
-  padding: 0 5px;
+  padding: 0 8px;
+  margin: 0 2px;
 }}
 #custom-screenrecording-indicator {{
   color: #FF454F;
-  padding: 0 5px;
+  padding: 0 8px;
+  margin: 0 2px;
   text-shadow: 0 0 8px #FF454F;
 }}
 
 /* ── Clock ───────────────────────────────────────────────────────── */
 #clock, #custom-clock {{
   color: {accent};
-  padding: 0 8px;
+  padding: 0 12px;
+  margin: 0 4px;
   font-weight: bold;
   font-size: 13px;
   transition: color 0.3s;
@@ -277,13 +281,14 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Weather ─────────────────────────────────────────────────────── */
 #custom-weather {{
   color: {accent_comp};
-  padding: 0 6px;
+  padding: 0 10px;
+  margin: 0 4px;
 }}
 
 /* ── CPU ─────────────────────────────────────────────────────────── */
 #cpu {{
   color: {highlight};
-  margin: 0 3px;
+  margin: 0 8px;
   transition: color 0.3s;
 }}
 #cpu.warning {{ color: #FFA726; }}
@@ -292,7 +297,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Memory ──────────────────────────────────────────────────────── */
 #memory {{
   color: {cursor};
-  margin: 0 3px;
+  margin: 0 8px;
   transition: color 0.3s;
 }}
 #memory.warning {{ color: #FFA726; }}
@@ -301,7 +306,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Audio ───────────────────────────────────────────────────────── */
 #pulseaudio, #wireplumber {{
   color: {accent};
-  margin: 0 3px;
+  margin: 0 8px;
   transition: color 0.3s;
 }}
 #pulseaudio.muted, #wireplumber.muted {{ color: alpha(white, 0.35); }}
@@ -309,7 +314,7 @@ window#waybar.hidden {{ opacity: 0.2; }}
 /* ── Battery ─────────────────────────────────────────────────────── */
 #battery {{
   color: {cursor};
-  margin: 0 3px;
+  margin: 0 8px;
   transition: color 0.4s;
 }}
 #battery.charging {{ color: #4CAF50; text-shadow: 0 0 8px #4CAF50; }}
@@ -322,14 +327,14 @@ window#waybar.hidden {{ opacity: 0.2; }}
 @keyframes blink {{ 50% {{ opacity: 0; }} }}
 
 /* ── Network / Bluetooth ─────────────────────────────────────────── */
-#network {{ color: white; margin: 0 3px; }}
+#network {{ color: white; margin: 0 8px; }}
 #network.disconnected {{ color: alpha(white, 0.3); }}
-#bluetooth {{ color: white; margin: 0 3px; }}
+#bluetooth {{ color: white; margin: 0 8px; }}
 #bluetooth.connected {{ color: {accent}; }}
 #bluetooth.disabled {{ color: alpha(white, 0.28); }}
 
 /* ── Tray ────────────────────────────────────────────────────────── */
-#tray {{ margin: 0 4px; }}
+#tray {{ margin: 0 10px; }}
 #tray > .passive {{ -gtk-icon-effect: dim; }}
 #tray > .needs-attention {{
   -gtk-icon-effect: highlight;
