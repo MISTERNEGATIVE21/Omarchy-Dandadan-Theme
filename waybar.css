@@ -69,7 +69,7 @@ window#waybar > box {
   border-radius: 10px;
   padding: 2px 14px;
   margin: 3px 8px;
-  color: @foreground;
+  color: #F0F4FC;
   font-weight: bold;
 }
 
