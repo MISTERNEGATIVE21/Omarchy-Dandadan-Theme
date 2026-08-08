@@ -7,46 +7,48 @@
   "margin-top": 0,
   "margin-left": 0,
   "margin-right": 0,
-  "modules-left": [],
-  "modules-center": [
-    "group/center4",
-    "group/center3",
-    "hyprland/workspaces",
-    "group/center2"
+  "modules-left": [
+    "group/left-container"
   ],
-  "modules-right": [],
+  "modules-center": [
+    "group/center-container"
+  ],
+  "modules-right": [
+    "group/right-container"
+  ],
 
-  "group/center4": {
+  "group/left-container": {
     "orientation": "inherit",
     "modules": [
       "custom/omarchy",
-      "custom/active_window",
-      "custom/separator#dot",
-      "tray",
-      "network",
-      "bluetooth"
+      "hyprland/workspaces",
+      "custom/active_window"
     ]
   },
 
-  "group/center3": {
+  "group/center-container": {
     "orientation": "inherit",
     "modules": [
+      "custom/mpris",
       "custom/idle-indicator",
       "custom/notification-silencing-indicator",
       "custom/screenrecording-indicator",
-      "custom/update",
-      "custom/mpris"
+      "custom/update"
     ]
   },
 
-  "group/center2": {
+  "group/right-container": {
     "orientation": "inherit",
     "modules": [
       "clock",
       "custom/weather",
       "cpu",
+      "memory",
       "pulseaudio",
-      "battery"
+      "battery",
+      "network",
+      "bluetooth",
+      "tray"
     ]
   },
 
@@ -121,6 +123,12 @@
   "cpu": {
     "interval": 3,
     "format": "󰍛 {usage}%",
+    "on-click": "omarchy-launch-or-focus-tui btop"
+  },
+
+  "memory": {
+    "interval": 3,
+    "format": "󰘚 {percentage}%",
     "on-click": "omarchy-launch-or-focus-tui btop"
   },
 

@@ -26,10 +26,10 @@ window#waybar {
   transition: all 0.4s ease;
 }
 
-/* Apple macOS Control-Center Floating Pill Modules */
-#group-center2,
-#group-center3,
-#group-center4 {
+/* Apple macOS Control-Center Group Containers (Left, Center, Right) */
+#group-left-container,
+#group-center-container,
+#group-right-container {
   background-color: rgba(255, 255, 255, 0.10);
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-top: none;
@@ -40,15 +40,15 @@ window#waybar {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-#group-center2:hover,
-#group-center3:hover,
-#group-center4:hover {
+#group-left-container:hover,
+#group-center-container:hover,
+#group-right-container:hover {
   background-color: rgba(255, 255, 255, 0.18);
   border-color: @accent;
   box-shadow: 0 0 20px @accent;
 }
 
-/* Omarchy Brand Button */
+/* Omarchy Brand Button (Left) */
 #custom-omarchy {
   color: @cursor;
   font-size: 17px;
@@ -59,22 +59,19 @@ window#waybar {
   color: @accent;
 }
 
-/* Apple Workspaces Module - Frosted Glass & Clear Numerals */
+/* Workspaces Module (Left) - Clear Numerals Only */
 #workspaces {
-  padding: 0px 8px;
-  margin: 0px 6px 3px 6px;
-  border-radius: 0px 0px 18px 18px;
-  background-color: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-top: none;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  padding: 0px 6px;
+  margin: 0px 4px;
+  background: transparent;
+  border: none;
 }
 
 #workspaces button {
   color: rgba(255, 255, 255, 0.85);
   font-size: 14px;
   font-weight: bold;
-  padding: 0 6px;
+  padding: 0 5px;
   margin: 0 2px;
   background: transparent;
   border: none;
@@ -101,7 +98,14 @@ window#waybar {
   color: #FF454F;
 }
 
-/* Scrolling MPRIS Music Module */
+/* Active Window Title (Left) */
+#custom-active_window {
+  color: #FFFFFF;
+  padding-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Center Media Player & Notifications */
 #custom-mpris,
 #mpris {
   color: #FFFFFF;
@@ -109,21 +113,28 @@ window#waybar {
   padding: 0 8px;
 }
 
-/* Active Window & Clock Text */
-#custom-active_window {
-  color: #FFFFFF;
-  padding: 0 6px;
+#custom-idle-indicator,
+#custom-notification-silencing-indicator,
+#custom-screenrecording-indicator,
+#custom-update {
+  color: @accent;
+  padding: 0 4px;
 }
 
+/* Right Side: Clock, Weather, System Monitors */
 #clock,
 #custom-weather {
   color: @accent;
   padding: 0 6px;
 }
 
-/* System Monitors */
 #cpu {
   color: #30A69D;
+  margin: 0 4px;
+}
+
+#memory {
+  color: #309FA6;
   margin: 0 4px;
 }
 
