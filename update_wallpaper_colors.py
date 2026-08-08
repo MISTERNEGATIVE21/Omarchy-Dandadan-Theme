@@ -159,59 +159,42 @@ waybar_css = f"""/* DANDADAN Waybar — Wallpaper {active_idx}: {vibe}
   font-weight: bold;
 }}
 
-/* ── Bar window ──────────────────────────────────────────────────── */
+/* ── Bar window (Full Width Layout) ─────────────────────────────── */
 window#waybar {{
-  background-color: alpha(@background, 0.50);
-  border-bottom: 1px solid alpha(@accent, 0.40);
+  background-color: alpha(@background, 0.85);
+  border-bottom: 2px solid alpha(@accent, 0.60);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
   transition: background-color 0.5s ease, border-color 0.5s ease;
 }}
 
 window#waybar.hidden {{ opacity: 0.2; }}
 
-/* ── Island pill containers ──────────────────────────────────────── */
+/* ── Full Width Container Groups ────────────────────────────────── */
 #group-left-container {{
-  background-color: alpha(white, 0.07);
-  border: 1px solid alpha(@accent, 0.30);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  margin: 0 10px 4px 14px;
-  padding: 4px 20px;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 2px 12px 2px 18px;
+  box-shadow: none;
 }}
 
 #group-center-container {{
-  background-color: alpha(white, 0.07);
-  border: 1px solid alpha(@accent, 0.30);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  margin: 0 10px 4px 10px;
-  padding: 4px 20px;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 2px 16px;
+  box-shadow: none;
 }}
 
 #group-right-container {{
-  background-color: alpha(white, 0.07);
-  border: 1px solid alpha(@accent, 0.30);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  margin: 0 14px 4px 10px;
-  padding: 4px 24px 4px 20px;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}}
-
-#group-left-container:hover,
-#group-center-container:hover,
-#group-right-container:hover {{
-  background-color: alpha(@accent, 0.11);
-  border-color: alpha(@accent, 0.55);
-  box-shadow: 0 0 28px alpha(@accent, 0.30),
-              inset 0 1px 0 alpha(@accent, 0.25);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 2px 20px 2px 12px;
+  box-shadow: none;
 }}
 
 /* ── Omarchy logo ────────────────────────────────────────────────── */
