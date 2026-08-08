@@ -3,28 +3,45 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
-  "height": 26,
+  "height": 34,
   "width": 0,
   "modules-left": [
     "custom/omarchy",
     "hyprland/workspaces"
   ],
   "modules-center": [
+    "mpris",
     "clock#horizontal",
-    "clock#vertical",
-    "custom/weather",
-    "custom/update",
-    "custom/screenrecording-indicator",
-    "custom/idle-indicator"
+    "custom/weather"
   ],
   "modules-right": [
-    "group/tray-expander",
-    "bluetooth",
-    "network",
-    "pulseaudio",
     "cpu",
-    "battery"
+    "pulseaudio",
+    "network",
+    "bluetooth",
+    "battery",
+    "group/tray-expander"
   ],
+  "mpris": {
+    "format": "{player_icon} {status_icon} {artist} - {title}",
+    "format-paused": "{player_icon} {status_icon} <i>{artist} - {title}</i>",
+    "player-icons": {
+      "default": "󰎈",
+      "mpv": "🎵",
+      "spotify": ""
+    },
+    "status-icons": {
+      "playing": "󰐊",
+      "paused": "󰏤",
+      "stopped": "󰓛"
+    },
+    "max-length": 32,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous",
+    "on-scroll-up": "playerctl position 5+",
+    "on-scroll-down": "playerctl position 5-"
+  },
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -66,7 +83,7 @@
   },
   "cpu": {
     "interval": 5,
-    "format": "󰍛",
+    "format": "󰍛 {usage}%",
     "on-click": "omarchy-launch-or-focus-tui btop",
     "on-click-right": "alacritty"
   },
@@ -97,10 +114,10 @@
       "󰤥",
       "󰤨"
     ],
-    "format": "{icon}",
-    "format-wifi": "{icon}",
-    "format-ethernet": "󰀂",
-    "format-disconnected": "󰤮",
+    "format": "󰤨  {essid}",
+    "format-wifi": "󰤨  {essid}",
+    "format-ethernet": "󰀂 Connected",
+    "format-disconnected": "󰤮 Disconnected",
     "tooltip-format-wifi": "{essid} ({frequency} GHz)",
     "tooltip-format-ethernet": "Connected",
     "tooltip-format-disconnected": "Disconnected",
@@ -109,10 +126,10 @@
     "on-click": "omarchy-launch-wifi"
   },
   "battery": {
-    "format": "{capacity}% {icon}",
-    "format-discharging": "{icon}",
-    "format-charging": "{icon}",
-    "format-plugged": "",
+    "format": "{icon} {capacity}%",
+    "format-discharging": "{icon} {capacity}%",
+    "format-charging": "{icon} {capacity}%",
+    "format-plugged": " {capacity}%",
     "format-icons": {
       "charging": [
         "󰢜",
@@ -139,7 +156,7 @@
         "󰁹"
       ]
     },
-    "format-full": "󰂅",
+    "format-full": "󰂅 100%",
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "interval": 5,
@@ -160,12 +177,12 @@
     "on-click": "omarchy-launch-bluetooth"
   },
   "pulseaudio": {
-    "format": "{icon}",
+    "format": "{icon} {volume}%",
     "on-click": "omarchy-launch-audio",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
-    "format-muted": "",
+    "format-muted": " 0%",
     "format-icons": {
       "headphone": "",
       "headset": "",
