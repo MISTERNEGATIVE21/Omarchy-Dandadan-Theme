@@ -1,6 +1,6 @@
 @import 'wallpapers.css';
 
-/* Default Wallpaper Class: .wallpaper-01 */
+/* Active Wallpaper Class: .wallpaper-01 (Okarun & Turbo Granny Golden Spark) */
 #waybar,
 .wallpaper-01 {
   --wp-accent: #FFFF00;
