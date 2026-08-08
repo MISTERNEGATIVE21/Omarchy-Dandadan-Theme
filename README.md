@@ -23,7 +23,15 @@
 
 ---
 
-## 🚀 One-Command Install
+## 🚀 Install
+
+### Via omarchy-theme-install (Recommended)
+
+```bash
+omarchy-theme-install https://github.com/misternegative21/omarchy-Dandadan-Theme
+```
+
+### Via install script
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/misternegative21/omarchy-Dandadan-Theme/main/install.sh | bash

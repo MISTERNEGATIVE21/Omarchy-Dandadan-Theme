@@ -1,0 +1,59 @@
+/* DANDADAN Wofi — Wallpaper 48: Final Form Crimson & Cyber Teal */
+@define-color bg     #14161E;
+@define-color fg     #F0F4FC;
+@define-color accent #E62828;
+@define-color hover  #E6282822;
+@define-color border #E6282866;
+
+window {
+  background-color: alpha(@bg, 0.95);
+  border: 2px solid @border;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+#input {
+  background-color: alpha(@bg, 0.8);
+  color: @fg;
+  border: 1px solid @border;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin: 8px;
+  font-size: 14px;
+}
+
+#input:focus { border-color: #E62828; }
+
+#inner-box {
+  background-color: transparent;
+  margin: 4px;
+}
+
+#outer-box {
+  padding: 6px;
+  background: transparent;
+}
+
+#entry {
+  color: @fg;
+  background-color: transparent;
+  padding: 6px 10px;
+  margin: 2px 4px;
+  border-radius: 10px;
+}
+
+#entry:selected {
+  background-color: @hover;
+  color: #E62828;
+  box-shadow: inset 0 0 0 1px #E6282855;
+}
+
+#text { color: @fg; }
+#text:selected { color: #E62828; font-weight: bold; }
+
+scrollbar { background-color: transparent; }
+scrollbar slider {
+  background-color: #E6282844;
+  border-radius: 6px;
+}
+scrollbar slider:hover { background-color: #E6282877; }

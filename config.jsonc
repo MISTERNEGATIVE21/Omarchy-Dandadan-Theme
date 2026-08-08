@@ -53,7 +53,7 @@
   },
 
   "custom/active_window": {
-    "exec": "$HOME/.config/omarchy/themes/dandadan/window.sh",
+    "exec": "$HOME/.config/omarchy/current/theme/window.sh",
     "return-type": "json",
     "interval": 1
   },
@@ -96,7 +96,7 @@
   },
 
   "custom/mpris": {
-    "exec": "python3 -u ~/.config/omarchy/themes/dandadan/scrolling-mpris.py",
+    "exec": "python3 -u ~/.config/omarchy/current/theme/scrolling-mpris.py",
     "format": "{text}",
     "return-type": "json",
     "on-click": "playerctl play-pause",

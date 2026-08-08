@@ -1,10 +1,11 @@
-/* DANDADAN Dynamic Firefox / Zen Browser CSS (Wallpaper 32) */
+/* DANDADAN Firefox/Zen — Wallpaper 48: Final Form Crimson & Cyber Teal */
 :root {
-  --lwt-accent-color: #C12719;
-  --lwt-toolbar-field-focus: #C12719;
-  --toolbar-field-border-color: #C12719;
+  --lwt-accent-color: #E62828;
+  --lwt-toolbar-field-focus: #E62828;
+  --toolbar-field-border-color: #E62828;
   --toolbar-field-background-color: #14161E;
   --toolbar-field-color: #F0F4FC;
   --lwt-tab-text: #F0F4FC;
-  --lwt-selected-tab-background-color: #C12719;
+  --lwt-selected-tab-background-color: #E62828;
+  --tab-line-color: #E62828;
 }

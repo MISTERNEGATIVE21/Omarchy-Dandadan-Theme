@@ -2,13 +2,15 @@
 """
 Extract dominant accent colors from each dandadan wallpaper and rebuild
 wallpaper_highlights.json with accurate, per-wallpaper accent palettes.
+Handles all 48 wallpapers.
 """
 
 import os, json, colorsys
 from PIL import Image
 
-WALLPAPER_DIR = "/home/mister/.config/omarchy/themes/dandadan/backgrounds"
-OUTPUT_PATH   = "/home/mister/.config/omarchy/themes/dandadan/wallpaper_highlights.json"
+THEME_DIR     = os.path.expanduser("~/.config/omarchy/themes/dandadan-theme")
+WALLPAPER_DIR = os.path.join(THEME_DIR, "backgrounds")
+OUTPUT_PATH   = os.path.join(THEME_DIR, "wallpaper_highlights.json")
 
 # Vibe labels per wallpaper (narrative)
 VIBES = {
@@ -51,6 +53,22 @@ VIBES = {
     "37": "Dimensional Rift Ultra Violet",
     "38": "Battlefield Destruction Fiery Ochre",
     "39": "Curse Unleashed Dark Ruby",
+    "40": "Possessed Spirit Crimson Tide",
+    "41": "Thunder God Battle Scarlet",
+    "42": "Alien Queen Neon Rose & Aqua",
+    "43": "Deep Sea Ghost Electric Blue",
+    "44": "Yokai Summoning Blood & Violet",
+    "45": "Spirit Burst Ember & Sky",
+    "46": "Supernatural Stand-off Teal Blaze",
+    "47": "Paranormal Rift Magenta Spark",
+    "48": "Final Form Crimson & Cyber Teal",
+    "49": "Chaos Rift Turbo Overdrive",
+    "52": "Spirit World Neon Invasion",
+    "53": "Yokai Clash Midnight Scarlet",
+    "54": "Astral Dimension Shadow Burst",
+    "56": "Ghost Protocol Crimson Edge",
+    "57": "Alien Surge Violet Static",
+    "58": "Cursed Veil Ember & Abyss",
 }
 
 BG = "#14161E"
@@ -127,15 +145,22 @@ def pick_accent_and_contrast(colors):
 
 result = {}
 
-for idx_num in range(1, 40):
-    idx = f"{idx_num:02d}"
-    webp_path = os.path.join(WALLPAPER_DIR, f"{idx}.webp")
-    if not os.path.exists(webp_path):
-        print(f"Missing: {webp_path}")
-        continue
+# Discover all wallpapers — handles both 2-digit (01.webp) and 3-digit (049.webp) names
+webp_files = {}
+for fname in sorted(os.listdir(WALLPAPER_DIR)):
+    if fname.endswith(".webp"):
+        num_str = fname.replace(".webp", "")        # e.g. '049'
+        num_int = int(num_str)                       # 49
+        key     = f"{num_int:02d}"                   # '49'
+        webp_files[key] = os.path.join(WALLPAPER_DIR, fname)
 
-    print(f"Processing {idx}...", end=" ", flush=True)
-    colors = extract_palette(webp_path)
+print(f"Found {len(webp_files)} wallpapers in {WALLPAPER_DIR}")
+print(f"Keys: {sorted(webp_files.keys(), key=int)}")
+
+for idx in sorted(webp_files.keys(), key=int):
+    path = webp_files[idx]
+    print(f"Processing {idx} ({os.path.basename(path)})...", end=" ", flush=True)
+    colors = extract_palette(path)
     accent, highlight, glow = pick_accent_and_contrast(colors)
     print(f"accent={accent}  highlight={highlight}")
 
@@ -149,7 +174,10 @@ for idx_num in range(1, 40):
         "vibe":       VIBES.get(idx, f"Dandadan Scene {idx}"),
     }
 
-with open(OUTPUT_PATH, "w") as f:
-    json.dump(result, f, indent=2)
+# Sort by int value
+result_sorted = dict(sorted(result.items(), key=lambda x: int(x[0])))
 
-print(f"\n✓ Wrote {len(result)} wallpaper palettes to {OUTPUT_PATH}")
+with open(OUTPUT_PATH, "w") as f:
+    json.dump(result_sorted, f, indent=2)
+
+print(f"\n✓ Wrote {len(result_sorted)} wallpaper palettes to {OUTPUT_PATH}")

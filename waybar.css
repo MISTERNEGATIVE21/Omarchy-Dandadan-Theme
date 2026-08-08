@@ -1,151 +1,208 @@
-@import "../omarchy/current/theme/wallpapers.css";
+/* DANDADAN Waybar — Wallpaper 48: Final Form Crimson & Cyber Teal
+   accent=#E62828  cursor=#E62828  highlight=#28C4E6  comp=#28E6E6
+*/
+
+/* ── Core color variables ─────────────────────────────────────────── */
+@define-color background  #14161E;
+@define-color foreground  #F0F4FC;
+@define-color accent      #E62828;
+@define-color cursor      #E62828;
+@define-color highlight   #28C4E6;
+@define-color comp        #28E6E6;
+@define-color accent_dark #A11C1C;
 
 * {
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: 'JetBrainsMono Nerd Font', 'Inter', sans-serif;
+  font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', monospace;
   font-size: 13px;
   font-weight: bold;
 }
 
-/* Apple-style Frosted Glass Top Bar Container */
+/* ── Bar window ──────────────────────────────────────────────────── */
 window#waybar {
-  background-color: rgba(20, 22, 32, 0.45);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  border-top: none;
-  margin: 0;
-  padding: 0;
-  transition: all 0.4s ease;
+  background-color: alpha(@background, 0.50);
+  border-bottom: 1px solid alpha(@accent, 0.40);
+  transition: background-color 0.5s ease, border-color 0.5s ease;
 }
 
-/* Apple macOS Control-Center Group Containers (Left, Center, Right) */
+window#waybar.hidden { opacity: 0.2; }
+
+/* ── Island pill containers ──────────────────────────────────────── */
 #group-left-container,
 #group-center-container,
 #group-right-container {
-  background-color: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background-color: alpha(white, 0.07);
+  border: 1px solid alpha(@accent, 0.30);
   border-top: none;
-  border-radius: 0px 0px 18px 18px;
-  margin: 0px 6px 3px 6px;
-  padding: 3px 14px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  border-radius: 0 0 20px 20px;
+  margin: 0 8px 4px 8px;
+  padding: 2px 16px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.38),
+              inset 0 1px 0 alpha(@accent, 0.15);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #group-left-container:hover,
 #group-center-container:hover,
 #group-right-container:hover {
-  background-color: rgba(255, 255, 255, 0.18);
-  border-color: @accent;
-  box-shadow: 0 0 20px @accent;
+  background-color: alpha(@accent, 0.11);
+  border-color: alpha(@accent, 0.55);
+  box-shadow: 0 0 28px alpha(@accent, 0.30),
+              inset 0 1px 0 alpha(@accent, 0.25);
 }
 
-/* Omarchy Brand Button (Left) - Perfectly Balanced with Divider */
+/* ── Omarchy logo ────────────────────────────────────────────────── */
 #custom-omarchy {
-  color: @cursor;
-  font-size: 16px;
+  color: #E62828;
+  font-size: 17px;
   padding: 0 10px 0 4px;
   margin-right: 6px;
-  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  border-right: 1px solid alpha(white, 0.20);
+  transition: color 0.2s, text-shadow 0.2s;
 }
-
 #custom-omarchy:hover {
-  color: @accent;
+  color: #E62828;
+  text-shadow: 0 0 14px #E62828, 0 0 28px #E62828;
 }
 
-/* Workspaces Module (Left) - Clear Numerals Only */
-#workspaces {
-  padding: 0px 6px;
-  margin: 0px 4px;
-  background: transparent;
-  border: none;
-}
+/* ── Workspaces ──────────────────────────────────────────────────── */
+#workspaces { padding: 0 6px; margin: 0 4px; background: transparent; }
 
 #workspaces button {
-  color: rgba(255, 255, 255, 0.85);
+  color: alpha(white, 0.65);
   font-size: 14px;
-  font-weight: bold;
-  padding: 0 5px;
-  margin: 0 2px;
+  padding: 0 6px; margin: 0 2px;
   background: transparent;
-  border: none;
-  box-shadow: none;
-  transition: all 0.2s ease-in-out;
+  border: none; box-shadow: none;
+  transition: all 0.2s ease;
+  border-radius: 6px;
 }
-
 #workspaces button:hover {
-  color: #FFFFFF;
-  background: transparent;
+  color: white;
+  background: alpha(#E62828, 0.12);
 }
-
 #workspaces button.active {
-  color: @cursor;
-  font-size: 16px;
-  font-weight: 900;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  text-shadow: 0 0 12px @cursor, 0 0 20px @accent;
+  color: #E62828;
+  font-size: 15px; font-weight: 900;
+  text-shadow: 0 0 12px #E62828, 0 0 24px #E62828;
 }
-
 #workspaces button.urgent {
   color: #FF454F;
+  text-shadow: 0 0 10px #FF454F;
+}
+#workspaces button.empty { opacity: 0.40; }
+
+/* ── Active window ───────────────────────────────────────────────── */
+#custom-active_window, #hyprland-window {
+  color: alpha(white, 0.88);
+  padding-left: 10px;
+  border-left: 1px solid alpha(#E62828, 0.35);
+  font-size: 12px; font-weight: 400;
 }
 
-/* Active Window Title (Left) */
-#custom-active_window {
-  color: #FFFFFF;
-  padding-left: 8px;
-  border-left: 1px solid rgba(255, 255, 255, 0.25);
+/* ── Media / MPRIS ───────────────────────────────────────────────── */
+#custom-mpris, #mpris {
+  color: #28C4E6;
+  font-style: italic;
+  font-weight: 600;
+  padding: 0 10px;
+  transition: color 0.3s;
 }
+#custom-mpris:hover, #mpris:hover { color: #E62828; }
 
-/* Center Media Player & Notifications */
-#custom-mpris,
-#mpris {
-  color: #FFFFFF;
-  font-weight: bold;
-  padding: 0 8px;
-}
-
+/* ── Indicators ──────────────────────────────────────────────────── */
 #custom-idle-indicator,
 #custom-notification-silencing-indicator,
-#custom-screenrecording-indicator,
 #custom-update {
-  color: @accent;
-  padding: 0 4px;
+  color: #28E6E6;
+  padding: 0 5px;
+}
+#custom-screenrecording-indicator {
+  color: #FF454F;
+  padding: 0 5px;
+  text-shadow: 0 0 8px #FF454F;
 }
 
-/* Right Side: Clock, Weather, System Monitors */
-#clock,
+/* ── Clock ───────────────────────────────────────────────────────── */
+#clock, #custom-clock {
+  color: #E62828;
+  padding: 0 8px;
+  font-weight: bold;
+  font-size: 13px;
+  transition: color 0.3s;
+}
+#clock:hover, #custom-clock:hover { color: #E62828; }
+
+/* ── Weather ─────────────────────────────────────────────────────── */
 #custom-weather {
-  color: @accent;
+  color: #28E6E6;
   padding: 0 6px;
 }
 
+/* ── CPU ─────────────────────────────────────────────────────────── */
 #cpu {
-  color: #30A69D;
-  margin: 0 4px;
+  color: #28C4E6;
+  margin: 0 3px;
+  transition: color 0.3s;
 }
+#cpu.warning { color: #FFA726; }
+#cpu.critical { color: #FF454F; text-shadow: 0 0 6px #FF454F; }
 
+/* ── Memory ──────────────────────────────────────────────────────── */
 #memory {
-  color: #309FA6;
-  margin: 0 4px;
+  color: #E62828;
+  margin: 0 3px;
+  transition: color 0.3s;
 }
+#memory.warning { color: #FFA726; }
+#memory.critical { color: #FF454F; }
 
-#pulseaudio {
-  color: @accent;
-  margin: 0 4px;
+/* ── Audio ───────────────────────────────────────────────────────── */
+#pulseaudio, #wireplumber {
+  color: #E62828;
+  margin: 0 3px;
+  transition: color 0.3s;
 }
+#pulseaudio.muted, #wireplumber.muted { color: alpha(white, 0.35); }
 
+/* ── Battery ─────────────────────────────────────────────────────── */
 #battery {
-  color: @cursor;
-  margin: 0 4px;
+  color: #E62828;
+  margin: 0 3px;
+  transition: color 0.4s;
+}
+#battery.charging { color: #4CAF50; text-shadow: 0 0 8px #4CAF50; }
+#battery.warning:not(.charging) { color: #FFA726; }
+#battery.critical:not(.charging) {
+  color: #FF454F;
+  text-shadow: 0 0 8px #FF454F;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── Network / Bluetooth ─────────────────────────────────────────── */
+#network { color: white; margin: 0 3px; }
+#network.disconnected { color: alpha(white, 0.3); }
+#bluetooth { color: white; margin: 0 3px; }
+#bluetooth.connected { color: #E62828; }
+#bluetooth.disabled { color: alpha(white, 0.28); }
+
+/* ── Tray ────────────────────────────────────────────────────────── */
+#tray { margin: 0 4px; }
+#tray > .passive { -gtk-icon-effect: dim; }
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: alpha(#E62828, 0.18);
+  border-radius: 4px;
 }
 
-#network,
-#bluetooth,
-#tray {
-  color: #FFFFFF;
-  margin: 0 4px;
+/* ── Tooltip ─────────────────────────────────────────────────────── */
+tooltip {
+  background: alpha(#14161E, 0.96);
+  border: 1px solid #E62828;
+  border-radius: 10px;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.5);
 }
+tooltip label { color: #F0F4FC; }

@@ -349,5 +349,149 @@
     "border": "#E3180D",
     "glow": "#9F4638",
     "vibe": "Curse Unleashed Dark Ruby"
+  },
+  "40": {
+    "accent": "#E8304A",
+    "highlight": "#4A8FD4",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#E8304A",
+    "glow": "#4A8FD4",
+    "vibe": "Possessed Spirit Crimson Tide"
+  },
+  "41": {
+    "accent": "#CB1F2E",
+    "highlight": "#D4A823",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#CB1F2E",
+    "glow": "#D4A823",
+    "vibe": "Thunder God Battle Scarlet"
+  },
+  "42": {
+    "accent": "#D42055",
+    "highlight": "#2BC4C8",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#D42055",
+    "glow": "#2BC4C8",
+    "vibe": "Alien Queen Neon Rose & Aqua"
+  },
+  "43": {
+    "accent": "#0E9FD8",
+    "highlight": "#E82040",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#0E9FD8",
+    "glow": "#E82040",
+    "vibe": "Deep Sea Ghost Electric Blue"
+  },
+  "44": {
+    "accent": "#CC2030",
+    "highlight": "#8832CC",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#CC2030",
+    "glow": "#8832CC",
+    "vibe": "Yokai Summoning Blood & Violet"
+  },
+  "45": {
+    "accent": "#E04820",
+    "highlight": "#20A8E0",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#E04820",
+    "glow": "#20A8E0",
+    "vibe": "Spirit Burst Ember & Sky"
+  },
+  "46": {
+    "accent": "#B8181E",
+    "highlight": "#18B8B2",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#B8181E",
+    "glow": "#18B8B2",
+    "vibe": "Supernatural Stand-off Teal Blaze"
+  },
+  "47": {
+    "accent": "#D91060",
+    "highlight": "#F0C020",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#D91060",
+    "glow": "#F0C020",
+    "vibe": "Paranormal Rift Magenta Spark"
+  },
+  "48": {
+    "accent": "#E62828",
+    "highlight": "#28C4E6",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#E62828",
+    "glow": "#28C4E6",
+    "vibe": "Final Form Crimson & Cyber Teal"
+  },
+  "49": {
+    "accent": "#9E03F9",
+    "highlight": "#F9EB54",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#9E03F9",
+    "glow": "#F9EB54",
+    "vibe": "Chaos Rift Turbo Overdrive"
+  },
+  "52": {
+    "accent": "#730C09",
+    "highlight": "#C72825",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#730C09",
+    "glow": "#C72825",
+    "vibe": "Spirit World Neon Invasion"
+  },
+  "53": {
+    "accent": "#77484C",
+    "highlight": "#A7817C",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#77484C",
+    "glow": "#A7817C",
+    "vibe": "Yokai Clash Midnight Scarlet"
+  },
+  "54": {
+    "accent": "#B58E14",
+    "highlight": "#CA3150",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#B58E14",
+    "glow": "#CA3150",
+    "vibe": "Astral Dimension Shadow Burst"
+  },
+  "56": {
+    "accent": "#BEC13D",
+    "highlight": "#7DB0F9",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#BEC13D",
+    "glow": "#7DB0F9",
+    "vibe": "Ghost Protocol Crimson Edge"
+  },
+  "57": {
+    "accent": "#2659C7",
+    "highlight": "#654721",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#2659C7",
+    "glow": "#654721",
+    "vibe": "Alien Surge Violet Static"
+  },
+  "58": {
+    "accent": "#E40BA1",
+    "highlight": "#55DFB0",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#E40BA1",
+    "glow": "#55DFB0",
+    "vibe": "Cursed Veil Ember & Abyss"
   }
 }

@@ -1,40 +1,34 @@
-// DANDADAN Dynamic Telegram Desktop Theme Palette (Wallpaper 32)
+// DANDADAN Telegram — Wallpaper 48: Final Form Crimson & Cyber Teal
 windowBg: #14161E;
 windowFg: #F0F4FC;
-windowBgOver: #1D212F;
-windowBgRipple: #2A2F42;
+windowBgOver: #1A1C26;
+windowBgRipple: #1E2030;
 windowFgActive: #FFFFFF;
-
-activeButtonBg: #C12719;
-activeButtonBgOver: #3043AE;
-activeButtonBgRipple: #C12719;
+activeButtonBg: #E62828;
+activeButtonBgOver: #951A1A;
+activeButtonBgRipple: #E62828;
 activeButtonFg: #FFFFFF;
-
 dialogsBg: #14161E;
 dialogsNameFg: #F0F4FC;
-dialogsChatIconFg: #C12719;
+dialogsChatIconFg: #E62828;
 dialogsDateFg: #616367;
 dialogsTextFg: #A0A5B5;
-dialogsTextFgService: #C12719;
-dialogsUnreadBg: #C12719;
+dialogsTextFgService: #E62828;
+dialogsUnreadBg: #E62828;
 dialogsUnreadBgMuted: #616367;
 dialogsUnreadFg: #FFFFFF;
-
-msgInBg: #1E2230;
-msgInBgSelected: #2A2F42;
+msgInBg: #1A1C26;
+msgInBgSelected: #1E2030;
 msgInFg: #F0F4FC;
 msgInDateFg: #A0A5B5;
-
-msgOutBg: #C12719;
-msgOutBgSelected: #3043AE;
+msgOutBg: #E62828;
+msgOutBgSelected: #951A1A;
 msgOutFg: #FFFFFF;
-msgOutDateFg: #FCE4EC;
-
+msgOutDateFg: #F0F4FCBB;
 historyTextInFg: #F0F4FC;
 historyTextOutFg: #FFFFFF;
-historyLinkInFg: #C12719;
+historyLinkInFg: #E62828;
 historyLinkOutFg: #FFFFFF;
-
 sideBarBg: #14161E;
 sideBarTextFg: #F0F4FC;
-sideBarIconFg: #C12719;
+sideBarIconFg: #E62828;
