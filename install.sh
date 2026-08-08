@@ -98,11 +98,34 @@ install_hooks() {
 THEME="$1"
 
 if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
+  DANDADAN_DIR="$HOME/.config/omarchy/themes/dandadan-theme"
+
+  # Backup system default waybar config if not already backed up
+  if [[ ! -f "$HOME/.config/waybar/config.jsonc.omarchy-default" ]]; then
+    if [[ -f "$HOME/.config/waybar/config.jsonc" ]]; then
+      cp -f "$HOME/.config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc.omarchy-default"
+    fi
+  fi
+
+  # Deploy Dandadan waybar layout
+  if [[ -f "$DANDADAN_DIR/waybar_config.jsonc" ]]; then
+    cp -f "$DANDADAN_DIR/waybar_config.jsonc" "$HOME/.config/waybar/config.jsonc"
+  fi
+
   (python3 "$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py" >/dev/null 2>&1) &
+else
+  # Restore standard Omarchy waybar config when switching away from dandadan
+  if [[ -f "$HOME/.config/waybar/config.jsonc.omarchy-default" ]]; then
+    cp -f "$HOME/.config/waybar/config.jsonc.omarchy-default" "$HOME/.config/waybar/config.jsonc"
+  elif [[ -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" ]]; then
+    cp -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
+  fi
 fi
+
+(omarchy-restart-waybar >/dev/null 2>&1) &
 HOOK
   chmod +x "$THEME_SET_HOOK"
-  log "theme-set hook installed (native non-intrusive Waybar integration)"
+  log "theme-set hook installed (isolated Waybar layout for Dandadan)"
 
   # ── bg-set hook (fires on every wallpaper change) ─────────────────────────
   BG_SET_HOOK="$HOOKS_DIR/bg-set"
