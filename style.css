@@ -12,7 +12,7 @@
 /* Apple-style Frosted Glass Top Bar Container */
 window#waybar {
   background-color: rgba(20, 22, 32, 0.45);
-  border-bottom: 2px solid @cursor;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   border-top: none;
   margin: 0;
   padding: 0;
@@ -41,11 +41,13 @@ window#waybar {
   box-shadow: 0 0 20px @accent;
 }
 
-/* Omarchy Brand Button (Left) */
+/* Omarchy Brand Button (Left) - Perfectly Balanced with Divider */
 #custom-omarchy {
   color: @cursor;
-  font-size: 17px;
-  padding-right: 8px;
+  font-size: 16px;
+  padding: 0 10px 0 4px;
+  margin-right: 6px;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 #custom-omarchy:hover {
@@ -95,7 +97,7 @@ window#waybar {
 #custom-active_window {
   color: #FFFFFF;
   padding-left: 8px;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 /* Center Media Player & Notifications */
