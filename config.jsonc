@@ -43,6 +43,7 @@
     "orientation": "inherit",
     "modules": [
       "clock",
+      "custom/weather",
       "cpu",
       "pulseaudio",
       "battery"
@@ -107,6 +108,14 @@
     "format-alt": "󰃭 {0:%A, %b %d}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
+  },
+
+  "custom/weather": {
+    "exec": "$OMARCHY_PATH/default/waybar/weather.sh",
+    "return-type": "json",
+    "interval": 600,
+    "tooltip": false,
+    "on-click": "notify-send -u low \"$(omarchy-weather-status)\""
   },
 
   "cpu": {

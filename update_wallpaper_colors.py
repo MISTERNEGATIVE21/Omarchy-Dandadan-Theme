@@ -12,12 +12,11 @@ if not os.path.exists(manifest_path):
 with open(manifest_path, "r") as f:
     data = json.load(f)
 
-# Find active wallpaper index
 active_idx = "19"
-if os.path.islink(current_bg_link):
-    target = os.readlink(current_bg_link)
+if os.path.islink(current_bg_link) or os.path.exists(current_bg_link):
+    target = os.readlink(current_bg_link) if os.path.islink(current_bg_link) else current_bg_link
     base = os.path.basename(target)
-    idx = base.split(".")[0]
+    idx = base.split(".")[0].zfill(2)
     if idx in data:
         active_idx = idx
 
@@ -28,7 +27,7 @@ highlight = colors.get("highlight", "#E8759B")
 bg = colors.get("background", "#14161E")
 fg = colors.get("foreground", "#F0F4FC")
 
-css_content = f"""/* Dynamic Wallpaper Highlight Colors ({active_idx} - {colors.get("vibe", "")}) */
+css_content = f"""/* Dynamic Wallpaper Highlight Colors (Wallpaper {active_idx} - {colors.get("vibe", "")}) */
 @define-color background {bg};
 @define-color foreground {fg};
 @define-color accent {accent};
@@ -43,3 +42,7 @@ current_theme_wallpapers = os.path.expanduser("~/.config/omarchy/current/theme/w
 if os.path.exists(os.path.dirname(current_theme_wallpapers)):
     with open(current_theme_wallpapers, "w") as f:
         f.write(css_content)
+
+waybar_wallpapers = os.path.expanduser("~/.config/waybar/wallpapers.css")
+with open(waybar_wallpapers, "w") as f:
+    f.write(css_content)
