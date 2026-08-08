@@ -5,63 +5,28 @@
 @define-color cursor #E1477A;
 @define-color highlight #E8759B;
 
-/* Global Waybar Styling */
+/* Global Waybar Styling - Full-width Top Bar */
 window#waybar {
-  background: transparent;
+  background: rgba(20, 22, 30, 0.90);
+  border-bottom: 2px solid @cursor;
   font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
   font-size: 13px;
   font-weight: bold;
+  color: #F0F4FC;
 }
 
 window#waybar > box {
   background: transparent;
 }
 
-/* Floating Capsule Modules */
-#custom-omarchy,
-#workspaces,
-#clock,
-#custom-weather,
-#custom-update,
-#custom-screenrecording-indicator,
-#custom-idle-indicator,
-#group-tray-expander,
-#tray,
-#bluetooth,
-#network,
-#pulseaudio,
-#cpu,
-#battery {
-  border-radius: 12px;
-  margin: 4px 6px;
-  padding: 2px 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  background: @background;
-  color: @foreground;
-  border: 1px solid @accent;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Module Hover Effects */
-#custom-omarchy:hover,
-#clock:hover,
-#custom-weather:hover,
-#custom-update:hover,
-#custom-screenrecording-indicator:hover,
-#custom-idle-indicator:hover,
-#bluetooth:hover,
-#network:hover,
-#pulseaudio:hover,
-#cpu:hover,
-#battery:hover {
-  border-color: @cursor;
-}
-
-/* Custom Omarchy Button */
+/* Custom Omarchy Button Badge */
 #custom-omarchy {
-  color: @cursor;
-  font-size: 15px;
-  padding: 2px 12px;
+  background: @cursor;
+  color: #FFFFFF;
+  font-size: 16px;
+  border-radius: 8px;
+  margin: 3px 6px;
+  padding: 2px 10px;
 }
 
 /* Hyprland Workspaces */
@@ -70,23 +35,26 @@ window#waybar > box {
 }
 
 #workspaces button {
-  padding: 2px 6px;
-  margin: 2px 2px;
-  border-radius: 8px;
-  color: @foreground;
+  padding: 2px 8px;
+  margin: 1px 2px;
+  border-radius: 6px;
+  color: #F0F4FC;
   background: transparent;
   border: none;
+  transition: all 0.2s ease-in-out;
 }
 
 #workspaces button:hover {
-  color: @cursor;
+  color: #FFFFFF;
   background: rgba(255, 255, 255, 0.15);
 }
 
 #workspaces button.active {
-  color: @background;
   background: @cursor;
+  color: #FFFFFF;
   font-weight: bold;
+  border-radius: 6px;
+  box-shadow: 0 0 12px @cursor;
 }
 
 #workspaces button.urgent {
@@ -94,11 +62,55 @@ window#waybar > box {
   background: @highlight;
 }
 
-/* Tray Expander & Tray Items */
-#group-tray-expander {
-  padding: 2px 6px;
+/* Center Music Card */
+#mpris {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid @accent;
+  border-radius: 10px;
+  padding: 2px 14px;
+  margin: 3px 8px;
+  color: @foreground;
+  font-weight: bold;
 }
 
+/* Glassmorphic Pill Modules */
+#clock,
+#custom-weather,
+#cpu,
+#pulseaudio,
+#network,
+#bluetooth,
+#battery,
+#custom-update,
+#custom-screenrecording-indicator,
+#custom-idle-indicator,
+#group-tray-expander {
+  background: rgba(238, 237, 238, 0.10);
+  color: #F0F4FC;
+  border: 1px solid rgba(216, 179, 254, 0.3);
+  border-radius: 10px;
+  margin: 3px 4px;
+  padding: 2px 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Module Hover Effects */
+#clock:hover,
+#custom-weather:hover,
+#cpu:hover,
+#pulseaudio:hover,
+#network:hover,
+#bluetooth:hover,
+#battery:hover,
+#custom-update:hover,
+#custom-screenrecording-indicator:hover,
+#custom-idle-indicator:hover,
+#group-tray-expander:hover {
+  border-color: @cursor;
+  background: rgba(238, 237, 238, 0.18);
+}
+
+/* Tray Expander & Tray Items */
 #tray {
   margin: 0;
   padding: 0 4px;
