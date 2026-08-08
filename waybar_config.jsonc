@@ -106,8 +106,8 @@
   },
 
   "clock": {
-    "format": "󰥔 {0:%H:%M}",
-    "format-alt": "󰃭 {0:%A, %b %d}",
+    "format": "󰥔 {:%I:%M %p}",
+    "format-alt": "󰃭 {:%A, %b %d}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
   },
