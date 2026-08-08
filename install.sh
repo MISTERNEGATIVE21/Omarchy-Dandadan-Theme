@@ -93,43 +93,65 @@ install_hooks() {
 
   # ── theme-set hook ────────────────────────────────────────────────────────
   THEME_SET_HOOK="$HOOKS_DIR/theme-set"
-  if [[ ! -f "$THEME_SET_HOOK" ]]; then
-    cat > "$THEME_SET_HOOK" << 'HOOK'
+  cat > "$THEME_SET_HOOK" << 'HOOK'
 #!/bin/bash
 THEME="$1"
-if [[ "$THEME" == "dandadan-theme" ]]; then
-  python3 "$HOME/.config/omarchy/themes/dandadan-theme/update_wallpaper_colors.py" 2>/dev/null
-  # Deploy waybar layout
-  [[ -f "$HOME/.config/omarchy/themes/dandadan-theme/waybar_config.jsonc" ]] && \
-    cp -f "$HOME/.config/omarchy/themes/dandadan-theme/waybar_config.jsonc" "$HOME/.config/waybar/config.jsonc"
-  [[ -f "$HOME/.config/omarchy/themes/dandadan-theme/style.css" ]] && \
-    cp -f "$HOME/.config/omarchy/themes/dandadan-theme/style.css" "$HOME/.config/waybar/style.css"
-else
-  [[ -f "$HOME/.config/waybar/config.jsonc.default" ]] && \
-    cp -f "$HOME/.config/waybar/config.jsonc.default" "$HOME/.config/waybar/config.jsonc"
-  [[ -f "$HOME/.config/waybar/style.css.default" ]] && \
-    cp -f "$HOME/.config/waybar/style.css.default" "$HOME/.config/waybar/style.css"
-fi
-omarchy-restart-waybar >/dev/null 2>&1 &
-HOOK
-    chmod +x "$THEME_SET_HOOK"
-    log "theme-set hook installed"
-  else
-    log "theme-set hook already exists – skipping"
+
+if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
+  DANDADAN_DIR="$HOME/.config/omarchy/themes/dandadan-theme"
+
+  # Backup original Omarchy waybar config if not already backed up
+  if [[ ! -f "$HOME/.config/waybar/config.jsonc.omarchy-backup" ]]; then
+    if [[ -f "$HOME/.config/waybar/config.jsonc" ]]; then
+      cp -f "$HOME/.config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc.omarchy-backup"
+    fi
   fi
+  if [[ ! -f "$HOME/.config/waybar/style.css.omarchy-backup" ]]; then
+    if [[ -f "$HOME/.config/waybar/style.css" ]]; then
+      cp -f "$HOME/.config/waybar/style.css" "$HOME/.config/waybar/style.css.omarchy-backup"
+    fi
+  fi
+
+  # Deploy Dandadan waybar config + style
+  [[ -f "$DANDADAN_DIR/waybar_config.jsonc" ]] && \
+    cp -f "$DANDADAN_DIR/waybar_config.jsonc" "$HOME/.config/waybar/config.jsonc"
+  [[ -f "$DANDADAN_DIR/style.css" ]] && \
+    cp -f "$DANDADAN_DIR/style.css" "$HOME/.config/waybar/style.css"
+
+  # Update colors asynchronously so theme selector UI never hangs
+  (python3 "$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py" >/dev/null 2>&1) &
+else
+  # Restore standard Omarchy waybar config for ALL OTHER themes!
+  if [[ -f "$HOME/.config/waybar/config.jsonc.omarchy-backup" ]]; then
+    cp -f "$HOME/.config/waybar/config.jsonc.omarchy-backup" "$HOME/.config/waybar/config.jsonc"
+  elif [[ -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" ]]; then
+    cp -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
+  fi
+
+  if [[ -f "$HOME/.config/waybar/style.css.omarchy-backup" ]]; then
+    cp -f "$HOME/.config/waybar/style.css.omarchy-backup" "$HOME/.config/waybar/style.css"
+  elif [[ -f "$HOME/.local/share/omarchy/config/waybar/style.css" ]]; then
+    cp -f "$HOME/.local/share/omarchy/config/waybar/style.css" "$HOME/.config/waybar/style.css"
+  fi
+fi
+
+(omarchy-restart-waybar >/dev/null 2>&1) &
+HOOK
+  chmod +x "$THEME_SET_HOOK"
+  log "theme-set hook installed (isolated Waybar config for Dandadan)"
 
   # ── bg-set hook (fires on every wallpaper change) ─────────────────────────
   BG_SET_HOOK="$HOOKS_DIR/bg-set"
   cat > "$BG_SET_HOOK" << 'HOOK'
 #!/bin/bash
 THEME=$(cat "$HOME/.config/omarchy/current/theme.name" 2>/dev/null)
-if [[ "$THEME" == "dandadan-theme" ]]; then
-  python3 "$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py" 2>/dev/null
-  pkill -SIGUSR2 waybar 2>/dev/null || true
+
+if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
+  (python3 "$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py" >/dev/null 2>&1 && pkill -SIGUSR2 waybar >/dev/null 2>&1) &
 fi
 HOOK
   chmod +x "$BG_SET_HOOK"
-  log "bg-set hook installed (auto-recolors on wallpaper switch)"
+  log "bg-set hook installed (non-blocking wallpaper recoloring)"
 }
 
 extract_colors() {

@@ -262,6 +262,17 @@ python3 ~/.config/omarchy/themes/dandadan-theme/extract_wallpaper_colors.py
 
 ---
 
+## 👥 Credits & Acknowledgments
+
+Special thanks and appreciation to the creators, libraries, and platforms that made this theme possible:
+
+- **[WallpaperHaven](https://whv.rs / https://wallpaperhaven.org)** — High-resolution anime wallpapers & community artwork catalog
+- **Shahid Library** — Dandadan manga & anime artwork repository & media assets
+- **[Omarchy](https://github.com/basecamp/omarchy)** — Modern Linux desktop environment & theme framework
+- **Yukinobu Tatsu / Science SARU** — The legendary creators and animation studio behind *Dandadan* (ダンダダン)
+
+---
+
 ## 📜 License
 
 MIT – Made with ❤️ by [misternegative21](https://github.com/misternegative21)
