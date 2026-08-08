@@ -58,7 +58,7 @@ window#waybar {
   color: @accent;
 }
 
-/* Hyprland Workspaces V7 Styling - Flush to Ceiling */
+/* Hyprland Workspaces V7 Styling - Prominent Workspace Numbering */
 #workspaces {
   padding: 0px 8px;
   margin: 0px 6px 3px 6px;
@@ -70,25 +70,37 @@ window#waybar {
 }
 
 #workspaces button {
-  color: #FFFFFF;
-  padding: 2px 6px;
-  margin: 0 2px;
+  color: #F0F4FC;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 2px 10px;
+  margin: 0 3px;
   border-radius: 8px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(216, 179, 254, 0.25);
   transition: all 0.2s ease-in-out;
 }
 
 #workspaces button:hover {
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(225, 71, 122, 0.35);
+  border-color: @cursor;
 }
 
 #workspaces button.active {
   color: #FFFFFF;
   background: linear-gradient(135deg, @cursor, @accent);
-  font-weight: bold;
+  font-weight: 900;
+  font-size: 15px;
+  padding: 2px 12px;
   border-radius: 8px;
-  box-shadow: 0 0 14px @cursor;
+  box-shadow: 0 0 16px rgba(225, 71, 122, 0.9);
+  border: 1px solid #FFFFFF;
+}
+
+#workspaces button.urgent {
+  color: #FFFFFF;
+  background: #A63330;
 }
 
 /* Scrolling MPRIS Music Module */
