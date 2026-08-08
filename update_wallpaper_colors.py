@@ -161,8 +161,7 @@ waybar_css = f"""/* DANDADAN Waybar — Wallpaper {active_idx}: {vibe}
 
 /* ── Bar window (Full Width Glassmorphism Layout) ───────────────── */
 window#waybar {{
-  background-color: alpha(@background, 0.60);
-  backdrop-filter: blur(16px);
+  background-color: alpha(@background, 0.70);
   border-bottom: 2px solid alpha(@accent, 0.50);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
               inset 0 -1px 0 alpha(white, 0.10);
@@ -339,7 +338,6 @@ window#waybar.hidden {{ opacity: 0.2; }}
   padding: 0 6px;
   margin: 0 2px;
   min-width: 16px;
-  text-align: center;
 }}
 #network.disconnected {{ color: alpha(white, 0.3); }}
 #bluetooth.connected {{ color: {accent}; }}
