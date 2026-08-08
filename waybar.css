@@ -14,22 +14,24 @@
   font-weight: bold;
 }
 
+/* Semi-transparent Glassmorphic Top Bar Container */
 window#waybar {
-  background-color: transparent;
+  background-color: rgba(18, 20, 28, 0.65);
+  border-bottom: 2px solid @cursor;
   transition-property: background-color;
   transition-duration: .5s;
 }
 
-/* V7 Floating Centered Pill Groups */
+/* V7 Floating Centered Pill Groups - Translucent Glass Capsules */
 #group-center2,
 #group-center3,
 #group-center4 {
-  background-color: rgba(20, 22, 30, 0.88);
-  border: 1px solid rgba(225, 71, 122, 0.45);
+  background-color: rgba(28, 32, 45, 0.72);
+  border: 1px solid rgba(216, 179, 254, 0.50);
   border-radius: 20px;
   margin: 4px 6px;
   padding: 3px 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   transition: all 0.3s ease;
 }
 
@@ -38,7 +40,7 @@ window#waybar {
 #group-center4:hover {
   border-color: @cursor;
   box-shadow: 0 0 16px rgba(225, 71, 122, 0.6);
-  background-color: rgba(26, 29, 40, 0.94);
+  background-color: rgba(35, 40, 56, 0.85);
 }
 
 /* Omarchy Brand Button */
@@ -57,13 +59,13 @@ window#waybar {
   padding: 0px 8px;
   margin: 4px 6px;
   border-radius: 20px;
-  background-color: rgba(20, 22, 30, 0.88);
-  border: 1px solid rgba(216, 179, 254, 0.45);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  background-color: rgba(28, 32, 45, 0.72);
+  border: 1px solid rgba(216, 179, 254, 0.50);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 #workspaces button {
-  color: #F0F4FC;
+  color: #FFFFFF;
   padding: 2px 6px;
   margin: 0 2px;
   border-radius: 10px;
@@ -73,7 +75,7 @@ window#waybar {
 
 #workspaces button:hover {
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 #workspaces button.active {
@@ -87,14 +89,14 @@ window#waybar {
 /* Scrolling MPRIS Music Module */
 #custom-mpris,
 #mpris {
-  color: #F0F4FC;
+  color: #FFFFFF;
   font-weight: bold;
   padding: 0 8px;
 }
 
 /* Active Window & Clock Text */
 #custom-active_window {
-  color: #F0F4FC;
+  color: #FFFFFF;
   padding: 0 6px;
 }
 
@@ -122,6 +124,6 @@ window#waybar {
 #network,
 #bluetooth,
 #tray {
-  color: #F0F4FC;
+  color: #FFFFFF;
   margin: 0 4px;
 }
