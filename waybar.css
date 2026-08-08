@@ -14,7 +14,7 @@
   font-weight: bold;
 }
 
-/* Semi-transparent Glassmorphic Top Bar Container */
+/* Flush Topmost Semi-transparent Bar Container */
 window#waybar {
   background-color: rgba(18, 20, 28, 0.65);
   border-bottom: 2px solid @cursor;
@@ -22,15 +22,15 @@ window#waybar {
   transition-duration: .5s;
 }
 
-/* V7 Floating Centered Pill Groups - Translucent Glass Capsules */
+/* V7 Floating Centered Pill Groups - Attached Topmost Capsules */
 #group-center2,
 #group-center3,
 #group-center4 {
   background-color: rgba(28, 32, 45, 0.72);
   border: 1px solid rgba(216, 179, 254, 0.50);
-  border-radius: 20px;
-  margin: 4px 6px;
-  padding: 3px 12px;
+  border-radius: 18px;
+  margin: 2px 6px;
+  padding: 2px 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   transition: all 0.3s ease;
 }
@@ -57,8 +57,8 @@ window#waybar {
 /* Hyprland Workspaces V7 Styling */
 #workspaces {
   padding: 0px 8px;
-  margin: 4px 6px;
-  border-radius: 20px;
+  margin: 2px 6px;
+  border-radius: 18px;
   background-color: rgba(28, 32, 45, 0.72);
   border: 1px solid rgba(216, 179, 254, 0.50);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
