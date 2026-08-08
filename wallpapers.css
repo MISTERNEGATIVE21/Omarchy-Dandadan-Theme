@@ -1,0 +1,352 @@
+/* Generated Wallpaper CSS Custom Properties */
+
+.wallpaper-01 {
+  --wp-accent: #FFFF00;
+  --wp-highlight: #FF0000;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FFFF00;
+  --wp-glow: #FF0000;
+}
+
+.wallpaper-02 {
+  --wp-accent: #C61000;
+  --wp-highlight: #D8D400;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #C61000;
+  --wp-glow: #D8D400;
+}
+
+.wallpaper-03 {
+  --wp-accent: #FF0000;
+  --wp-highlight: #D8B14B;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF0000;
+  --wp-glow: #D8B14B;
+}
+
+.wallpaper-04 {
+  --wp-accent: #FF0000;
+  --wp-highlight: #4BC5D8;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF0000;
+  --wp-glow: #4BC5D8;
+}
+
+.wallpaper-05 {
+  --wp-accent: #CF0774;
+  --wp-highlight: #A840CE;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #CF0774;
+  --wp-glow: #A840CE;
+}
+
+.wallpaper-06 {
+  --wp-accent: #00F0EA;
+  --wp-highlight: #E9004A;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #00F0EA;
+  --wp-glow: #E9004A;
+}
+
+.wallpaper-07 {
+  --wp-accent: #00C9FF;
+  --wp-highlight: #F70002;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #00C9FF;
+  --wp-glow: #F70002;
+}
+
+.wallpaper-08 {
+  --wp-accent: #FF0000;
+  --wp-highlight: #FFE500;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF0000;
+  --wp-glow: #FFE500;
+}
+
+.wallpaper-09 {
+  --wp-accent: #DD2838;
+  --wp-highlight: #48D8BF;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #DD2838;
+  --wp-glow: #48D8BF;
+}
+
+.wallpaper-10 {
+  --wp-accent: #083EF8;
+  --wp-highlight: #FB2154;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #083EF8;
+  --wp-glow: #FB2154;
+}
+
+.wallpaper-11 {
+  --wp-accent: #FF00F3;
+  --wp-highlight: #00A8E3;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF00F3;
+  --wp-glow: #00A8E3;
+}
+
+.wallpaper-12 {
+  --wp-accent: #AF6B21;
+  --wp-highlight: #B17D88;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #AF6B21;
+  --wp-glow: #B17D88;
+}
+
+.wallpaper-13 {
+  --wp-accent: #3DBAD8;
+  --wp-highlight: #F4D7AC;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #3DBAD8;
+  --wp-glow: #F4D7AC;
+}
+
+.wallpaper-14 {
+  --wp-accent: #FFFB00;
+  --wp-highlight: #01F1A3;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FFFB00;
+  --wp-glow: #01F1A3;
+}
+
+.wallpaper-15 {
+  --wp-accent: #0B8CFB;
+  --wp-highlight: #620AFB;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #0B8CFB;
+  --wp-glow: #620AFB;
+}
+
+.wallpaper-16 {
+  --wp-accent: #FF4700;
+  --wp-highlight: #0072FF;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF4700;
+  --wp-glow: #0072FF;
+}
+
+.wallpaper-17 {
+  --wp-accent: #FF0B0C;
+  --wp-highlight: #FFE50A;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF0B0C;
+  --wp-glow: #FFE50A;
+}
+
+.wallpaper-18 {
+  --wp-accent: #D20000;
+  --wp-highlight: #6C4BD8;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #D20000;
+  --wp-glow: #6C4BD8;
+}
+
+.wallpaper-19 {
+  --wp-accent: #D8B3FE;
+  --wp-highlight: #E1477A;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #D8B3FE;
+  --wp-glow: #E1477A;
+}
+
+.wallpaper-20 {
+  --wp-accent: #FF0000;
+  --wp-highlight: #FFE500;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF0000;
+  --wp-glow: #FFE500;
+}
+
+.wallpaper-21 {
+  --wp-accent: #00FEFF;
+  --wp-highlight: #FD570F;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #00FEFF;
+  --wp-glow: #FD570F;
+}
+
+.wallpaper-22 {
+  --wp-accent: #CFB55B;
+  --wp-highlight: #AB3C40;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #CFB55B;
+  --wp-glow: #AB3C40;
+}
+
+.wallpaper-23 {
+  --wp-accent: #D89327;
+  --wp-highlight: #A1D7FF;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #D89327;
+  --wp-glow: #A1D7FF;
+}
+
+.wallpaper-24 {
+  --wp-accent: #F95F53;
+  --wp-highlight: #FFE16B;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #F95F53;
+  --wp-glow: #FFE16B;
+}
+
+.wallpaper-25 {
+  --wp-accent: #FFB300;
+  --wp-highlight: #FF00B9;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FFB300;
+  --wp-glow: #FF00B9;
+}
+
+.wallpaper-26 {
+  --wp-accent: #FCD112;
+  --wp-highlight: #252BC1;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FCD112;
+  --wp-glow: #252BC1;
+}
+
+.wallpaper-27 {
+  --wp-accent: #DC03FC;
+  --wp-highlight: #2B99C5;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #DC03FC;
+  --wp-glow: #2B99C5;
+}
+
+.wallpaper-28 {
+  --wp-accent: #E72C64;
+  --wp-highlight: #168CBA;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #E72C64;
+  --wp-glow: #168CBA;
+}
+
+.wallpaper-29 {
+  --wp-accent: #EBB103;
+  --wp-highlight: #C8313A;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #EBB103;
+  --wp-glow: #C8313A;
+}
+
+.wallpaper-30 {
+  --wp-accent: #FFB502;
+  --wp-highlight: #EC0004;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FFB502;
+  --wp-glow: #EC0004;
+}
+
+.wallpaper-31 {
+  --wp-accent: #FF0000;
+  --wp-highlight: #EDD182;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF0000;
+  --wp-glow: #EDD182;
+}
+
+.wallpaper-32 {
+  --wp-accent: #C42114;
+  --wp-highlight: #3245B7;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #C42114;
+  --wp-glow: #3245B7;
+}
+
+.wallpaper-33 {
+  --wp-accent: #EB0D23;
+  --wp-highlight: #E6B22B;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #EB0D23;
+  --wp-glow: #E6B22B;
+}
+
+.wallpaper-34 {
+  --wp-accent: #FF012D;
+  --wp-highlight: #7A03E4;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF012D;
+  --wp-glow: #7A03E4;
+}
+
+.wallpaper-35 {
+  --wp-accent: #FFFF00;
+  --wp-highlight: #FF0000;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FFFF00;
+  --wp-glow: #FF0000;
+}
+
+.wallpaper-36 {
+  --wp-accent: #FF454F;
+  --wp-highlight: #FFE244;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF454F;
+  --wp-glow: #FFE244;
+}
+
+.wallpaper-37 {
+  --wp-accent: #FF5000;
+  --wp-highlight: #A03D6B;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FF5000;
+  --wp-glow: #A03D6B;
+}
+
+.wallpaper-38 {
+  --wp-accent: #FFFF0B;
+  --wp-highlight: #F2260F;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #FFFF0B;
+  --wp-glow: #F2260F;
+}
+
+.wallpaper-39 {
+  --wp-accent: #F40A00;
+  --wp-highlight: #F4E500;
+  --wp-bg: #14161E;
+  --wp-fg: #F0F4FC;
+  --wp-border: #F40A00;
+  --wp-glow: #F4E500;
+}

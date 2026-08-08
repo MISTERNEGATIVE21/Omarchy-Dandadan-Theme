@@ -1,0 +1,353 @@
+{
+  "01": {
+    "accent": "#FFFF00",
+    "highlight": "#FF0000",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FFFF00",
+    "glow": "#FF0000",
+    "vibe": "Okarun & Turbo Granny Golden Spark"
+  },
+  "02": {
+    "accent": "#C61000",
+    "highlight": "#D8D400",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#C61000",
+    "glow": "#D8D400",
+    "vibe": "Turbo Granny Crimson Curse"
+  },
+  "03": {
+    "accent": "#FF0000",
+    "highlight": "#D8B14B",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF0000",
+    "glow": "#D8B14B",
+    "vibe": "Momo Astral Pink & Blood Red"
+  },
+  "04": {
+    "accent": "#FF0000",
+    "highlight": "#4BC5D8",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF0000",
+    "glow": "#4BC5D8",
+    "vibe": "Curse Transformation Scarlet"
+  },
+  "05": {
+    "accent": "#CF0774",
+    "highlight": "#A840CE",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#CF0774",
+    "glow": "#A840CE",
+    "vibe": "Seiko Shrine Magenta Magic"
+  },
+  "06": {
+    "accent": "#00F0EA",
+    "highlight": "#E9004A",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#00F0EA",
+    "glow": "#E9004A",
+    "vibe": "Serpo Alien Cyan & Magenta Blast"
+  },
+  "07": {
+    "accent": "#00C9FF",
+    "highlight": "#F70002",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#00C9FF",
+    "glow": "#F70002",
+    "vibe": "High Octane Electric Cyan & Crimson"
+  },
+  "08": {
+    "accent": "#FF0000",
+    "highlight": "#FFE500",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF0000",
+    "glow": "#FFE500",
+    "vibe": "St. Germain Vermilion Mystery"
+  },
+  "09": {
+    "accent": "#DD2838",
+    "highlight": "#48D8BF",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#DD2838",
+    "glow": "#48D8BF",
+    "vibe": "Acrobat Silky Scarlet Tears"
+  },
+  "10": {
+    "accent": "#083EF8",
+    "highlight": "#FB2154",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#083EF8",
+    "glow": "#FB2154",
+    "vibe": "Alien Tech Deep Sapphire & Pink"
+  },
+  "11": {
+    "accent": "#FF00F3",
+    "highlight": "#00A8E3",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF00F3",
+    "glow": "#00A8E3",
+    "vibe": "Subterranean Neon Violet & Turquoise"
+  },
+  "12": {
+    "accent": "#AF6B21",
+    "highlight": "#B17D88",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#AF6B21",
+    "glow": "#B17D88",
+    "vibe": "Golden Hour Okamomo Warmth"
+  },
+  "13": {
+    "accent": "#3DBAD8",
+    "highlight": "#F4D7AC",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#3DBAD8",
+    "glow": "#F4D7AC",
+    "vibe": "Yokai Night Midnight Teal & Bronze"
+  },
+  "14": {
+    "accent": "#FFFB00",
+    "highlight": "#01F1A3",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FFFB00",
+    "glow": "#01F1A3",
+    "vibe": "Kamo Cursed Gold & Emerald Glow"
+  },
+  "15": {
+    "accent": "#0B8CFB",
+    "highlight": "#620AFB",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#0B8CFB",
+    "glow": "#620AFB",
+    "vibe": "Turbo Form Azure Lightning"
+  },
+  "16": {
+    "accent": "#FF4700",
+    "highlight": "#0072FF",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF4700",
+    "glow": "#0072FF",
+    "vibe": "Sunset Showdown Orange & Cobalt"
+  },
+  "17": {
+    "accent": "#FF0B0C",
+    "highlight": "#FFE50A",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF0B0C",
+    "glow": "#FFE50A",
+    "vibe": "Flatwoods Monster Blood Crimson"
+  },
+  "18": {
+    "accent": "#D20000",
+    "highlight": "#6C4BD8",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#D20000",
+    "glow": "#6C4BD8",
+    "vibe": "Evil Eye Wrathful Carmine"
+  },
+  "19": {
+    "accent": "#D8B3FE",
+    "highlight": "#E1477A",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#D8B3FE",
+    "glow": "#E1477A",
+    "vibe": "Dandadan Iconic Pastel & Magenta"
+  },
+  "20": {
+    "accent": "#FF0000",
+    "highlight": "#FFE500",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF0000",
+    "glow": "#FFE500",
+    "vibe": "Spiritual Energy Flame Red"
+  },
+  "21": {
+    "accent": "#00FEFF",
+    "highlight": "#FD570F",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#00FEFF",
+    "glow": "#FD570F",
+    "vibe": "Hyperdrive Neon Cyan & Coral"
+  },
+  "22": {
+    "accent": "#CFB55B",
+    "highlight": "#AB3C40",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#CFB55B",
+    "glow": "#AB3C40",
+    "vibe": "Vintage Manga Sepia & Vermilion"
+  },
+  "23": {
+    "accent": "#D89327",
+    "highlight": "#A1D7FF",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#D89327",
+    "glow": "#A1D7FF",
+    "vibe": "Astral Projection Violet Aura"
+  },
+  "24": {
+    "accent": "#F95F53",
+    "highlight": "#FFE16B",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#F95F53",
+    "glow": "#FFE16B",
+    "vibe": "Abyssal Alien Void Indigo"
+  },
+  "25": {
+    "accent": "#FFB300",
+    "highlight": "#FF00B9",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FFB300",
+    "glow": "#FF00B9",
+    "vibe": "Pyrotechnic Spark Amber & Purple"
+  },
+  "26": {
+    "accent": "#FCD112",
+    "highlight": "#252BC1",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FCD112",
+    "glow": "#252BC1",
+    "vibe": "Masterpiece Action Splash Neon"
+  },
+  "27": {
+    "accent": "#DC03FC",
+    "highlight": "#2B99C5",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#DC03FC",
+    "glow": "#2B99C5",
+    "vibe": "Cursed Realm Shadow & Ruby"
+  },
+  "28": {
+    "accent": "#E72C64",
+    "highlight": "#168CBA",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#E72C64",
+    "glow": "#168CBA",
+    "vibe": "Giant Kaiju Battle Emerald & Gold"
+  },
+  "29": {
+    "accent": "#EBB103",
+    "highlight": "#C8313A",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#EBB103",
+    "glow": "#C8313A",
+    "vibe": "Chiquitita Micro-Cosmos Pastel"
+  },
+  "30": {
+    "accent": "#FFB502",
+    "highlight": "#EC0004",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FFB502",
+    "glow": "#EC0004",
+    "vibe": "Spectral Haunting Ghostly Jade"
+  },
+  "31": {
+    "accent": "#FF0000",
+    "highlight": "#EDD182",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF0000",
+    "glow": "#EDD182",
+    "vibe": "Invasion Mothership Electric Blue"
+  },
+  "32": {
+    "accent": "#C42114",
+    "highlight": "#3245B7",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#C42114",
+    "glow": "#3245B7",
+    "vibe": "Momo & Okarun Midnight Starlight"
+  },
+  "33": {
+    "accent": "#EB0D23",
+    "highlight": "#E6B22B",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#EB0D23",
+    "glow": "#E6B22B",
+    "vibe": "Unidentified Flying Object Glow"
+  },
+  "34": {
+    "accent": "#FF012D",
+    "highlight": "#7A03E4",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF012D",
+    "glow": "#7A03E4",
+    "vibe": "Subterranean Sub-surface Lava"
+  },
+  "35": {
+    "accent": "#FFFF00",
+    "highlight": "#FF0000",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FFFF00",
+    "glow": "#FF0000",
+    "vibe": "Turbo Sprint Crimson Spark"
+  },
+  "36": {
+    "accent": "#FF454F",
+    "highlight": "#FFE244",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF454F",
+    "glow": "#FFE244",
+    "vibe": "Classroom Commotion Warm Amber"
+  },
+  "37": {
+    "accent": "#FF5000",
+    "highlight": "#A03D6B",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FF5000",
+    "glow": "#A03D6B",
+    "vibe": "Dimensional Rift Ultra Violet"
+  },
+  "38": {
+    "accent": "#FFFF0B",
+    "highlight": "#F2260F",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#FFFF0B",
+    "glow": "#F2260F",
+    "vibe": "Battlefield Destruction Fiery Ochre"
+  },
+  "39": {
+    "accent": "#F40A00",
+    "highlight": "#F4E500",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#F40A00",
+    "glow": "#F4E500",
+    "vibe": "Curse Unleashed Dark Ruby"
+  }
+}
