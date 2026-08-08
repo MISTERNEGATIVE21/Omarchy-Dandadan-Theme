@@ -159,43 +159,59 @@ waybar_css = f"""/* DANDADAN Waybar — Wallpaper {active_idx}: {vibe}
   font-weight: bold;
 }}
 
-/* ── Bar window (Full Width Glassmorphism Layout) ───────────────── */
+/* ── Bar window ──────────────────────────────────────────────────── */
 window#waybar {{
-  background-color: alpha(@background, 0.70);
-  border-bottom: 2px solid alpha(@accent, 0.50);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
-              inset 0 -1px 0 alpha(white, 0.10);
+  background-color: alpha(@background, 0.40);
+  border-bottom: 1px solid alpha(@accent, 0.40);
   transition: background-color 0.5s ease, border-color 0.5s ease;
 }}
 
 window#waybar.hidden {{ opacity: 0.2; }}
 
-/* ── Full Width Container Groups ────────────────────────────────── */
+/* ── Floating Island Pill Containers ────────────────────────────── */
 #group-left-container {{
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  padding: 2px 8px 2px 16px;
-  box-shadow: none;
+  background-color: alpha(white, 0.07);
+  border: 1px solid alpha(@accent, 0.35);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  margin: 0 10px 4px 14px;
+  padding: 4px 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
+              inset 0 1px 0 alpha(@accent, 0.15);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }}
 
 #group-center-container {{
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  padding: 2px 12px;
-  box-shadow: none;
+  background-color: alpha(white, 0.07);
+  border: 1px solid alpha(@accent, 0.35);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  margin: 0 10px 4px 10px;
+  padding: 4px 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
+              inset 0 1px 0 alpha(@accent, 0.15);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }}
 
 #group-right-container {{
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  padding: 2px 16px 2px 8px;
-  box-shadow: none;
+  background-color: alpha(white, 0.07);
+  border: 1px solid alpha(@accent, 0.35);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  margin: 0 14px 4px 10px;
+  padding: 4px 24px 4px 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
+              inset 0 1px 0 alpha(@accent, 0.15);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}}
+
+#group-left-container:hover,
+#group-center-container:hover,
+#group-right-container:hover {{
+  background-color: alpha(@accent, 0.11);
+  border-color: alpha(@accent, 0.60);
+  box-shadow: 0 0 28px alpha(@accent, 0.35),
+              inset 0 1px 0 alpha(@accent, 0.25);
 }}
 
 /* ── Omarchy logo ────────────────────────────────────────────────── */
