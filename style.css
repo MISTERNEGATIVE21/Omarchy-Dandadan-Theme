@@ -1,4 +1,6 @@
-/* GTK Color Definitions for DANDADAN Theme */
+@import "../omarchy/current/theme/wallpapers.css";
+
+/* GTK Color Fallbacks for DANDADAN Theme */
 @define-color background #14161E;
 @define-color foreground #F0F4FC;
 @define-color accent #D8B3FE;
@@ -14,37 +16,36 @@
   font-weight: bold;
 }
 
-/* Ceiling-Flush Semi-transparent Bar Container */
+/* Apple-style Frosted Glass Top Bar Container */
 window#waybar {
-  background-color: rgba(18, 20, 28, 0.70);
-  border-bottom: 2px solid @cursor;
+  background-color: rgba(20, 22, 32, 0.45);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   border-top: none;
   margin: 0;
   padding: 0;
-  transition-property: background-color;
-  transition-duration: .5s;
+  transition: all 0.4s ease;
 }
 
-/* V7 Centered Modules - Flush to Ceiling (Zero Top Space) */
+/* Apple macOS Control-Center Floating Pill Modules */
 #group-center2,
 #group-center3,
 #group-center4 {
-  background-color: rgba(28, 32, 45, 0.75);
-  border: 1px solid rgba(216, 179, 254, 0.50);
+  background-color: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-top: none;
-  border-radius: 0px 0px 16px 16px;
+  border-radius: 0px 0px 18px 18px;
   margin: 0px 6px 3px 6px;
-  padding: 2px 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-  transition: all 0.3s ease;
+  padding: 3px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #group-center2:hover,
 #group-center3:hover,
 #group-center4:hover {
-  border-color: @cursor;
-  box-shadow: 0 0 16px rgba(225, 71, 122, 0.6);
-  background-color: rgba(35, 40, 56, 0.88);
+  background-color: rgba(255, 255, 255, 0.18);
+  border-color: @accent;
+  box-shadow: 0 0 20px @accent;
 }
 
 /* Omarchy Brand Button */
@@ -58,22 +59,22 @@ window#waybar {
   color: @accent;
 }
 
-/* Hyprland Workspaces V7 Styling - Clear Numerals Only (No Square Boxes) */
+/* Apple Workspaces Module - Frosted Glass & Clear Numerals */
 #workspaces {
   padding: 0px 8px;
   margin: 0px 6px 3px 6px;
-  border-radius: 0px 0px 16px 16px;
-  background-color: rgba(28, 32, 45, 0.75);
-  border: 1px solid rgba(216, 179, 254, 0.50);
+  border-radius: 0px 0px 18px 18px;
+  background-color: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-top: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
 #workspaces button {
-  color: rgba(240, 244, 252, 0.75);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 14px;
   font-weight: bold;
-  padding: 0 5px;
+  padding: 0 6px;
   margin: 0 2px;
   background: transparent;
   border: none;
@@ -93,11 +94,11 @@ window#waybar {
   background: transparent;
   border: none;
   box-shadow: none;
-  text-shadow: 0 0 10px @cursor;
+  text-shadow: 0 0 12px @cursor, 0 0 20px @accent;
 }
 
 #workspaces button.urgent {
-  color: #A63330;
+  color: #FF454F;
 }
 
 /* Scrolling MPRIS Music Module */
@@ -126,12 +127,12 @@ window#waybar {
 }
 
 #pulseaudio {
-  color: #D8B3FE;
+  color: @accent;
   margin: 0 4px;
 }
 
 #battery {
-  color: #E1477A;
+  color: @cursor;
   margin: 0 4px;
 }
 
