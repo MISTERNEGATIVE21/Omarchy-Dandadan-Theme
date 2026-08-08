@@ -1,0 +1,10 @@
+/* DANDADAN Dynamic Firefox / Zen Browser CSS (Wallpaper 32) */
+:root {
+  --lwt-accent-color: #C42114;
+  --lwt-toolbar-field-focus: #C42114;
+  --toolbar-field-border-color: #C42114;
+  --toolbar-field-background-color: #14161E;
+  --toolbar-field-color: #F0F4FC;
+  --lwt-tab-text: #F0F4FC;
+  --lwt-selected-tab-background-color: #C42114;
+}
