@@ -1,20 +1,9 @@
-@import 'wallpapers.css';
-
+/* GTK Color Definitions for DANDADAN Theme */
 @define-color background #EEEDEE;
 @define-color foreground #2C393B;
 @define-color accent #D8B3FE;
 @define-color cursor #E1477A;
-
-/* Active Wallpaper Fallback Variables */
-#waybar,
-.wallpaper-01 {
-  --wp-accent: #FFFF00;
-  --wp-highlight: #FF0000;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FFFF00;
-  --wp-glow: #FF0000;
-}
+@define-color highlight #E8759B;
 
 /* Global Waybar Styling */
 window#waybar {
@@ -46,10 +35,10 @@ window#waybar > box {
   border-radius: 12px;
   margin: 4px 6px;
   padding: 2px 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  background: var(--wp-bg);
-  color: var(--wp-fg);
-  border: 1px solid var(--wp-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: @background;
+  color: @foreground;
+  border: 1px solid @accent;
   transition: all 0.3s ease-in-out;
 }
 
@@ -65,13 +54,12 @@ window#waybar > box {
 #pulseaudio:hover,
 #cpu:hover,
 #battery:hover {
-  border-color: var(--wp-accent);
-  box-shadow: 0 4px 16px var(--wp-glow);
+  border-color: @cursor;
 }
 
 /* Custom Omarchy Button */
 #custom-omarchy {
-  color: var(--wp-accent);
+  color: @cursor;
   font-size: 15px;
   padding: 2px 12px;
 }
@@ -85,27 +73,25 @@ window#waybar > box {
   padding: 2px 6px;
   margin: 2px 2px;
   border-radius: 8px;
-  color: var(--wp-fg);
+  color: @foreground;
   background: transparent;
   border: none;
-  transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
-  color: var(--wp-accent);
-  background: rgba(255, 255, 255, 0.1);
+  color: @cursor;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 #workspaces button.active {
-  color: var(--wp-bg);
-  background: var(--wp-accent);
+  color: @background;
+  background: @cursor;
   font-weight: bold;
-  box-shadow: 0 0 8px var(--wp-glow);
 }
 
 #workspaces button.urgent {
   color: #FFFFFF;
-  background: var(--wp-highlight);
+  background: @highlight;
 }
 
 /* Tray Expander & Tray Items */

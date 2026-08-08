@@ -1,352 +1,274 @@
-/* Generated Wallpaper CSS Custom Properties */
+/* GTK Color Definitions for Wallpapers */
 
-.wallpaper-01 {
-  --wp-accent: #FFFF00;
-  --wp-highlight: #FF0000;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FFFF00;
-  --wp-glow: #FF0000;
-}
+/* Wallpaper 01: Okarun & Turbo Granny Golden Spark */
+@define-color wp-01-accent #FFFF00;
+@define-color wp-01-highlight #FF0000;
+@define-color wp-01-bg #14161E;
+@define-color wp-01-fg #F0F4FC;
+@define-color wp-01-border #FFFF00;
 
-.wallpaper-02 {
-  --wp-accent: #C61000;
-  --wp-highlight: #D8D400;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #C61000;
-  --wp-glow: #D8D400;
-}
+/* Wallpaper 02: Turbo Granny Crimson Curse */
+@define-color wp-02-accent #C61000;
+@define-color wp-02-highlight #D8D400;
+@define-color wp-02-bg #14161E;
+@define-color wp-02-fg #F0F4FC;
+@define-color wp-02-border #C61000;
 
-.wallpaper-03 {
-  --wp-accent: #FF0000;
-  --wp-highlight: #D8B14B;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF0000;
-  --wp-glow: #D8B14B;
-}
+/* Wallpaper 03: Momo Astral Pink & Blood Red */
+@define-color wp-03-accent #FF0000;
+@define-color wp-03-highlight #D8B14B;
+@define-color wp-03-bg #14161E;
+@define-color wp-03-fg #F0F4FC;
+@define-color wp-03-border #FF0000;
 
-.wallpaper-04 {
-  --wp-accent: #FF0000;
-  --wp-highlight: #4BC5D8;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF0000;
-  --wp-glow: #4BC5D8;
-}
+/* Wallpaper 04: Curse Transformation Scarlet */
+@define-color wp-04-accent #FF0000;
+@define-color wp-04-highlight #4BC5D8;
+@define-color wp-04-bg #14161E;
+@define-color wp-04-fg #F0F4FC;
+@define-color wp-04-border #FF0000;
 
-.wallpaper-05 {
-  --wp-accent: #CF0774;
-  --wp-highlight: #A840CE;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #CF0774;
-  --wp-glow: #A840CE;
-}
+/* Wallpaper 05: Seiko Shrine Magenta Magic */
+@define-color wp-05-accent #CF0774;
+@define-color wp-05-highlight #A840CE;
+@define-color wp-05-bg #14161E;
+@define-color wp-05-fg #F0F4FC;
+@define-color wp-05-border #CF0774;
 
-.wallpaper-06 {
-  --wp-accent: #00F0EA;
-  --wp-highlight: #E9004A;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #00F0EA;
-  --wp-glow: #E9004A;
-}
+/* Wallpaper 06: Serpo Alien Cyan & Magenta Blast */
+@define-color wp-06-accent #00F0EA;
+@define-color wp-06-highlight #E9004A;
+@define-color wp-06-bg #14161E;
+@define-color wp-06-fg #F0F4FC;
+@define-color wp-06-border #00F0EA;
 
-.wallpaper-07 {
-  --wp-accent: #00C9FF;
-  --wp-highlight: #F70002;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #00C9FF;
-  --wp-glow: #F70002;
-}
+/* Wallpaper 07: High Octane Electric Cyan & Crimson */
+@define-color wp-07-accent #00C9FF;
+@define-color wp-07-highlight #F70002;
+@define-color wp-07-bg #14161E;
+@define-color wp-07-fg #F0F4FC;
+@define-color wp-07-border #00C9FF;
 
-.wallpaper-08 {
-  --wp-accent: #FF0000;
-  --wp-highlight: #FFE500;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF0000;
-  --wp-glow: #FFE500;
-}
+/* Wallpaper 08: St. Germain Vermilion Mystery */
+@define-color wp-08-accent #FF0000;
+@define-color wp-08-highlight #FFE500;
+@define-color wp-08-bg #14161E;
+@define-color wp-08-fg #F0F4FC;
+@define-color wp-08-border #FF0000;
 
-.wallpaper-09 {
-  --wp-accent: #DD2838;
-  --wp-highlight: #48D8BF;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #DD2838;
-  --wp-glow: #48D8BF;
-}
+/* Wallpaper 09: Acrobat Silky Scarlet Tears */
+@define-color wp-09-accent #DD2838;
+@define-color wp-09-highlight #48D8BF;
+@define-color wp-09-bg #14161E;
+@define-color wp-09-fg #F0F4FC;
+@define-color wp-09-border #DD2838;
 
-.wallpaper-10 {
-  --wp-accent: #083EF8;
-  --wp-highlight: #FB2154;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #083EF8;
-  --wp-glow: #FB2154;
-}
+/* Wallpaper 10: Alien Tech Deep Sapphire & Pink */
+@define-color wp-10-accent #083EF8;
+@define-color wp-10-highlight #FB2154;
+@define-color wp-10-bg #14161E;
+@define-color wp-10-fg #F0F4FC;
+@define-color wp-10-border #083EF8;
 
-.wallpaper-11 {
-  --wp-accent: #FF00F3;
-  --wp-highlight: #00A8E3;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF00F3;
-  --wp-glow: #00A8E3;
-}
+/* Wallpaper 11: Subterranean Neon Violet & Turquoise */
+@define-color wp-11-accent #FF00F3;
+@define-color wp-11-highlight #00A8E3;
+@define-color wp-11-bg #14161E;
+@define-color wp-11-fg #F0F4FC;
+@define-color wp-11-border #FF00F3;
 
-.wallpaper-12 {
-  --wp-accent: #AF6B21;
-  --wp-highlight: #B17D88;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #AF6B21;
-  --wp-glow: #B17D88;
-}
+/* Wallpaper 12: Golden Hour Okamomo Warmth */
+@define-color wp-12-accent #AF6B21;
+@define-color wp-12-highlight #B17D88;
+@define-color wp-12-bg #14161E;
+@define-color wp-12-fg #F0F4FC;
+@define-color wp-12-border #AF6B21;
 
-.wallpaper-13 {
-  --wp-accent: #3DBAD8;
-  --wp-highlight: #F4D7AC;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #3DBAD8;
-  --wp-glow: #F4D7AC;
-}
+/* Wallpaper 13: Yokai Night Midnight Teal & Bronze */
+@define-color wp-13-accent #3DBAD8;
+@define-color wp-13-highlight #F4D7AC;
+@define-color wp-13-bg #14161E;
+@define-color wp-13-fg #F0F4FC;
+@define-color wp-13-border #3DBAD8;
 
-.wallpaper-14 {
-  --wp-accent: #FFFB00;
-  --wp-highlight: #01F1A3;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FFFB00;
-  --wp-glow: #01F1A3;
-}
+/* Wallpaper 14: Kamo Cursed Gold & Emerald Glow */
+@define-color wp-14-accent #FFFB00;
+@define-color wp-14-highlight #01F1A3;
+@define-color wp-14-bg #14161E;
+@define-color wp-14-fg #F0F4FC;
+@define-color wp-14-border #FFFB00;
 
-.wallpaper-15 {
-  --wp-accent: #0B8CFB;
-  --wp-highlight: #620AFB;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #0B8CFB;
-  --wp-glow: #620AFB;
-}
+/* Wallpaper 15: Turbo Form Azure Lightning */
+@define-color wp-15-accent #0B8CFB;
+@define-color wp-15-highlight #620AFB;
+@define-color wp-15-bg #14161E;
+@define-color wp-15-fg #F0F4FC;
+@define-color wp-15-border #0B8CFB;
 
-.wallpaper-16 {
-  --wp-accent: #FF4700;
-  --wp-highlight: #0072FF;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF4700;
-  --wp-glow: #0072FF;
-}
+/* Wallpaper 16: Sunset Showdown Orange & Cobalt */
+@define-color wp-16-accent #FF4700;
+@define-color wp-16-highlight #0072FF;
+@define-color wp-16-bg #14161E;
+@define-color wp-16-fg #F0F4FC;
+@define-color wp-16-border #FF4700;
 
-.wallpaper-17 {
-  --wp-accent: #FF0B0C;
-  --wp-highlight: #FFE50A;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF0B0C;
-  --wp-glow: #FFE50A;
-}
+/* Wallpaper 17: Flatwoods Monster Blood Crimson */
+@define-color wp-17-accent #FF0B0C;
+@define-color wp-17-highlight #FFE50A;
+@define-color wp-17-bg #14161E;
+@define-color wp-17-fg #F0F4FC;
+@define-color wp-17-border #FF0B0C;
 
-.wallpaper-18 {
-  --wp-accent: #D20000;
-  --wp-highlight: #6C4BD8;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #D20000;
-  --wp-glow: #6C4BD8;
-}
+/* Wallpaper 18: Evil Eye Wrathful Carmine */
+@define-color wp-18-accent #D20000;
+@define-color wp-18-highlight #6C4BD8;
+@define-color wp-18-bg #14161E;
+@define-color wp-18-fg #F0F4FC;
+@define-color wp-18-border #D20000;
 
-.wallpaper-19 {
-  --wp-accent: #D8B3FE;
-  --wp-highlight: #E1477A;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #D8B3FE;
-  --wp-glow: #E1477A;
-}
+/* Wallpaper 19: Dandadan Iconic Pastel & Magenta */
+@define-color wp-19-accent #D8B3FE;
+@define-color wp-19-highlight #E1477A;
+@define-color wp-19-bg #14161E;
+@define-color wp-19-fg #F0F4FC;
+@define-color wp-19-border #D8B3FE;
 
-.wallpaper-20 {
-  --wp-accent: #FF0000;
-  --wp-highlight: #FFE500;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF0000;
-  --wp-glow: #FFE500;
-}
+/* Wallpaper 20: Spiritual Energy Flame Red */
+@define-color wp-20-accent #FF0000;
+@define-color wp-20-highlight #FFE500;
+@define-color wp-20-bg #14161E;
+@define-color wp-20-fg #F0F4FC;
+@define-color wp-20-border #FF0000;
 
-.wallpaper-21 {
-  --wp-accent: #00FEFF;
-  --wp-highlight: #FD570F;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #00FEFF;
-  --wp-glow: #FD570F;
-}
+/* Wallpaper 21: Hyperdrive Neon Cyan & Coral */
+@define-color wp-21-accent #00FEFF;
+@define-color wp-21-highlight #FD570F;
+@define-color wp-21-bg #14161E;
+@define-color wp-21-fg #F0F4FC;
+@define-color wp-21-border #00FEFF;
 
-.wallpaper-22 {
-  --wp-accent: #CFB55B;
-  --wp-highlight: #AB3C40;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #CFB55B;
-  --wp-glow: #AB3C40;
-}
+/* Wallpaper 22: Vintage Manga Sepia & Vermilion */
+@define-color wp-22-accent #CFB55B;
+@define-color wp-22-highlight #AB3C40;
+@define-color wp-22-bg #14161E;
+@define-color wp-22-fg #F0F4FC;
+@define-color wp-22-border #CFB55B;
 
-.wallpaper-23 {
-  --wp-accent: #D89327;
-  --wp-highlight: #A1D7FF;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #D89327;
-  --wp-glow: #A1D7FF;
-}
+/* Wallpaper 23: Astral Projection Violet Aura */
+@define-color wp-23-accent #D89327;
+@define-color wp-23-highlight #A1D7FF;
+@define-color wp-23-bg #14161E;
+@define-color wp-23-fg #F0F4FC;
+@define-color wp-23-border #D89327;
 
-.wallpaper-24 {
-  --wp-accent: #F95F53;
-  --wp-highlight: #FFE16B;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #F95F53;
-  --wp-glow: #FFE16B;
-}
+/* Wallpaper 24: Abyssal Alien Void Indigo */
+@define-color wp-24-accent #F95F53;
+@define-color wp-24-highlight #FFE16B;
+@define-color wp-24-bg #14161E;
+@define-color wp-24-fg #F0F4FC;
+@define-color wp-24-border #F95F53;
 
-.wallpaper-25 {
-  --wp-accent: #FFB300;
-  --wp-highlight: #FF00B9;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FFB300;
-  --wp-glow: #FF00B9;
-}
+/* Wallpaper 25: Pyrotechnic Spark Amber & Purple */
+@define-color wp-25-accent #FFB300;
+@define-color wp-25-highlight #FF00B9;
+@define-color wp-25-bg #14161E;
+@define-color wp-25-fg #F0F4FC;
+@define-color wp-25-border #FFB300;
 
-.wallpaper-26 {
-  --wp-accent: #FCD112;
-  --wp-highlight: #252BC1;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FCD112;
-  --wp-glow: #252BC1;
-}
+/* Wallpaper 26: Masterpiece Action Splash Neon */
+@define-color wp-26-accent #FCD112;
+@define-color wp-26-highlight #252BC1;
+@define-color wp-26-bg #14161E;
+@define-color wp-26-fg #F0F4FC;
+@define-color wp-26-border #FCD112;
 
-.wallpaper-27 {
-  --wp-accent: #DC03FC;
-  --wp-highlight: #2B99C5;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #DC03FC;
-  --wp-glow: #2B99C5;
-}
+/* Wallpaper 27: Cursed Realm Shadow & Ruby */
+@define-color wp-27-accent #DC03FC;
+@define-color wp-27-highlight #2B99C5;
+@define-color wp-27-bg #14161E;
+@define-color wp-27-fg #F0F4FC;
+@define-color wp-27-border #DC03FC;
 
-.wallpaper-28 {
-  --wp-accent: #E72C64;
-  --wp-highlight: #168CBA;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #E72C64;
-  --wp-glow: #168CBA;
-}
+/* Wallpaper 28: Giant Kaiju Battle Emerald & Gold */
+@define-color wp-28-accent #E72C64;
+@define-color wp-28-highlight #168CBA;
+@define-color wp-28-bg #14161E;
+@define-color wp-28-fg #F0F4FC;
+@define-color wp-28-border #E72C64;
 
-.wallpaper-29 {
-  --wp-accent: #EBB103;
-  --wp-highlight: #C8313A;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #EBB103;
-  --wp-glow: #C8313A;
-}
+/* Wallpaper 29: Chiquitita Micro-Cosmos Pastel */
+@define-color wp-29-accent #EBB103;
+@define-color wp-29-highlight #C8313A;
+@define-color wp-29-bg #14161E;
+@define-color wp-29-fg #F0F4FC;
+@define-color wp-29-border #EBB103;
 
-.wallpaper-30 {
-  --wp-accent: #FFB502;
-  --wp-highlight: #EC0004;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FFB502;
-  --wp-glow: #EC0004;
-}
+/* Wallpaper 30: Spectral Haunting Ghostly Jade */
+@define-color wp-30-accent #FFB502;
+@define-color wp-30-highlight #EC0004;
+@define-color wp-30-bg #14161E;
+@define-color wp-30-fg #F0F4FC;
+@define-color wp-30-border #FFB502;
 
-.wallpaper-31 {
-  --wp-accent: #FF0000;
-  --wp-highlight: #EDD182;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF0000;
-  --wp-glow: #EDD182;
-}
+/* Wallpaper 31: Invasion Mothership Electric Blue */
+@define-color wp-31-accent #FF0000;
+@define-color wp-31-highlight #EDD182;
+@define-color wp-31-bg #14161E;
+@define-color wp-31-fg #F0F4FC;
+@define-color wp-31-border #FF0000;
 
-.wallpaper-32 {
-  --wp-accent: #C42114;
-  --wp-highlight: #3245B7;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #C42114;
-  --wp-glow: #3245B7;
-}
+/* Wallpaper 32: Momo & Okarun Midnight Starlight */
+@define-color wp-32-accent #C42114;
+@define-color wp-32-highlight #3245B7;
+@define-color wp-32-bg #14161E;
+@define-color wp-32-fg #F0F4FC;
+@define-color wp-32-border #C42114;
 
-.wallpaper-33 {
-  --wp-accent: #EB0D23;
-  --wp-highlight: #E6B22B;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #EB0D23;
-  --wp-glow: #E6B22B;
-}
+/* Wallpaper 33: Unidentified Flying Object Glow */
+@define-color wp-33-accent #EB0D23;
+@define-color wp-33-highlight #E6B22B;
+@define-color wp-33-bg #14161E;
+@define-color wp-33-fg #F0F4FC;
+@define-color wp-33-border #EB0D23;
 
-.wallpaper-34 {
-  --wp-accent: #FF012D;
-  --wp-highlight: #7A03E4;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF012D;
-  --wp-glow: #7A03E4;
-}
+/* Wallpaper 34: Subterranean Sub-surface Lava */
+@define-color wp-34-accent #FF012D;
+@define-color wp-34-highlight #7A03E4;
+@define-color wp-34-bg #14161E;
+@define-color wp-34-fg #F0F4FC;
+@define-color wp-34-border #FF012D;
 
-.wallpaper-35 {
-  --wp-accent: #FFFF00;
-  --wp-highlight: #FF0000;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FFFF00;
-  --wp-glow: #FF0000;
-}
+/* Wallpaper 35: Turbo Sprint Crimson Spark */
+@define-color wp-35-accent #FFFF00;
+@define-color wp-35-highlight #FF0000;
+@define-color wp-35-bg #14161E;
+@define-color wp-35-fg #F0F4FC;
+@define-color wp-35-border #FFFF00;
 
-.wallpaper-36 {
-  --wp-accent: #FF454F;
-  --wp-highlight: #FFE244;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF454F;
-  --wp-glow: #FFE244;
-}
+/* Wallpaper 36: Classroom Commotion Warm Amber */
+@define-color wp-36-accent #FF454F;
+@define-color wp-36-highlight #FFE244;
+@define-color wp-36-bg #14161E;
+@define-color wp-36-fg #F0F4FC;
+@define-color wp-36-border #FF454F;
 
-.wallpaper-37 {
-  --wp-accent: #FF5000;
-  --wp-highlight: #A03D6B;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FF5000;
-  --wp-glow: #A03D6B;
-}
+/* Wallpaper 37: Dimensional Rift Ultra Violet */
+@define-color wp-37-accent #FF5000;
+@define-color wp-37-highlight #A03D6B;
+@define-color wp-37-bg #14161E;
+@define-color wp-37-fg #F0F4FC;
+@define-color wp-37-border #FF5000;
 
-.wallpaper-38 {
-  --wp-accent: #FFFF0B;
-  --wp-highlight: #F2260F;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #FFFF0B;
-  --wp-glow: #F2260F;
-}
+/* Wallpaper 38: Battlefield Destruction Fiery Ochre */
+@define-color wp-38-accent #FFFF0B;
+@define-color wp-38-highlight #F2260F;
+@define-color wp-38-bg #14161E;
+@define-color wp-38-fg #F0F4FC;
+@define-color wp-38-border #FFFF0B;
 
-.wallpaper-39 {
-  --wp-accent: #F40A00;
-  --wp-highlight: #F4E500;
-  --wp-bg: #14161E;
-  --wp-fg: #F0F4FC;
-  --wp-border: #F40A00;
-  --wp-glow: #F4E500;
-}
+/* Wallpaper 39: Curse Unleashed Dark Ruby */
+@define-color wp-39-accent #F40A00;
+@define-color wp-39-highlight #F4E500;
+@define-color wp-39-bg #14161E;
+@define-color wp-39-fg #F0F4FC;
+@define-color wp-39-border #F40A00;
