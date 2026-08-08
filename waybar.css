@@ -14,22 +14,26 @@
   font-weight: bold;
 }
 
-/* Flush Topmost Semi-transparent Bar Container */
+/* Ceiling-Flush Semi-transparent Bar Container */
 window#waybar {
-  background-color: rgba(18, 20, 28, 0.65);
+  background-color: rgba(18, 20, 28, 0.70);
   border-bottom: 2px solid @cursor;
+  border-top: none;
+  margin: 0;
+  padding: 0;
   transition-property: background-color;
   transition-duration: .5s;
 }
 
-/* V7 Floating Centered Pill Groups - Attached Topmost Capsules */
+/* V7 Centered Modules - Flush to Ceiling (Zero Top Space) */
 #group-center2,
 #group-center3,
 #group-center4 {
-  background-color: rgba(28, 32, 45, 0.72);
+  background-color: rgba(28, 32, 45, 0.75);
   border: 1px solid rgba(216, 179, 254, 0.50);
-  border-radius: 18px;
-  margin: 2px 6px;
+  border-top: none;
+  border-radius: 0px 0px 16px 16px;
+  margin: 0px 6px 3px 6px;
   padding: 2px 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   transition: all 0.3s ease;
@@ -40,7 +44,7 @@ window#waybar {
 #group-center4:hover {
   border-color: @cursor;
   box-shadow: 0 0 16px rgba(225, 71, 122, 0.6);
-  background-color: rgba(35, 40, 56, 0.85);
+  background-color: rgba(35, 40, 56, 0.88);
 }
 
 /* Omarchy Brand Button */
@@ -54,13 +58,14 @@ window#waybar {
   color: @accent;
 }
 
-/* Hyprland Workspaces V7 Styling */
+/* Hyprland Workspaces V7 Styling - Flush to Ceiling */
 #workspaces {
   padding: 0px 8px;
-  margin: 2px 6px;
-  border-radius: 18px;
-  background-color: rgba(28, 32, 45, 0.72);
+  margin: 0px 6px 3px 6px;
+  border-radius: 0px 0px 16px 16px;
+  background-color: rgba(28, 32, 45, 0.75);
   border: 1px solid rgba(216, 179, 254, 0.50);
+  border-top: none;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
@@ -68,7 +73,7 @@ window#waybar {
   color: #FFFFFF;
   padding: 2px 6px;
   margin: 0 2px;
-  border-radius: 10px;
+  border-radius: 8px;
   background: transparent;
   transition: all 0.2s ease-in-out;
 }
@@ -82,7 +87,7 @@ window#waybar {
   color: #FFFFFF;
   background: linear-gradient(135deg, @cursor, @accent);
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 0 14px @cursor;
 }
 
