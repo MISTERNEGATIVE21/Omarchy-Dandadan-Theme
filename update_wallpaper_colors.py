@@ -169,15 +169,37 @@ window#waybar {{
 window#waybar.hidden {{ opacity: 0.2; }}
 
 /* ── Island pill containers ──────────────────────────────────────── */
-#group-left-container,
-#group-center-container,
-#group-right-container {{
+#group-left-container {{
+  background-color: alpha(white, 0.07);
+  border: 1px solid alpha(@accent, 0.30);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  margin: 0 10px 4px 14px;
+  padding: 4px 20px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.38),
+              inset 0 1px 0 alpha(@accent, 0.15);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}}
+
+#group-center-container {{
   background-color: alpha(white, 0.07);
   border: 1px solid alpha(@accent, 0.30);
   border-top: none;
   border-radius: 0 0 20px 20px;
   margin: 0 10px 4px 10px;
   padding: 4px 20px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.38),
+              inset 0 1px 0 alpha(@accent, 0.15);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}}
+
+#group-right-container {{
+  background-color: alpha(white, 0.07);
+  border: 1px solid alpha(@accent, 0.30);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  margin: 0 14px 4px 10px;
+  padding: 4px 24px 4px 20px;
   box-shadow: 0 8px 28px rgba(0,0,0,0.38),
               inset 0 1px 0 alpha(@accent, 0.15);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -327,14 +349,14 @@ window#waybar.hidden {{ opacity: 0.2; }}
 @keyframes blink {{ 50% {{ opacity: 0; }} }}
 
 /* ── Network / Bluetooth ─────────────────────────────────────────── */
-#network {{ color: white; margin: 0 8px; }}
+#network {{ color: white; margin: 0 10px; padding: 0 4px; }}
 #network.disconnected {{ color: alpha(white, 0.3); }}
-#bluetooth {{ color: white; margin: 0 8px; }}
+#bluetooth {{ color: white; margin: 0 10px 0 8px; padding: 0 4px; }}
 #bluetooth.connected {{ color: {accent}; }}
 #bluetooth.disabled {{ color: alpha(white, 0.28); }}
 
 /* ── Tray ────────────────────────────────────────────────────────── */
-#tray {{ margin: 0 10px; }}
+#tray {{ margin: 0 12px 0 10px; padding-right: 6px; }}
 #tray > .passive {{ -gtk-icon-effect: dim; }}
 #tray > .needs-attention {{
   -gtk-icon-effect: highlight;
