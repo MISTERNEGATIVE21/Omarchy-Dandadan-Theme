@@ -845,7 +845,59 @@ updates = {
 }
 c.update(updates)
 vscode_data["colors"] = c
-write_both("vscode.json", json.dumps(vscode_data, indent=2))
+vscode_json_str = json.dumps(vscode_data, indent=2)
+write_both("vscode.json", vscode_json_str)
+
+# Sync Antigravity IDE, VS Code, VSCodium, Cursor theme extensions & settings.json
+for ext_dir in [
+    f"{HOME}/.vscode/extensions/dandadan-theme",
+    f"{HOME}/.antigravity-ide/extensions/dandadan-theme",
+    f"{HOME}/.antigravity/extensions/dandadan-theme",
+    f"{HOME}/.config/VSCodium/User/extensions/dandadan-theme",
+    f"{HOME}/.cursor/extensions/dandadan-theme",
+]:
+    if os.path.exists(os.path.dirname(ext_dir)):
+        themes_dir = f"{ext_dir}/themes"
+        os.makedirs(themes_dir, exist_ok=True)
+        write(f"{themes_dir}/dandadan-color-theme.json", vscode_json_str)
+        pkg_json = {
+            "name": "dandadan-theme",
+            "displayName": "Dandadan Theme",
+            "description": "Dynamic Dandadan anime-inspired dark theme",
+            "version": "2.0.0",
+            "publisher": "misternegative21",
+            "engines": {"vscode": "^1.60.0"},
+            "categories": ["Themes"],
+            "contributes": {
+                "themes": [{
+                    "label": "Dandadan",
+                    "uiTheme": "vs-dark",
+                    "path": "./themes/dandadan-color-theme.json"
+                }]
+            }
+        }
+        write(f"{ext_dir}/package.json", json.dumps(pkg_json, indent=2))
+
+for user_settings in [
+    f"{HOME}/.config/Antigravity IDE/User/settings.json",
+    f"{HOME}/.config/Antigravity/User/settings.json",
+    f"{HOME}/.config/Code/User/settings.json",
+    f"{HOME}/.config/VSCodium/User/settings.json",
+    f"{HOME}/.config/Cursor/User/settings.json",
+]:
+    if os.path.exists(os.path.dirname(user_settings)):
+        try:
+            st = {}
+            if os.path.exists(user_settings):
+                try:
+                    with open(user_settings, "r") as sf:
+                        st = json.load(sf)
+                except Exception:
+                    st = {}
+            st["workbench.colorTheme"] = "Dandadan"
+            write(user_settings, json.dumps(st, indent=2))
+        except Exception:
+            pass
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1056,6 +1108,10 @@ walker_css = f"""/* DANDADAN Walker — Wallpaper {active_idx}: {vibe} */
 @define-color hover         {accent_comp};
 @define-color selected-box  {cursor};
 
+* {{
+  font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', monospace;
+}}
+
 window {{ background: transparent; }}
 
 window .search-container,
@@ -1094,6 +1150,8 @@ child:selected .item-box * {{ color: @selected-text; }}
 child:hover {{ background-color: alpha(@hover, 0.12); }}
 """
 write_both("walker.css", walker_css)
+os.makedirs(f"{HOME}/.config/walker", exist_ok=True)
+write(f"{HOME}/.config/walker/style.css", walker_css)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
