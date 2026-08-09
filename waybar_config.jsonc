@@ -135,11 +135,11 @@
 
   "pulseaudio": {
     "format": "{icon} {volume}%",
-    "format-muted": "  Muted",
+    "format-muted": "  Muted",
     "format-icons": {
-      "headphone": "",
-      "headset": "",
-      "default": ["", "", ""]
+      "headphone": "",
+      "headset": "",
+      "default": ["", "", ""]
     },
     "on-click": "omarchy-launch-audio",
     "on-click-right": "pamixer -t"

@@ -545,7 +545,7 @@ cursor = "{cursor}"
 text   = "#FFFFFF"
 
 [colors.selection]
-background = "{with_alpha(accent,'66')}"
+background = "{accent}"
 foreground = "{fg}"
 
 [colors.search.matches]

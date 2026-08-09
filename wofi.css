@@ -1,9 +1,9 @@
-/* DANDADAN Wofi — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
+/* DANDADAN Wofi — Wallpaper 41: Thunder God Battle Scarlet */
 @define-color bg     #14161E;
 @define-color fg     #F0F4FC;
-@define-color accent #08F503;
-@define-color hover  #08F50322;
-@define-color border #08F50366;
+@define-color accent #CB1F2E;
+@define-color hover  #CB1F2E22;
+@define-color border #CB1F2E66;
 
 window {
   background-color: alpha(@bg, 0.95);
@@ -22,7 +22,7 @@ window {
   font-size: 14px;
 }
 
-#input:focus { border-color: #08F503; }
+#input:focus { border-color: #CB1F2E; }
 
 #inner-box {
   background-color: transparent;
@@ -44,16 +44,16 @@ window {
 
 #entry:selected {
   background-color: @hover;
-  color: #08F503;
-  box-shadow: inset 0 0 0 1px #08F50355;
+  color: #CB1F2E;
+  box-shadow: inset 0 0 0 1px #CB1F2E55;
 }
 
 #text { color: @fg; }
-#text:selected { color: #08F503; font-weight: bold; }
+#text:selected { color: #CB1F2E; font-weight: bold; }
 
 scrollbar { background-color: transparent; }
 scrollbar slider {
-  background-color: #08F50344;
+  background-color: #CB1F2E44;
   border-radius: 6px;
 }
-scrollbar slider:hover { background-color: #08F50377; }
+scrollbar slider:hover { background-color: #CB1F2E77; }

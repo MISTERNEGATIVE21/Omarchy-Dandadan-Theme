@@ -1,16 +1,16 @@
-// DANDADAN Zellij Theme — Wallpaper 01: Okarun & Turbo Granny Golden Spark
+// DANDADAN Zellij Theme — Wallpaper 41: Thunder God Battle Scarlet
 themes {
     dandadan {
         fg "#F0F4FC"
         bg "#14161E"
         black "#14161E"
-        red "#08F503"
-        green "#EA0B08"
-        yellow "#02F576"
-        blue "#0208F5"
-        magenta "#08F503"
-        cyan "#F50208"
+        red "#CB1F2E"
+        green "#D4A823"
+        yellow "#CB651F"
+        blue "#2ECB1F"
+        magenta "#CB1F2E"
+        cyan "#1F2DCB"
         white "#F0F4FC"
-        orange "#80F502"
+        orange "#CB1F83"
     }
 }

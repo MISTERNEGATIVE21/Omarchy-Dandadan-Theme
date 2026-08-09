@@ -1,12 +1,16 @@
-/* DANDADAN Walker — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
-@define-color selected-text #08F503;
+/* DANDADAN Walker — Wallpaper 41: Thunder God Battle Scarlet */
+@define-color selected-text #CB1F2E;
 @define-color text          #F0F4FC;
 @define-color base          #14161E;
-@define-color border        #08F503;
+@define-color border        #CB1F2E;
 @define-color foreground    #F0F4FC;
 @define-color background    #14161E;
-@define-color hover         #EF02F5;
-@define-color selected-box  #08F503;
+@define-color hover         #1FCBBB;
+@define-color selected-box  #CB1F2E;
+
+* {
+  font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', monospace;
+}
 
 window { background: transparent; }
 

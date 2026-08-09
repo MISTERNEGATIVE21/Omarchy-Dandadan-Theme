@@ -1,7 +1,7 @@
-# DANDADAN Warp Theme — Wallpaper 01: Okarun & Turbo Granny Golden Spark
+# DANDADAN Warp Theme — Wallpaper 41: Thunder God Battle Scarlet
 name: Dandadan
-accent: "#08F503"
-cursor: "#08F503"
+accent: "#CB1F2E"
+cursor: "#CB1F2E"
 background: "#14161E"
 foreground: "#F0F4FC"
 details: darker
@@ -9,19 +9,19 @@ details: darker
 terminal_colors:
   normal:
     black:   "#14161E"
-    red:     "#08F503"
-    green:   "#EA0B08"
-    yellow:  "#02F576"
-    blue:    "#0208F5"
-    magenta: "#08F503"
-    cyan:    "#F50208"
+    red:     "#CB1F2E"
+    green:   "#D4A823"
+    yellow:  "#CB651F"
+    blue:    "#2ECB1F"
+    magenta: "#CB1F2E"
+    cyan:    "#1F2DCB"
     white:   "#F0F4FC"
   bright:
     black:   "#616367"
-    red:     "#4EF24A"
-    green:   "#F2504E"
-    yellow:  "#4AF29A"
-    blue:    "#4A4EF2"
-    magenta: "#4EF24A"
-    cyan:    "#F24A4E"
+    red:     "#F2626F"
+    green:   "#F2CF64"
+    yellow:  "#F29D62"
+    blue:    "#6FF262"
+    magenta: "#F2626F"
+    cyan:    "#626EF2"
     white:   "#FFFFFF"
