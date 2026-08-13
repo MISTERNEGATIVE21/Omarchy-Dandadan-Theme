@@ -1,0 +1,136 @@
+# DANDADAN Omarchy 4.0 Quickshell Surface Styling
+# Supernatural anime aesthetic: dark translucent glass, vivid cursed neon glow
+
+[bar]
+background       = "#14161E"
+background-alpha = 0.85
+text             = "#F0F4FC"
+active           = "#08F503"
+scale-with-font  = true
+size-horizontal  = 30
+size-vertical    = 32
+
+[hyprland]
+active-border            = "#08F503 #EA0B08 45deg"
+active-border-foreground = "#08F503"
+
+[controls]
+normal-color        = "#F0F4FC"
+normal-fill-alpha   = 0.05
+normal-border       = "#08F503"
+normal-border-width = 1
+normal-border-alpha = 0.25
+
+hover-cursor-color        = "#FFFFFF"
+hover-cursor-fill-alpha   = 0.12
+hover-cursor-border       = "#08F503"
+hover-cursor-border-width = 1
+hover-cursor-border-alpha = 0.50
+
+focus-color        = "#FFFFFF"
+focus-fill-alpha   = 0.12
+focus-border       = "#08F503"
+focus-border-width = 1
+focus-border-alpha = 0.50
+
+selected-color        = "#FFFFFF"
+selected-fill-alpha   = 0.22
+selected-border       = "#08F503"
+selected-border-width = 1
+selected-border-alpha = 0.80
+
+pressed-fill-alpha   = 0.28
+selection-fill-alpha = 0.35
+
+[spacing]
+scale           = 1.0
+scale-with-font = true
+
+[font]
+base-size = 12
+
+[popups]
+background       = "#14161E"
+background-alpha = 0.94
+text             = "#F0F4FC"
+border           = "#08F503"
+border-alpha     = 0.80
+border-width     = 1
+
+[tooltip]
+background       = "#14161E"
+background-alpha = 0.96
+text             = "#F0F4FC"
+border           = "#08F503"
+border-alpha     = 0.70
+
+[notifications]
+background       = "#14161E"
+background-alpha = 0.95
+text             = "#F0F4FC"
+border           = "#08F503"
+border-alpha     = 0.85
+border-width     = 1
+countdown        = "#08F503"
+
+[launcher]
+background                = "#14161E"
+background-alpha          = 0.94
+text                      = "#F0F4FC"
+border                    = "#08F503"
+border-alpha              = 0.75
+scrim                     = "#14161E"
+scrim-alpha               = 0.55
+selected-background       = "#08F503"
+selected-background-alpha = 0.15
+selected-text             = "#08F503"
+selected-border           = "#08F503"
+selected-border-alpha     = 0.50
+
+[menu]
+background                = "#14161E"
+background-alpha          = 0.95
+text                      = "#F0F4FC"
+border                    = "#08F503"
+border-alpha              = 0.75
+scrim                     = "#14161E"
+scrim-alpha               = 0.55
+selected-background       = "#08F503"
+selected-background-alpha = 0.15
+selected-text             = "#08F503"
+selected-border           = "#08F503"
+selected-border-alpha     = 0.50
+
+[polkit]
+background       = "#14161E"
+background-alpha = 0.96
+text             = "#F0F4FC"
+text-error       = "#EA0B08"
+border           = "#08F503"
+border-error     = "#EA0B08"
+border-alpha     = 0.90
+scrim            = "#14161E"
+scrim-alpha      = 0.60
+accent           = "#08F503"
+
+[lock]
+background       = "#14161E"
+background-alpha = 0.85
+text             = "#F0F4FC"
+placeholder      = "#616367"
+text-error       = "#EA0B08"
+border           = "#08F503"
+border-active    = "#08F503"
+border-error     = "#EA0B08"
+border-alpha     = 0.90
+selection        = "#08F503"
+selection-alpha  = 0.45
+
+[image-picker]
+scrim                   = "#14161E"
+scrim-alpha             = 0.55
+text                    = "#F0F4FC"
+selected-border         = "#08F503"
+selected-border-alpha   = 1.0
+unselected-border       = "#F0F4FC"
+unselected-border-alpha = 0.25
