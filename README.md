@@ -1,7 +1,7 @@
 # 🎌 Dandadan – Omarchy Theme
 
 > **Dynamic anime-inspired dark theme for [Omarchy](https://github.com/basecamp/omarchy)**  
-> 52 wallpapers · 21 app targets · per-image accent + complementary color theming
+> 52 wallpapers · 22 app targets · per-image accent + complementary color theming · Omarchy 4.0 Quickshell & Waybar native support
 
 ![Dandadan Theme Preview](./preview.png)
 
@@ -10,21 +10,23 @@
 ## ✨ Features
 
 - **52 unique wallpapers** from the Dandadan anime series (001–058, zero-padded)
-- **Dynamic per-image accent system** — PIL extracts the dominant vivid color from each wallpaper; a complementary/triadic palette is computed and applied live to every app
-- **Apple-style glassmorphic Waybar** — 3-island pill layout:
+- **Omarchy 4.0 Quattro Quickshell Native Support** — full color scheme & layout surface tokens via `shell.toml`, `shell.lock.toml`, `shell.json`, and `hyprland.lua`
+- **Smart Shell Auto-Detection** — seamless shell environment detection (`Quickshell` priority #1, `Waybar` fallback #2) with dual-shell compatibility
+- **Dynamic per-image accent system** — PIL extracts the dominant vivid color from each wallpaper; a complementary/triadic palette is computed and applied live to every app & surface token
+- **Apple-style glassmorphic Waybar** — 3-island pill layout for legacy/fallback Waybar support:
   - **Left** — Omarchy logo · workspaces · active window title
   - **Center** — media player (MPRIS) · idle · DND · screen recording · update indicator
   - **Right** — clock · weather · CPU · RAM · audio · battery · network · Bluetooth · tray
-- **21 fully themed targets** updated automatically on every wallpaper switch
+- **22 fully themed targets** updated automatically on every wallpaper switch with live IPC reload signals
 
 ---
 
 ## 🎯 Themed Applications
 
-| Category | Apps |
-|----------|------|
-| **Shell / WM** | Hyprland borders (gradient) · Hyprlock lockscreen |
-| **Bar** | Waybar (full per-image GTK CSS) · SwayOSD |
+| Category | Apps & Configs |
+|----------|----------------|
+| **Shell / WM (Omarchy 4.0)** | Quickshell (`shell.toml`, `shell.lock.toml`, `shell.json`) · Hyprland Lua (`hyprland.lua`) · Hyprland borders (gradient) · Hyprlock lockscreen |
+| **Bar / OS Surface** | Quickshell Surface Engine · Waybar (3-island glassmorphic GTK CSS) · SwayOSD |
 | **Terminals** | Kitty · Alacritty · Ghostty · Foot · Warp · Zellij |
 | **Editors** | VS Code · Codium · Antigravity IDE · Zed · Neovim |
 | **Browsers** | Firefox / Zen Browser · Chromium / Brave / Vivaldi |
@@ -33,6 +35,35 @@
 | **System** | Btop · GTK 3 & 4 |
 | **Communication** | Telegram Desktop · Vencord / Vesktop (Discord) |
 | **Icons** | Yaru icon theme (hue-matched to accent) |
+
+---
+
+## 🐚 Omarchy 4.0 Quickshell & Shell Auto-Detection
+
+Omarchy 4.0 Quattro introduces native Quickshell UI support while preserving full fallback compatibility for Waybar.
+
+### Surface Tokens & Configuration Files
+
+- **`shell.toml`**: Primary surface styling tokens (`[bar]`, `[controls]`, `[popups]`, `[tooltip]`, `[notifications]`, `[launcher]`, `[menu]`, `[polkit]`, `[lock]`, `[image-picker]`, `[hyprland]`)
+- **`shell.lock.toml`**: Immutable layout parameters, widget settings, and locked UI variables
+- **`shell.json`**: Expanded JSON representation for Quickshell engine consumption
+- **`hyprland.lua`**: Native Lua-based Hyprland configuration overrides for Omarchy 4.0
+
+### Smart Shell Auto-Detection Engine (`scripts/detect_shell.sh`)
+
+The theme automatically detects the active shell environment using `scripts/detect_shell.sh`:
+1. **Priority #1: Quickshell** — Checked via running process (`quickshell`, `omarchy-shell`) or Omarchy 4.0+ installation state (`/usr/share/omarchy/shell`, `~/.local/state/omarchy`)
+2. **Priority #2: Waybar** — Checked via running process or binary availability
+
+You can query the current shell mode directly:
+
+```bash
+bash scripts/detect_shell.sh
+# Outputs: quickshell | waybar | dual | none
+
+bash scripts/detect_shell.sh --primary
+# Outputs primary active shell: quickshell
+```
 
 ---
 
@@ -69,6 +100,11 @@ git clone https://github.com/misternegative21/omarchy-Dandadan-Theme \
 bash ~/.config/omarchy/themes/dandadan-theme/install.sh
 ```
 
+During installation, `install.sh`:
+- Runs shell auto-detection (`scripts/detect_shell.sh`)
+- Symlinks `shell.toml`, `shell.lock.toml`, `shell.json`, `hyprland.lua`, and Waybar configs into `~/.config/omarchy/current/theme/`
+- Installs automated `theme-set` and `bg-set` hooks inside `~/.config/omarchy/current/theme/hooks/`
+
 ---
 
 ### Update
@@ -94,14 +130,20 @@ bash ~/.config/omarchy/themes/dandadan-theme/install.sh --uninstall
 
 ---
 
-## 🎨 Dynamic Wallpaper Accents
+## 🎨 Dynamic Wallpaper Accents & Live IPC
 
-Switching wallpapers automatically updates all 21 app targets:
+Switching wallpapers automatically updates all 22 app targets and triggers live IPC reloads:
 
 ```bash
-omarchy theme bg next        # → accent colors update everywhere instantly
+omarchy theme bg next        # → accent colors update everywhere instantly via bg-set hook
 omarchy theme bg prev        # ← go back
 ```
+
+Live IPC reloading:
+- **Quickshell**: Sends live signal via `quickshell --reload` or `qsctl reload`
+- **Waybar**: Sends `SIGUSR2` to active `waybar` process
+- **Hyprland**: Executes `hyprctl reload`
+- **Mako**: Triggers `makoctl reload`
 
 To manually regenerate colors for the current wallpaper:
 
@@ -183,19 +225,30 @@ dandadan-theme/
 ├── backgrounds/               # 52 wallpapers (001–058.webp, zero-padded)
 ├── wallpaper_highlights.json  # Per-wallpaper accent + highlight palette (55 entries)
 ├── extract_wallpaper_colors.py  # Re-extracts colors from wallpaper images via PIL
-├── update_wallpaper_colors.py   # Applies dynamic accents to all 21 app targets
-├── install.sh                 # One-command installer
+├── update_wallpaper_colors.py   # Applies dynamic accents to all 22 app targets
+├── install.sh                 # One-command installer with Quickshell & hook setup
+│
+├── shell.toml                 # Omarchy 4.0 Quickshell surface styling tokens
+├── shell.lock.toml            # Omarchy 4.0 Quickshell immutable layout locks
+├── shell.json                 # Quickshell JSON color token configuration
+├── hyprland.lua               # Hyprland Lua configuration overrides (Omarchy 4.0)
 │
 ├── waybar_config.jsonc        # Waybar 3-island layout config
 ├── waybar.css                 # Waybar glassmorphic CSS (per-image regenerated)
 ├── style.css                  # Waybar style entry point (@import waybar.css)
-├── wallpapers.css             # CSS color variable bridge for waybar
+├── wallpapers.css             # CSS color variable bridge for waybar & quickshell
 │
 ├── config.jsonc               # Waybar config (omarchy canonical)
 ├── colors.toml                # Omarchy terminal color palette
 ├── hyprland.conf              # Hyprland active/inactive border colors
-├── hyprland.lua               # Hyprland Lua config overrides
 ├── hyprlock.conf              # Hyprlock lockscreen palette
+│
+├── scripts/
+│   └── detect_shell.sh        # Smart shell auto-detection engine (Quickshell / Waybar)
+│
+├── hooks/                     # Installer hook templates
+│   ├── bg-set                 # Wallpaper change hook (triggers update_wallpaper_colors.py)
+│   └── theme-set              # Theme activation hook
 │
 ├── alacritty.toml             # Alacritty terminal theme
 ├── kitty.conf                 # Kitty terminal theme
@@ -235,7 +288,7 @@ dandadan-theme/
 ## ⚙️ How the Dynamic Color Engine Works
 
 ```
-wallpaper change
+wallpaper change  (omarchy theme bg next / prev)
       │
       ▼
  omarchy bg-set hook
@@ -246,12 +299,17 @@ wallpaper change
       ├── reads wallpaper_highlights.json  (accent, highlight, background, foreground)
       ├── computes: complement (180°) · triadic (±120°) · analogous (±30°) · darken/lighten
       │
-      ├── writes per-image configs for all 21 targets
+      ├── writes per-image configs for all 22 targets:
+      │     Quickshell (shell.toml, shell.json) · Hyprland Lua (hyprland.lua)
       │     Waybar CSS · Mako · SwayOSD · Hyprlock · Hyprland · Alacritty
       │     Kitty · Foot · Ghostty · Btop · VS Code · GTK · Zed · Walker
       │     Wofi · Warp · Zellij · Vencord · Chromium · Firefox · Neovim
       │
-      └── live-reloads: hyprctl · waybar SIGUSR2 · makoctl
+      └── live IPC reloads based on detect_shell.sh:
+            Quickshell (quickshell --reload / qsctl reload)
+            Waybar (killall -SIGUSR2 waybar)
+            Hyprland (hyprctl reload)
+            Mako (makoctl reload)
 ```
 
 To re-extract accent palettes from wallpaper images (uses PIL dominant color analysis):
