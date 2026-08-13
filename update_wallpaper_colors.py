@@ -11,15 +11,31 @@ Targets: Neovim · GTK · Zed · VS Code · Alacritty · Btop · Chromium
          SwayOSD · Vencord · Walker · Warp · Waybar · Wofi · Zellij
 """
 
-import json, os, sys, subprocess, colorsys, math
+import json, os, sys, subprocess, colorsys, math, base64
 
 # ─── Paths ─────────────────────────────────────────────────────────────────────
 HOME      = os.path.expanduser("~")
 THEME_DIR = f"{HOME}/.config/omarchy/themes/dandadan-theme"
-CURR_DIR  = f"{HOME}/.config/omarchy/current/theme"
+
+# Omarchy 4.0 state directories with Omarchy 3.x legacy fallback
+STATE_CURR_DIRS = [
+    f"{HOME}/.local/state/omarchy/current/theme",
+    f"{HOME}/.config/omarchy/current/theme"
+]
+CURR_DIR  = STATE_CURR_DIRS[0]
 
 manifest_path   = f"{THEME_DIR}/wallpaper_highlights.json"
-current_bg_link = f"{HOME}/.config/omarchy/current/background"
+current_bg_link = None
+for bg_path in [
+    f"{HOME}/.local/state/omarchy/current/background",
+    f"{HOME}/.config/omarchy/current/background"
+]:
+    if os.path.islink(bg_path) or os.path.exists(bg_path):
+        current_bg_link = bg_path
+        break
+
+if current_bg_link is None:
+    current_bg_link = f"{HOME}/.config/omarchy/current/background"
 
 if not os.path.exists(manifest_path):
     sys.exit(0)
@@ -124,14 +140,18 @@ print(f"  accent={accent}  cursor={cursor}  highlight={highlight}")
 print(f"  complement={accent_comp}  triadic=({tri1},{tri2})")
 
 def write(path: str, content: str):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w") as f:
-        f.write(content)
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as f:
+            f.write(content)
+    except Exception:
+        pass
 
 def write_both(filename: str, content: str):
-    """Write to both theme dir and current/theme dir."""
+    """Write to both theme dir and all active current/theme dirs."""
     write(f"{THEME_DIR}/{filename}", content)
-    write(f"{CURR_DIR}/{filename}", content)
+    for curr in STATE_CURR_DIRS:
+        write(f"{curr}/{filename}", content)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -499,8 +519,11 @@ hyprland_conf = f"""general {{
 write_both("hyprland.conf", hyprland_conf)
 
 # hyprland.lua — Hyprland Lua config (new parser)
-hyprland_lua = f"""local active_border_color = "rgb({accent.lstrip('#')})"
+ar, ag, ab = h2r(accent)
+hyprland_lua = f"""local active_border_color = "rgb({accent.lstrip('#')}) rgb({cursor.lstrip('#')}) 45deg"
 local inactive_border_color = "rgba(61636780)"
+local active_shadow_color = "rgba({ar},{ag},{ab},0.4)"
+local inactive_shadow_color = "rgba(00000044)"
 
 hl.config({{
   general = {{
@@ -513,6 +536,15 @@ hl.config({{
     col = {{
       border_active = active_border_color,
       border_inactive = inactive_border_color,
+    }},
+  }},
+  decoration = {{
+    shadow = {{
+      enabled = true,
+      range = 10,
+      render_power = 4,
+      color = active_shadow_color,
+      color_inactive = inactive_shadow_color,
     }},
   }},
 }})
@@ -1452,8 +1484,9 @@ for vesktop_path in [
 # 19 · CHROMIUM / Brave / Vivaldi / Chrome
 # ══════════════════════════════════════════════════════════════════════════════
 chrom_rgb = hex_to_rgb_str(cursor)
-for p in [f"{THEME_DIR}/chromium.theme", f"{CURR_DIR}/chromium.theme"]:
-    write(p, f"{chrom_rgb}\n")
+write(f"{THEME_DIR}/chromium.theme", f"{chrom_rgb}\n")
+for curr_dir in STATE_CURR_DIRS:
+    write(f"{curr_dir}/chromium.theme", f"{chrom_rgb}\n")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1609,15 +1642,196 @@ write_both("icons.theme", f"Yaru-{icon_color}\n")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# Live triggers
+# 25 · QUICKSHELL shell.toml & shell.lock.toml
 # ══════════════════════════════════════════════════════════════════════════════
-subprocess.run(["omarchy-theme-set-browser"], capture_output=True)
-subprocess.run(["pkill", "-SIGUSR2", "waybar"], capture_output=True)
+shell_toml = f"""# DANDADAN Omarchy 4.0 Quickshell Surface Styling — Wallpaper {active_idx}: {vibe}
 
-# Reload mako
-subprocess.run(["makoctl", "reload"], capture_output=True)
+[bar]
+background       = "{bg}"
+background-alpha = 0.85
+text             = "{fg}"
+active           = "{accent}"
+scale-with-font  = true
+size-horizontal  = 30
+size-vertical    = 32
 
-print(f"\n✓ All 21 targets updated for wallpaper {active_idx}: {vibe}")
+[hyprland]
+active-border            = "{accent} {cursor} 45deg"
+active-border-foreground = "{accent}"
+
+[controls]
+normal-color        = "{fg}"
+normal-fill-alpha   = 0.05
+normal-border       = "{accent}"
+normal-border-width = 1
+normal-border-alpha = 0.25
+
+hover-cursor-color        = "#FFFFFF"
+hover-cursor-fill-alpha   = 0.12
+hover-cursor-border       = "{cursor}"
+hover-cursor-border-width = 1
+hover-cursor-border-alpha = 0.50
+
+focus-color        = "#FFFFFF"
+focus-fill-alpha   = 0.12
+focus-border       = "{accent}"
+focus-border-width = 1
+focus-border-alpha = 0.50
+
+selected-color        = "#FFFFFF"
+selected-fill-alpha   = 0.22
+selected-border       = "{accent}"
+selected-border-width = 1
+selected-border-alpha = 0.80
+
+pressed-fill-alpha   = 0.28
+selection-fill-alpha = 0.35
+
+[spacing]
+scale           = 1.0
+scale-with-font = true
+
+[font]
+base-size = 12
+
+[popups]
+background       = "{bg}"
+background-alpha = 0.94
+text             = "{fg}"
+border           = "{accent}"
+border-alpha     = 0.80
+border-width     = 1
+
+[tooltip]
+background       = "{bg}"
+background-alpha = 0.96
+text             = "{fg}"
+border           = "{accent}"
+border-alpha     = 0.70
+
+[notifications]
+background       = "{bg}"
+background-alpha = 0.95
+text             = "{fg}"
+border           = "{accent}"
+border-alpha     = 0.85
+border-width     = 1
+countdown        = "{accent}"
+
+[launcher]
+background                = "{bg}"
+background-alpha          = 0.94
+text                      = "{fg}"
+border                    = "{accent}"
+border-alpha              = 0.75
+scrim                     = "{bg}"
+scrim-alpha               = 0.55
+selected-background       = "{accent}"
+selected-background-alpha = 0.15
+selected-text             = "{accent}"
+selected-border           = "{accent}"
+selected-border-alpha     = 0.50
+
+[menu]
+background                = "{bg}"
+background-alpha          = 0.95
+text                      = "{fg}"
+border                    = "{accent}"
+border-alpha              = 0.75
+scrim                     = "{bg}"
+scrim-alpha               = 0.55
+selected-background       = "{accent}"
+selected-background-alpha = 0.15
+selected-text             = "{accent}"
+selected-border           = "{accent}"
+selected-border-alpha     = 0.50
+
+[polkit]
+background       = "{bg}"
+background-alpha = 0.96
+text             = "{fg}"
+text-error       = "{cursor}"
+border           = "{accent}"
+border-error     = "{cursor}"
+border-alpha     = 0.90
+scrim            = "{bg}"
+scrim-alpha      = 0.60
+accent           = "{accent}"
+
+[lock]
+background       = "{bg}"
+background-alpha = 0.85
+text             = "{fg}"
+placeholder      = "#616367"
+text-error       = "{cursor}"
+border           = "{accent}"
+border-active    = "{accent}"
+border-error     = "{cursor}"
+border-alpha     = 0.90
+selection        = "{accent}"
+selection-alpha  = 0.45
+
+[image-picker]
+scrim                   = "{bg}"
+scrim-alpha             = 0.55
+text                    = "{fg}"
+selected-border         = "{accent}"
+selected-border-alpha   = 1.0
+unselected-border       = "{fg}"
+unselected-border-alpha = 0.25
+"""
+write_both("shell.toml", shell_toml)
+
+shell_lock_toml = f"""text             = "{fg}"
+placeholder      = "#616367"
+text-error       = "{cursor}"
+border           = "{accent}"
+border-active    = "{accent}"
+border-error     = "{cursor}"
+"""
+write_both("shell.lock.toml", shell_lock_toml)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Live triggers & IPC
+# ══════════════════════════════════════════════════════════════════════════════
+def is_process_running(proc_name: str) -> bool:
+    try:
+        res = subprocess.run(["pgrep", "-x", proc_name], capture_output=True)
+        if res.returncode == 0:
+            return True
+        res2 = subprocess.run(["pgrep", "-f", proc_name], capture_output=True)
+        return res2.returncode == 0
+    except Exception:
+        return False
+
+# Quickshell / omarchy-shell live IPC update
+if is_process_running("quickshell") or is_process_running("omarchy-shell"):
+    try:
+        colors_b64 = base64.b64encode(colors_toml.encode("utf-8")).decode("utf-8")
+        shell_b64  = base64.b64encode(shell_toml.encode("utf-8")).decode("utf-8")
+        subprocess.run(["omarchy-shell", "-q", "shell", "applyTheme", colors_b64, shell_b64], capture_output=True)
+    except Exception:
+        pass
+
+# Waybar reload signal if waybar is running
+if is_process_running("waybar"):
+    try:
+        subprocess.run(["pkill", "-SIGUSR2", "waybar"], capture_output=True)
+    except Exception:
+        pass
+
+try:
+    subprocess.run(["omarchy-theme-set-browser"], capture_output=True)
+except Exception:
+    pass
+
+try:
+    subprocess.run(["makoctl", "reload"], capture_output=True)
+except Exception:
+    pass
+
+print(f"\n✓ Dynamic color engine updated for wallpaper {active_idx}: {vibe}")
 print(f"  Wallpaper pool: 52 images (001-058 with gaps)")
 print(f"  accent={accent}  comp={accent_comp}  cursor={cursor}")
 print(f"  highlight={highlight}  tri1={tri1}  tri2={tri2}")
