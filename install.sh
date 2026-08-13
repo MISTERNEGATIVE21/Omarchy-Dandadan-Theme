@@ -10,7 +10,7 @@ set -e
 THEME_NAME="dandadan-theme"
 REPO_URL="https://github.com/misternegative21/omarchy-Dandadan-Theme"
 THEME_DIR="$HOME/.config/omarchy/themes/$THEME_NAME"
-HOOKS_DIR="$HOME/.config/omarchy/hooks"
+HOOKS_DIR="${HOOKS_DIR:-$HOME/.config/omarchy/hooks}"
 WAYBAR_DIR="$HOME/.config/waybar"
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; BOLD='\033[1m'; NC='\033[0m'
@@ -39,7 +39,7 @@ step()  { echo -e "\n${BOLD}${CYAN}━━ $* ${NC}"; }
 
 check_deps() {
   step "Checking dependencies"
-  for dep in git python3 waybar; do
+  for dep in git python3; do
     if command -v "$dep" &>/dev/null; then
       log "$dep ✓"
     else
@@ -47,6 +47,17 @@ check_deps() {
       exit 1
     fi
   done
+
+  # Check Quickshell (Omarchy 4.0) or Waybar
+  if command -v quickshell &>/dev/null || command -v omarchy-shell &>/dev/null; then
+    log "Quickshell ✓"
+  elif command -v waybar &>/dev/null; then
+    log "Waybar ✓"
+  else
+    err "Neither Quickshell (quickshell/omarchy-shell) nor Waybar (waybar) found – please install one of them."
+    exit 1
+  fi
+
   if ! python3 -c "from PIL import Image" &>/dev/null; then
     warn "Pillow not found. Installing..."
     pip3 install Pillow -q || true
@@ -55,7 +66,7 @@ check_deps() {
 }
 
 backup_waybar() {
-  step "Backing up Waybar defaults"
+  step "Backing up shell defaults"
   if [[ -f "$WAYBAR_DIR/config.jsonc" && ! -f "$WAYBAR_DIR/config.jsonc.default" ]]; then
     cp -f "$WAYBAR_DIR/config.jsonc" "$WAYBAR_DIR/config.jsonc.default"
     log "Backed up config.jsonc.default"
@@ -63,6 +74,10 @@ backup_waybar() {
   if [[ -f "$WAYBAR_DIR/style.css" && ! -f "$WAYBAR_DIR/style.css.default" ]]; then
     cp -f "$WAYBAR_DIR/style.css" "$WAYBAR_DIR/style.css.default"
     log "Backed up style.css.default"
+  fi
+  if [[ -f "$HOME/.config/omarchy/shell.json" && ! -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]]; then
+    cp -f "$HOME/.config/omarchy/shell.json" "$HOME/.config/omarchy/shell.json.omarchy-default"
+    log "Backed up shell.json.omarchy-default"
   fi
 }
 
@@ -99,42 +114,99 @@ THEME="$1"
 
 if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
   DANDADAN_DIR="$HOME/.config/omarchy/themes/dandadan-theme"
+  DETECT_SCRIPT="$DANDADAN_DIR/scripts/detect_shell.sh"
 
-  # Backup system default waybar config if not already backed up
-  if [[ ! -f "$HOME/.config/waybar/config.jsonc.omarchy-default" ]]; then
-    if [[ -f "$HOME/.config/waybar/config.jsonc" ]]; then
-      cp -f "$HOME/.config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc.omarchy-default"
+  SHELL_MODE="waybar"
+  if [[ -x "$DETECT_SCRIPT" ]]; then
+    SHELL_MODE=$("$DETECT_SCRIPT" --primary 2>/dev/null || echo "waybar")
+  elif command -v quickshell &>/dev/null || command -v omarchy-shell &>/dev/null; then
+    SHELL_MODE="quickshell"
+  fi
+
+  if [[ "$SHELL_MODE" == "quickshell" || "$SHELL_MODE" == "dual" ]]; then
+    # Backup default Quickshell config if not already backed up
+    if [[ ! -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]]; then
+      if [[ -f "$HOME/.config/omarchy/shell.json" ]]; then
+        cp -f "$HOME/.config/omarchy/shell.json" "$HOME/.config/omarchy/shell.json.omarchy-default"
+      fi
     fi
+
+    # Deploy Dandadan shell layout
+    if [[ -f "$DANDADAN_DIR/shell.json" ]]; then
+      cp -f "$DANDADAN_DIR/shell.json" "$HOME/.config/omarchy/shell.json"
+    fi
+
+    (omarchy-shell-reload >/dev/null 2>&1 || quickshell --reload >/dev/null 2>&1 || pkill -SIGUSR1 quickshell >/dev/null 2>&1) &
   fi
 
-  # Deploy Dandadan waybar layout
-  if [[ -f "$DANDADAN_DIR/waybar_config.jsonc" ]]; then
-    cp -f "$DANDADAN_DIR/waybar_config.jsonc" "$HOME/.config/waybar/config.jsonc"
+  if [[ "$SHELL_MODE" == "waybar" || "$SHELL_MODE" == "dual" ]]; then
+    # Backup system default waybar config if not already backed up
+    if [[ ! -f "$HOME/.config/waybar/config.jsonc.omarchy-default" ]]; then
+      if [[ -f "$HOME/.config/waybar/config.jsonc" ]]; then
+        cp -f "$HOME/.config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc.omarchy-default"
+      fi
+    fi
+
+    # Deploy Dandadan waybar layout
+    if [[ -f "$DANDADAN_DIR/waybar_config.jsonc" ]]; then
+      cp -f "$DANDADAN_DIR/waybar_config.jsonc" "$HOME/.config/waybar/config.jsonc"
+    fi
+
+    (omarchy-restart-waybar >/dev/null 2>&1) &
   fi
 
-  (python3 "$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py" >/dev/null 2>&1) &
+  SCRIPT_PATH="$HOME/.local/state/omarchy/current/theme/update_wallpaper_colors.py"
+  if [[ ! -f "$SCRIPT_PATH" ]]; then
+    SCRIPT_PATH="$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py"
+  fi
+  if [[ ! -f "$SCRIPT_PATH" ]]; then
+    SCRIPT_PATH="$DANDADAN_DIR/update_wallpaper_colors.py"
+  fi
+
+  if [[ -f "$SCRIPT_PATH" ]]; then
+    (python3 "$SCRIPT_PATH" >/dev/null 2>&1) &
+  fi
 else
-  # Restore standard Omarchy waybar config when switching away from dandadan
+  # Restore standard Omarchy shell/waybar config when switching away from dandadan
+  if [[ -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]]; then
+    cp -f "$HOME/.config/omarchy/shell.json.omarchy-default" "$HOME/.config/omarchy/shell.json"
+  fi
+
   if [[ -f "$HOME/.config/waybar/config.jsonc.omarchy-default" ]]; then
     cp -f "$HOME/.config/waybar/config.jsonc.omarchy-default" "$HOME/.config/waybar/config.jsonc"
   elif [[ -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" ]]; then
     cp -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
   fi
-fi
 
-(omarchy-restart-waybar >/dev/null 2>&1) &
+  (omarchy-restart-waybar >/dev/null 2>&1; omarchy-shell-reload >/dev/null 2>&1) &
+fi
 HOOK
   chmod +x "$THEME_SET_HOOK"
-  log "theme-set hook installed (isolated Waybar layout for Dandadan)"
+  log "theme-set hook installed (Quickshell & Waybar support for Dandadan)"
 
   # ── bg-set hook (fires on every wallpaper change) ─────────────────────────
   BG_SET_HOOK="$HOOKS_DIR/bg-set"
   cat > "$BG_SET_HOOK" << 'HOOK'
 #!/bin/bash
-THEME=$(cat "$HOME/.config/omarchy/current/theme.name" 2>/dev/null)
+THEME=""
+if [[ -f "$HOME/.local/state/omarchy/current/theme.name" ]]; then
+  THEME=$(cat "$HOME/.local/state/omarchy/current/theme.name" 2>/dev/null)
+elif [[ -f "$HOME/.config/omarchy/current/theme.name" ]]; then
+  THEME=$(cat "$HOME/.config/omarchy/current/theme.name" 2>/dev/null)
+fi
 
 if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
-  (python3 "$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py" >/dev/null 2>&1 && pkill -SIGUSR2 waybar >/dev/null 2>&1) &
+  SCRIPT_PATH="$HOME/.local/state/omarchy/current/theme/update_wallpaper_colors.py"
+  if [[ ! -f "$SCRIPT_PATH" ]]; then
+    SCRIPT_PATH="$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py"
+  fi
+  if [[ ! -f "$SCRIPT_PATH" ]]; then
+    SCRIPT_PATH="$HOME/.config/omarchy/themes/dandadan-theme/update_wallpaper_colors.py"
+  fi
+
+  if [[ -f "$SCRIPT_PATH" ]]; then
+    (python3 "$SCRIPT_PATH" >/dev/null 2>&1 && pkill -SIGUSR2 waybar >/dev/null 2>&1) &
+  fi
 fi
 HOOK
   chmod +x "$BG_SET_HOOK"
@@ -258,6 +330,9 @@ banner
 
 case "${1:-}" in
   --uninstall) uninstall_theme ;;
+  --hooks-only)
+    install_hooks
+    ;;
   --update)
     check_deps
     install_theme --update
@@ -286,8 +361,9 @@ esac
 
 echo ""
 echo -e "${BOLD}${GREEN}✓ Dandadan theme installed successfully!${NC}"
-echo -e "  GitHub      : $REPO_URL"
-echo -e "  Wallpapers  : ${CYAN}omarchy theme bg next${NC}  ← auto-recolors everything"
-echo -e "  Activate    : ${CYAN}omarchy-theme-set dandadan-theme${NC}"
-echo -e "  Recolor now : ${CYAN}python3 ~/.config/omarchy/current/theme/update_wallpaper_colors.py${NC}"
+echo -e "  GitHub       : $REPO_URL"
+echo -e "  Shell Support: Quickshell (Omarchy 4.0) & Waybar auto-detected"
+echo -e "  Wallpapers   : ${CYAN}omarchy theme bg next${NC}  ← auto-recolors all 21 targets"
+echo -e "  Activate     : ${CYAN}omarchy-theme-set dandadan-theme${NC}"
+echo -e "  Recolor now  : ${CYAN}python3 ~/.config/omarchy/current/theme/update_wallpaper_colors.py${NC}"
 echo ""
