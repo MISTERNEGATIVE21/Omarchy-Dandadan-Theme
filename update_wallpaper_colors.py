@@ -413,7 +413,7 @@ tooltip label {{ color: {fg}; }}
 """
 
 write_both("waybar.css", waybar_css)
-write(f"{HOME}/.config/waybar/wallpapers.css",
+wallpapers_css = (
     f"/* Dandadan Wallpaper {active_idx} - {vibe} */\n"
     f"@define-color background {bg};\n"
     f"@define-color foreground {fg};\n"
@@ -421,18 +421,12 @@ write(f"{HOME}/.config/waybar/wallpapers.css",
     f"@define-color cursor {cursor};\n"
     f"@define-color highlight {highlight};\n"
 )
-# Also update the omarchy current/theme wallpapers.css (the canonical one)
-write(f"{CURR_DIR}/wallpapers.css",
-    f"/* Dandadan Wallpaper {active_idx} - {vibe} */\n"
-    f"@define-color background {bg};\n"
-    f"@define-color foreground {fg};\n"
-    f"@define-color accent {accent};\n"
-    f"@define-color cursor {cursor};\n"
-    f"@define-color highlight {highlight};\n"
-)
+write(f"{HOME}/.config/waybar/wallpapers.css", wallpapers_css)
+write_both("wallpapers.css", wallpapers_css)
+
 # Deploy style.css to waybar
 write(f"{HOME}/.config/waybar/style.css",
-    f'@import "/home/mister/.config/omarchy/current/theme/waybar.css";\n')
+    f'@import "{HOME}/.config/omarchy/current/theme/waybar.css";\n')
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -519,10 +513,9 @@ hyprland_conf = f"""general {{
 write_both("hyprland.conf", hyprland_conf)
 
 # hyprland.lua — Hyprland Lua config (new parser)
-ar, ag, ab = h2r(accent)
 hyprland_lua = f"""local active_border_color = "rgb({accent.lstrip('#')}) rgb({cursor.lstrip('#')}) 45deg"
 local inactive_border_color = "rgba(61636780)"
-local active_shadow_color = "rgba({ar},{ag},{ab},0.4)"
+local active_shadow_color = "rgba({accent.lstrip('#')}66)"
 local inactive_shadow_color = "rgba(00000044)"
 
 hl.config({{
