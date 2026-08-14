@@ -1,4 +1,4 @@
--- DANDADAN Neovim — Wallpaper 41: Thunder God Battle Scarlet
+-- DANDADAN Neovim — Wallpaper 02: Turbo Granny Crimson Curse
 -- Uses sunset-drive as base; overrides accent colors dynamically
 return {
     { "tahayvr/sunset-drive.nvim", lazy = false, priority = 1000 },
@@ -13,22 +13,22 @@ return {
         "LazyVim/LazyVim",
         opts = function(_, opts)
             vim.api.nvim_set_hl(0, "Normal",        { bg = "#14161E",     fg = "#F0F4FC"  })
-            vim.api.nvim_set_hl(0, "Visual",        { bg = "#CB1F2E44" })
-            vim.api.nvim_set_hl(0, "Search",        { bg = "#CB1F2E55", fg = "#FFFFFF" })
+            vim.api.nvim_set_hl(0, "Visual",        { bg = "#69000144" })
+            vim.api.nvim_set_hl(0, "Search",        { bg = "#69000155", fg = "#FFFFFF" })
             vim.api.nvim_set_hl(0, "CursorLine",    { bg = "#1A1C26" })
-            vim.api.nvim_set_hl(0, "StatusLine",    { bg = "#CB1F2E",    fg = "#FFFFFF" })
+            vim.api.nvim_set_hl(0, "StatusLine",    { bg = "#690001",    fg = "#FFFFFF" })
             vim.api.nvim_set_hl(0, "StatusLineNC",  { bg = "#1A1C26",    fg = "#616367" })
-            vim.api.nvim_set_hl(0, "TabLineSel",    { bg = "#CB1F2E",    fg = "#FFFFFF" })
+            vim.api.nvim_set_hl(0, "TabLineSel",    { bg = "#690001",    fg = "#FFFFFF" })
             vim.api.nvim_set_hl(0, "TabLine",       { bg = "#14161E",        fg = "#616367" })
-            vim.api.nvim_set_hl(0, "WinSeparator",  { fg = "#CB1F2E66" })
-            vim.api.nvim_set_hl(0, "FloatBorder",   { fg = "#CB1F2E" })
-            vim.api.nvim_set_hl(0, "DiagnosticError",   { fg = "#CB1F2E"    })
-            vim.api.nvim_set_hl(0, "DiagnosticWarn",    { fg = "#CB651F"      })
-            vim.api.nvim_set_hl(0, "DiagnosticInfo",    { fg = "#1FCBBB" })
-            vim.api.nvim_set_hl(0, "DiagnosticHint",    { fg = "#D4A823" })
-            vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#CB1F2E33", fg = "#F0F4FC" })
-            vim.api.nvim_set_hl(0, "TelescopeBorder",    { fg = "#CB1F2E" })
-            vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#CB1F2E" })
+            vim.api.nvim_set_hl(0, "WinSeparator",  { fg = "#69000166" })
+            vim.api.nvim_set_hl(0, "FloatBorder",   { fg = "#690001" })
+            vim.api.nvim_set_hl(0, "DiagnosticError",   { fg = "#690001"    })
+            vim.api.nvim_set_hl(0, "DiagnosticWarn",    { fg = "#693300"      })
+            vim.api.nvim_set_hl(0, "DiagnosticInfo",    { fg = "#006968" })
+            vim.api.nvim_set_hl(0, "DiagnosticHint",    { fg = "#C05F58" })
+            vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#69000133", fg = "#F0F4FC" })
+            vim.api.nvim_set_hl(0, "TelescopeBorder",    { fg = "#690001" })
+            vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#690001" })
         end,
     },
 }

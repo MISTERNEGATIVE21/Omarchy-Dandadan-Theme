@@ -1,41 +1,40 @@
-# DANDADAN Omarchy 4.0 Quickshell Surface Styling
-# Supernatural anime aesthetic: dark translucent glass, vivid cursed neon glow
+# DANDADAN Omarchy 4.0 Quickshell Surface Styling — Wallpaper 02: Turbo Granny Crimson Curse
 
 [bar]
 background       = "#14161E"
 background-alpha = 0.85
 text             = "#F0F4FC"
-active           = "#08F503"
+active           = "#690001"
 scale-with-font  = true
 size-horizontal  = 30
 size-vertical    = 32
 
 [hyprland]
-active-border            = "#08F503 #EA0B08 45deg"
-active-border-foreground = "#08F503"
+active-border            = "#690001 #690001 45deg"
+active-border-foreground = "#690001"
 
 [controls]
 normal-color        = "#F0F4FC"
 normal-fill-alpha   = 0.05
-normal-border       = "#08F503"
+normal-border       = "#690001"
 normal-border-width = 1
 normal-border-alpha = 0.25
 
 hover-cursor-color        = "#FFFFFF"
 hover-cursor-fill-alpha   = 0.12
-hover-cursor-border       = "#08F503"
+hover-cursor-border       = "#690001"
 hover-cursor-border-width = 1
 hover-cursor-border-alpha = 0.50
 
 focus-color        = "#FFFFFF"
 focus-fill-alpha   = 0.12
-focus-border       = "#08F503"
+focus-border       = "#690001"
 focus-border-width = 1
 focus-border-alpha = 0.50
 
 selected-color        = "#FFFFFF"
 selected-fill-alpha   = 0.22
-selected-border       = "#08F503"
+selected-border       = "#690001"
 selected-border-width = 1
 selected-border-alpha = 0.80
 
@@ -53,7 +52,7 @@ base-size = 12
 background       = "#14161E"
 background-alpha = 0.94
 text             = "#F0F4FC"
-border           = "#08F503"
+border           = "#690001"
 border-alpha     = 0.80
 border-width     = 1
 
@@ -61,76 +60,76 @@ border-width     = 1
 background       = "#14161E"
 background-alpha = 0.96
 text             = "#F0F4FC"
-border           = "#08F503"
+border           = "#690001"
 border-alpha     = 0.70
 
 [notifications]
 background       = "#14161E"
 background-alpha = 0.95
 text             = "#F0F4FC"
-border           = "#08F503"
+border           = "#690001"
 border-alpha     = 0.85
 border-width     = 1
-countdown        = "#08F503"
+countdown        = "#690001"
 
 [launcher]
 background                = "#14161E"
 background-alpha          = 0.94
 text                      = "#F0F4FC"
-border                    = "#08F503"
+border                    = "#690001"
 border-alpha              = 0.75
 scrim                     = "#14161E"
 scrim-alpha               = 0.55
-selected-background       = "#08F503"
+selected-background       = "#690001"
 selected-background-alpha = 0.15
-selected-text             = "#08F503"
-selected-border           = "#08F503"
+selected-text             = "#690001"
+selected-border           = "#690001"
 selected-border-alpha     = 0.50
 
 [menu]
 background                = "#14161E"
 background-alpha          = 0.95
 text                      = "#F0F4FC"
-border                    = "#08F503"
+border                    = "#690001"
 border-alpha              = 0.75
 scrim                     = "#14161E"
 scrim-alpha               = 0.55
-selected-background       = "#08F503"
+selected-background       = "#690001"
 selected-background-alpha = 0.15
-selected-text             = "#08F503"
-selected-border           = "#08F503"
+selected-text             = "#690001"
+selected-border           = "#690001"
 selected-border-alpha     = 0.50
 
 [polkit]
 background       = "#14161E"
 background-alpha = 0.96
 text             = "#F0F4FC"
-text-error       = "#EA0B08"
-border           = "#08F503"
-border-error     = "#EA0B08"
+text-error       = "#690001"
+border           = "#690001"
+border-error     = "#690001"
 border-alpha     = 0.90
 scrim            = "#14161E"
 scrim-alpha      = 0.60
-accent           = "#08F503"
+accent           = "#690001"
 
 [lock]
 background       = "#14161E"
 background-alpha = 0.85
 text             = "#F0F4FC"
 placeholder      = "#616367"
-text-error       = "#EA0B08"
-border           = "#08F503"
-border-active    = "#08F503"
-border-error     = "#EA0B08"
+text-error       = "#690001"
+border           = "#690001"
+border-active    = "#690001"
+border-error     = "#690001"
 border-alpha     = 0.90
-selection        = "#08F503"
+selection        = "#690001"
 selection-alpha  = 0.45
 
 [image-picker]
 scrim                   = "#14161E"
 scrim-alpha             = 0.55
 text                    = "#F0F4FC"
-selected-border         = "#08F503"
+selected-border         = "#690001"
 selected-border-alpha   = 1.0
 unselected-border       = "#F0F4FC"
 unselected-border-alpha = 0.25

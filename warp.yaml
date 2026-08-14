@@ -1,7 +1,7 @@
-# DANDADAN Warp Theme — Wallpaper 41: Thunder God Battle Scarlet
+# DANDADAN Warp Theme — Wallpaper 02: Turbo Granny Crimson Curse
 name: Dandadan
-accent: "#CB1F2E"
-cursor: "#CB1F2E"
+accent: "#690001"
+cursor: "#690001"
 background: "#14161E"
 foreground: "#F0F4FC"
 details: darker
@@ -9,19 +9,19 @@ details: darker
 terminal_colors:
   normal:
     black:   "#14161E"
-    red:     "#CB1F2E"
-    green:   "#D4A823"
-    yellow:  "#CB651F"
-    blue:    "#2ECB1F"
-    magenta: "#CB1F2E"
-    cyan:    "#1F2DCB"
+    red:     "#690001"
+    green:   "#C05F58"
+    yellow:  "#693300"
+    blue:    "#016900"
+    magenta: "#690001"
+    cyan:    "#000169"
     white:   "#F0F4FC"
   bright:
     black:   "#616367"
-    red:     "#F2626F"
-    green:   "#F2CF64"
-    yellow:  "#F29D62"
-    blue:    "#6FF262"
-    magenta: "#F2626F"
-    cyan:    "#626EF2"
+    red:     "#882829"
+    green:   "#F29C96"
+    yellow:  "#885728"
+    blue:    "#298828"
+    magenta: "#882829"
+    cyan:    "#282988"
     white:   "#FFFFFF"

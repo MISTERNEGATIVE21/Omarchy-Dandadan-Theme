@@ -1,16 +1,16 @@
-// DANDADAN Zellij Theme — Wallpaper 41: Thunder God Battle Scarlet
+// DANDADAN Zellij Theme — Wallpaper 02: Turbo Granny Crimson Curse
 themes {
     dandadan {
         fg "#F0F4FC"
         bg "#14161E"
         black "#14161E"
-        red "#CB1F2E"
-        green "#D4A823"
-        yellow "#CB651F"
-        blue "#2ECB1F"
-        magenta "#CB1F2E"
-        cyan "#1F2DCB"
+        red "#690001"
+        green "#C05F58"
+        yellow "#693300"
+        blue "#016900"
+        magenta "#690001"
+        cyan "#000169"
         white "#F0F4FC"
-        orange "#CB1F83"
+        orange "#690035"
     }
 }

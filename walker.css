@@ -1,12 +1,12 @@
-/* DANDADAN Walker — Wallpaper 41: Thunder God Battle Scarlet */
-@define-color selected-text #CB1F2E;
+/* DANDADAN Walker — Wallpaper 02: Turbo Granny Crimson Curse */
+@define-color selected-text #690001;
 @define-color text          #F0F4FC;
 @define-color base          #14161E;
-@define-color border        #CB1F2E;
+@define-color border        #690001;
 @define-color foreground    #F0F4FC;
 @define-color background    #14161E;
-@define-color hover         #1FCBBB;
-@define-color selected-box  #CB1F2E;
+@define-color hover         #006968;
+@define-color selected-box  #690001;
 
 * {
   font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', monospace;

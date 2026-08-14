@@ -1,20 +1,20 @@
-/* DANDADAN GTK Theme — Wallpaper 41: Thunder God Battle Scarlet */
-@define-color accent_color #CB1F2E;
-@define-color accent_bg_color #CB1F2E;
+/* DANDADAN GTK Theme — Wallpaper 02: Turbo Granny Crimson Curse */
+@define-color accent_color #690001;
+@define-color accent_bg_color #690001;
 @define-color accent_fg_color #ffffff;
-@define-color destructive_color #CB1F2E;
-@define-color destructive_bg_color #CB1F2E;
+@define-color destructive_color #690001;
+@define-color destructive_bg_color #690001;
 @define-color destructive_fg_color #ffffff;
-@define-color success_color #D4A823;
-@define-color warning_color #CB651F;
-@define-color error_color #CB1F2E;
+@define-color success_color #C05F58;
+@define-color warning_color #693300;
+@define-color error_color #690001;
 @define-color window_bg_color #14161E;
 @define-color window_fg_color #F0F4FC;
 @define-color view_bg_color #1A1C26;
 @define-color view_fg_color #F0F4FC;
 @define-color headerbar_bg_color #14161E;
 @define-color headerbar_fg_color #F0F4FC;
-@define-color headerbar_border_color #CB1F2E55;
+@define-color headerbar_border_color #69000155;
 @define-color headerbar_backdrop_color #14161E;
 @define-color headerbar_shade_color rgba(0,0,0,0.2);
 @define-color card_bg_color #1E2030;
@@ -34,4 +34,4 @@
 @define-color thumbnail_fg_color #F0F4FC;
 
 /* ── Selection highlight ─── */
-selection { background-color: #CB1F2E55; color: #F0F4FC; }
+selection { background-color: #69000155; color: #F0F4FC; }
