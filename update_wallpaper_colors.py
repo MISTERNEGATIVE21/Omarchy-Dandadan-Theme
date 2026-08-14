@@ -513,10 +513,12 @@ hyprland_conf = f"""general {{
 write_both("hyprland.conf", hyprland_conf)
 
 # hyprland.lua — Hyprland Lua config (new parser)
-hyprland_lua = f"""local active_border_color = "rgb({accent.lstrip('#')}) rgb({cursor.lstrip('#')}) 45deg"
+border_c2 = cursor.lstrip('#') if cursor != accent else accent_comp.lstrip('#')
+hyprland_lua = f"""local active_border_color = {{ colors = {{ "rgb({accent.lstrip('#')})", "rgb({border_c2})" }}, angle = 45 }}
 local inactive_border_color = "rgba(61636780)"
 local active_shadow_color = "rgba({accent.lstrip('#')}66)"
 local inactive_shadow_color = "rgba(00000044)"
+
 
 hl.config({{
   general = {{
