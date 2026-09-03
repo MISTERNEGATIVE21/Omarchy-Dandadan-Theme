@@ -2,7 +2,7 @@
 """
 Extract dominant accent colors from each dandadan wallpaper and rebuild
 wallpaper_highlights.json with accurate, per-wallpaper accent palettes.
-Handles all 48 wallpapers.
+Handles all 52 wallpapers.
 """
 
 import os, json, colorsys
@@ -143,48 +143,52 @@ def pick_accent_and_contrast(colors):
 
     return accent_hex, highlight_hex, glow_hex
 
-result = {}
+def main():
+    result = {}
 
-# Discover all wallpapers — handles png, webp, jpg, jpeg
-valid_exts = (".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif")
-image_files = {}
-if os.path.isdir(WALLPAPER_DIR):
-    for fname in sorted(os.listdir(WALLPAPER_DIR)):
-        ext = os.path.splitext(fname)[1].lower()
-        if ext in valid_exts:
-            base = os.path.splitext(fname)[0]
-            try:
-                num_int = int(base.split("-")[0].lstrip("0") or "0")
-                key = f"{num_int:02d}"
-                image_files[key] = os.path.join(WALLPAPER_DIR, fname)
-            except ValueError:
-                continue
+    # Discover all wallpapers — handles png, webp, jpg, jpeg
+    valid_exts = (".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif")
+    image_files = {}
+    if os.path.isdir(WALLPAPER_DIR):
+        for fname in sorted(os.listdir(WALLPAPER_DIR)):
+            ext = os.path.splitext(fname)[1].lower()
+            if ext in valid_exts:
+                base = os.path.splitext(fname)[0]
+                try:
+                    num_int = int(base.split("-")[0].lstrip("0") or "0")
+                    key = f"{num_int:02d}"
+                    image_files[key] = os.path.join(WALLPAPER_DIR, fname)
+                except ValueError:
+                    continue
 
-print(f"Found {len(image_files)} wallpapers in {WALLPAPER_DIR}")
-print(f"Keys: {sorted(image_files.keys(), key=int)}")
+    print(f"Found {len(image_files)} wallpapers in {WALLPAPER_DIR}")
+    print(f"Keys: {sorted(image_files.keys(), key=int)}")
 
-for idx in sorted(image_files.keys(), key=int):
-    path = image_files[idx]
-    print(f"Processing {idx} ({os.path.basename(path)})...", end=" ", flush=True)
-    colors = extract_palette(path)
-    accent, highlight, glow = pick_accent_and_contrast(colors)
-    print(f"accent={accent}  highlight={highlight}")
+    for idx in sorted(image_files.keys(), key=int):
+        path = image_files[idx]
+        print(f"Processing {idx} ({os.path.basename(path)})...", end=" ", flush=True)
+        colors = extract_palette(path)
+        accent, highlight, glow = pick_accent_and_contrast(colors)
+        print(f"accent={accent}  highlight={highlight}")
 
-    result[idx] = {
-        "accent":     accent,
-        "highlight":  highlight,
-        "background": BG,
-        "foreground": FG,
-        "border":     accent,
-        "glow":       glow,
-        "vibe":       VIBES.get(idx, f"Dandadan Scene {idx}"),
-    }
+        result[idx] = {
+            "accent":     accent,
+            "highlight":  highlight,
+            "background": BG,
+            "foreground": FG,
+            "border":     accent,
+            "glow":       glow,
+            "vibe":       VIBES.get(idx, f"Dandadan Scene {idx}"),
+        }
 
-# Sort by int value
-result_sorted = dict(sorted(result.items(), key=lambda x: int(x[0])))
+    # Sort by int value
+    result_sorted = dict(sorted(result.items(), key=lambda x: int(x[0])))
 
-with open(OUTPUT_PATH, "w") as f:
-    json.dump(result_sorted, f, indent=2)
+    with open(OUTPUT_PATH, "w") as f:
+        json.dump(result_sorted, f, indent=2)
 
-print(f"\n✓ Wrote {len(result_sorted)} wallpaper palettes to {OUTPUT_PATH}")
+    print(f"\n✓ Wrote {len(result_sorted)} wallpaper palettes to {OUTPUT_PATH}")
+
+if __name__ == "__main__":
+    main()
 

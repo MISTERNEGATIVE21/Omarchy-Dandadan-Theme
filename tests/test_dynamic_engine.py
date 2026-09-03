@@ -13,11 +13,17 @@ def test_engine_execution():
     assert result.returncode == 0, f"Engine failed: {result.stderr}"
 
     # Verify generated files exist and contain updated tokens
-    for fname in ["shell.toml", "shell.lock.toml", "colors.toml", "hyprland.lua", "waybar.css", "icons.theme", "gtk.css", "kitty.conf", "alacritty.toml", "ghostty.conf", "foot.ini"]:
+    for fname in ["shell.toml", "shell.lock.toml", "colors.toml", "hyprland.lua", "waybar.css", "wallpapers.css", "icons.theme", "gtk.css", "kitty.conf", "alacritty.toml", "ghostty.conf", "foot.ini"]:
         assert os.path.exists(fname), f"{fname} was not created"
         with open(fname) as f:
             content = f.read()
             assert len(content) > 0, f"{fname} is empty"
+
+    # Verify wallpapers.css contains valid colors
+    with open("wallpapers.css") as f:
+        wallpapers_css = f.read()
+    assert "@define-color accent" in wallpapers_css
+    assert "@define-color background" in wallpapers_css
 
     # Verify icon theme exists on disk
     with open("icons.theme") as f:
@@ -35,7 +41,7 @@ def test_engine_execution():
     assert "@define-color accent_fg_color" in gtk_css
     assert "@define-color accent_bg_color" in gtk_css
 
-    # Verify Quickshell shell.toml contrast & error tokens
+    # Verify Quickshell shell.toml contrast, visibility & active border tokens
     with open("shell.toml") as f:
         shell_toml = f.read()
     assert "selected-background" in shell_toml
@@ -43,6 +49,8 @@ def test_engine_execution():
     assert "placeholder" in shell_toml
     assert "text-error" in shell_toml
     assert "border-error" in shell_toml
+    assert "hyprland.active-border" in shell_toml
+    assert "background-alpha = 0.95" in shell_toml
 
     # Verify Omarchy 4.0 colors.toml specification & true ANSI hue channels
     with open("colors.toml") as f:
@@ -58,6 +66,7 @@ def test_engine_execution():
     assert "selection" in colors
     assert "muted" in colors
     assert "background" in colors
+    assert "hyprland_active_border" in colors
     assert "foreground" in colors
 
     # Strict ANSI hue verification (NO INVERTED CHANNELS)

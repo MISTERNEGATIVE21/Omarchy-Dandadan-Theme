@@ -171,6 +171,8 @@ def build_semantic_palette(accent_hex: str, highlight_hex: str):
 
 sem = build_semantic_palette(accent, highlight)
 accent_comp = complementary(accent)
+border_c2 = accent_comp.lstrip('#') if accent_comp != accent else cursor.lstrip('#')
+border_c2_hex = f"#{border_c2}"
 
 # Dark backgrounds and crisp text
 dark_bg    = "#0E1017"
@@ -254,6 +256,9 @@ dark_foreground = "{dark_fg}"
 light_foreground = "{light_fg}"
 bright_foreground = "{bright_fg}"
 
+hyprland_active_border = "{accent} {border_c2_hex} 45deg"
+hyprland_inactive_border = "{muted}"
+
 red = "{sem['red']}"
 yellow = "{sem['yellow']}"
 orange = "{sem['orange']}"
@@ -279,44 +284,44 @@ shell_toml = f"""# DANDADAN Omarchy 4.0 Quickshell Surface Styling — Wallpaper
 
 [bar]
 background       = "{bg}"
-background-alpha = 0.92
+background-alpha = 0.95
 text             = "{fg}"
-active           = "{sem['red']}"
+active           = "{accent}"
 scale-with-font  = true
 size-horizontal  = 30
 size-vertical    = 32
 
 [hyprland]
-active-border            = "{accent} {accent_comp} 45deg"
+active-border            = "{accent} {border_c2_hex} 45deg"
 active-border-foreground = "{fg}"
 
 [controls]
 normal-color        = "{fg}"
-normal-fill-alpha   = 0.05
+normal-fill-alpha   = 0.06
 normal-border       = "{fg}"
 normal-border-width = 1
 normal-border-alpha = 0.35
 
 hover-cursor-color        = "{bright_fg}"
-hover-cursor-fill-alpha   = 0.12
+hover-cursor-fill-alpha   = 0.15
 hover-cursor-border       = "{accent}"
 hover-cursor-border-width = 1
-hover-cursor-border-alpha = 0.50
+hover-cursor-border-alpha = 0.70
 
 focus-color        = "{bright_fg}"
-focus-fill-alpha   = 0.12
+focus-fill-alpha   = 0.15
 focus-border       = "{accent}"
 focus-border-width = 1
-focus-border-alpha = 0.50
+focus-border-alpha = 0.75
 
 selected-color        = "{bright_fg}"
-selected-fill-alpha   = 0.22
+selected-fill-alpha   = 0.25
 selected-border       = "{accent}"
 selected-border-width = 1
-selected-border-alpha = 0.80
+selected-border-alpha = 0.90
 
-pressed-fill-alpha   = 0.28
-selection-fill-alpha = 0.35
+pressed-fill-alpha   = 0.30
+selection-fill-alpha = 0.40
 
 [spacing]
 scale           = 1.0
@@ -327,89 +332,89 @@ base-size = 12
 
 [popups]
 background       = "{bg}"
-background-alpha = 0.95
+background-alpha = 0.98
 text             = "{fg}"
-border           = "{accent}"
-border-alpha     = 0.80
+border           = "hyprland.active-border"
+border-alpha     = 1.0
 border-width     = 1
 
 [tooltip]
 background       = "{bg}"
-background-alpha = 0.96
+background-alpha = 0.97
 text             = "{fg}"
-border           = "{accent}"
-border-alpha     = 0.70
+border           = "hyprland.active-border-foreground"
+border-alpha     = 1.0
 
 [notifications]
 background       = "{bg}"
-background-alpha = 0.95
+background-alpha = 0.98
 text             = "{fg}"
-border           = "{accent}"
-border-alpha     = 0.85
+border           = "hyprland.active-border"
+border-alpha     = 1.0
 border-width     = 1
 countdown        = "{accent}"
 
 [launcher]
 background                = "{bg}"
-background-alpha          = 0.95
+background-alpha          = 0.98
 text                      = "{fg}"
-border                    = "{accent}"
-border-alpha              = 0.75
+border                    = "hyprland.active-border"
+border-alpha              = 1.0
 scrim                     = "{bg}"
-scrim-alpha               = 0.55
+scrim-alpha               = 0.60
 selected-background       = "{fg}"
-selected-background-alpha = 0.10
-selected-text             = "{accent}"
+selected-background-alpha = 0.12
+selected-text             = "{bright_fg}"
 selected-border           = "{accent}"
-selected-border-alpha     = 0.40
+selected-border-alpha     = 0.70
 
 [menu]
 background                = "{bg}"
-background-alpha          = 0.95
+background-alpha          = 0.98
 text                      = "{fg}"
-border                    = "{accent}"
-border-alpha              = 0.75
+border                    = "hyprland.active-border"
+border-alpha              = 1.0
 scrim                     = "{bg}"
-scrim-alpha               = 0.55
+scrim-alpha               = 0.60
 selected-background       = "{fg}"
-selected-background-alpha = 0.10
-selected-text             = "{accent}"
+selected-background-alpha = 0.12
+selected-text             = "{bright_fg}"
 selected-border           = "{accent}"
-selected-border-alpha     = 0.40
+selected-border-alpha     = 0.70
 
 [polkit]
 background       = "{bg}"
-background-alpha = 0.96
+background-alpha = 0.98
 text             = "{fg}"
 text-error       = "{sem['red']}"
-border           = "{accent}"
+border           = "hyprland.active-border"
 border-error     = "{sem['red']}"
-border-alpha     = 0.90
+border-alpha     = 1.0
 scrim            = "{bg}"
 scrim-alpha      = 0.60
 accent           = "{accent}"
 
 [lock]
 background       = "{bg}"
-background-alpha = 0.85
+background-alpha = 0.88
 text             = "{fg}"
 placeholder      = "#8B90A0"
 text-error       = "{sem['red']}"
-border           = "{accent}"
-border-active    = "{accent}"
+border           = "hyprland.active-border"
+border-active    = "hyprland.active-border"
 border-error     = "{sem['red']}"
-border-alpha     = 0.90
+border-alpha     = 1.0
 selection        = "{accent}"
 selection-alpha  = 0.45
 
 [image-picker]
 scrim                   = "{bg}"
-scrim-alpha             = 0.55
+scrim-alpha             = 0.60
 text                    = "{fg}"
 selected-border         = "{accent}"
 selected-border-alpha   = 1.0
 unselected-border       = "{fg}"
-unselected-border-alpha = 0.30
+unselected-border-alpha = 0.35
 """
 write_both("shell.toml", shell_toml)
 
@@ -1247,6 +1252,48 @@ window#waybar {{
 """
 write_both("waybar.css", waybar_css)
 
+# Wallpapers CSS
+wallpapers_css = f"""/* Dandadan Wallpaper {active_idx} - {vibe} */
+@define-color background {bg};
+@define-color foreground {fg};
+@define-color accent {accent};
+@define-color cursor {cursor};
+@define-color highlight {highlight};
+"""
+write_both("wallpapers.css", wallpapers_css)
+write(f"{HOME}/.config/waybar/wallpapers.css", wallpapers_css)
+write(f"{HOME}/.config/waybar/style.css", f'@import "{HOME}/.config/omarchy/current/theme/waybar.css";\n')
+
+# Sync Dandadan Quickshell layout and ensure opaque bar for high visibility
+try:
+    curr_theme_name = ""
+    for name_file in [f"{HOME}/.local/state/omarchy/current/theme.name", f"{HOME}/.config/omarchy/current/theme.name"]:
+        if os.path.exists(name_file):
+            with open(name_file) as nf:
+                curr_theme_name = nf.read().strip()
+            break
+    if curr_theme_name in ["dandadan", "dandadan-theme"]:
+        theme_shell_json = f"{THEME_DIR}/shell.json"
+        user_shell_json = f"{HOME}/.config/omarchy/shell.json"
+        if os.path.exists(theme_shell_json):
+            with open(theme_shell_json) as sf:
+                sj_data = json.load(sf)
+            sj_data.setdefault("bar", {})["transparent"] = False
+            write_both("shell.json", json.dumps(sj_data, indent=2) + "\n")
+            need_user_update = True
+            if os.path.exists(user_shell_json):
+                with open(user_shell_json) as uf:
+                    try:
+                        u_data = json.load(uf)
+                        if u_data.get("bar", {}).get("transparent") is False:
+                            need_user_update = False
+                    except Exception:
+                        pass
+            if need_user_update:
+                write(user_shell_json, json.dumps(sj_data, indent=2) + "\n")
+except Exception:
+    pass
+
 # ══════════════════════════════════════════════════════════════════════════════
 # 17 · LIVE QUICKSHELL IPC & APP RELOADS
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1266,6 +1313,15 @@ if is_process_running("quickshell") or is_process_running("omarchy-shell"):
         colors_b64 = base64.b64encode(colors_toml.encode("utf-8")).decode("utf-8")
         shell_b64  = base64.b64encode(shell_toml.encode("utf-8")).decode("utf-8")
         subprocess.run(["omarchy-shell", "-q", "shell", "applyTheme", colors_b64, shell_b64], capture_output=True)
+        subprocess.run(["omarchy-shell", "-q", "shell", "reloadConfig"], capture_output=True)
+    except Exception:
+        pass
+
+# Ensure live background watcher is running if Dandadan is current theme
+watch_script = f"{THEME_DIR}/scripts/dandadan-bg-watch.sh"
+if os.path.exists(watch_script) and not is_process_running("dandadan-bg-watch"):
+    try:
+        subprocess.Popen(["bash", watch_script], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
     except Exception:
         pass
 

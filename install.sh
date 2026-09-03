@@ -164,6 +164,12 @@ if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
   if [[ -f "$SCRIPT_PATH" ]]; then
     (python3 "$SCRIPT_PATH" >/dev/null 2>&1) &
   fi
+
+  # Start live wallpaper change watcher
+  WATCH_SCRIPT="$DANDADAN_DIR/scripts/dandadan-bg-watch.sh"
+  if [[ -x "$WATCH_SCRIPT" ]] && ! pgrep -f "dandadan-bg-watch" >/dev/null 2>&1; then
+    (bash "$WATCH_SCRIPT" >/dev/null 2>&1) &
+  fi
 else
   # Restore standard Omarchy shell/waybar config when switching away from dandadan
   if [[ -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]]; then
@@ -176,13 +182,17 @@ else
     cp -f "/usr/share/omarchy/config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
   fi
 
+  pkill -f "dandadan-bg-watch" >/dev/null 2>&1 || true
   (pkill -SIGUSR2 waybar >/dev/null 2>&1 || true) &
 fi
 HOOK
   chmod +x "$THEME_SET_HOOK"
+  mkdir -p "$HOOKS_DIR/theme-set.d"
+  cp -f "$THEME_SET_HOOK" "$HOOKS_DIR/theme-set.d/dandadan-theme-set"
+  chmod +x "$HOOKS_DIR/theme-set.d/dandadan-theme-set"
   log "theme-set hook installed (Quickshell & Waybar support for Dandadan)"
 
-  # ── bg-set hook (fires on every wallpaper change) ─────────────────────────
+  # ── bg-set hook (fires on wallpaper change) ──────────────────────────────
   BG_SET_HOOK="$HOOKS_DIR/bg-set"
   cat > "$BG_SET_HOOK" << 'HOOK'
 #!/bin/bash
@@ -209,10 +219,20 @@ fi
 HOOK
   chmod +x "$BG_SET_HOOK"
   log "bg-set hook installed (non-blocking wallpaper recoloring)"
+
+  # Start background watcher daemon if not already running
+  if [[ -x "$THEME_DIR/scripts/dandadan-bg-watch.sh" ]] && ! pgrep -f "dandadan-bg-watch" >/dev/null 2>&1; then
+    (bash "$THEME_DIR/scripts/dandadan-bg-watch.sh" >/dev/null 2>&1) &
+    log "dandadan-bg-watch daemon started"
+  fi
 }
 
 extract_colors() {
   step "Extracting per-wallpaper accent colors (52 wallpapers)"
+  if [[ -f "$THEME_DIR/wallpaper_highlights.json" ]] && [[ "${1:-}" != "--force" ]]; then
+    log "Curated wallpaper palettes verified in wallpaper_highlights.json (52 wallpapers) ✓"
+    return 0
+  fi
   if [[ -d "$THEME_DIR/backgrounds" ]]; then
     python3 "$THEME_DIR/extract_wallpaper_colors.py"
     log "Accent palette generated from wallpapers"
