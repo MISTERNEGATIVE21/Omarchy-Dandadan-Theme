@@ -1,14 +1,14 @@
-// DANDADAN Zellij Theme — Wallpaper 02: Turbo Granny Crimson Curse
+// DANDADAN Zellij Theme — Wallpaper 01: Okarun & Turbo Granny Golden Spark
 themes {
     dandadan {
         fg "#F0F4FC"
         bg "#14161E"
         black "#26293B"
-        red "#FF5555"
+        red "#E3847B"
         green "#50FA7B"
         yellow "#F1FA8C"
         blue "#7AA2F7"
-        magenta "#AB38C8"
+        magenta "#EF02F5"
         cyan "#00F5D4"
         white "#F0F4FC"
         orange "#FF9E64"

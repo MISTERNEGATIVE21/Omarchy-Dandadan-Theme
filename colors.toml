@@ -1,7 +1,7 @@
-# DANDADAN Colors — Wallpaper 02: Turbo Granny Crimson Curse
+# DANDADAN Colors — Wallpaper 01: Okarun & Turbo Granny Golden Spark
 mode = "dark"
 
-accent = "#C71275"
+accent = "#E80202"
 selection = "#384166"
 muted = "#7E859E"
 
@@ -15,21 +15,21 @@ dark_foreground = "#6A738C"
 light_foreground = "#C5CDE3"
 bright_foreground = "#FFFFFF"
 
-hyprland_active_border = "#C71275 #11C764 45deg"
+hyprland_active_border = "#E80202 #01E8E8 45deg"
 hyprland_inactive_border = "#7E859E"
 
-red = "#FF5555"
+red = "#E3847B"
 yellow = "#F1FA8C"
 orange = "#FF9E64"
 green = "#50FA7B"
 cyan = "#00F5D4"
 blue = "#7AA2F7"
-magenta = "#AB38C8"
+magenta = "#EF02F5"
 brown = "#75493D"
 
-bright_red = "#FF6E6E"
+bright_red = "#F9ABA4"
 bright_yellow = "#FFFFA5"
 bright_green = "#69FF94"
 bright_cyan = "#56D4E8"
 bright_blue = "#9AB8FF"
-bright_magenta = "#D56EF0"
+bright_magenta = "#FF92DF"

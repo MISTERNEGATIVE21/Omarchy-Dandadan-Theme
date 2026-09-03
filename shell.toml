@@ -1,16 +1,16 @@
-# DANDADAN Omarchy 4.0 Quickshell Surface Styling — Wallpaper 02: Turbo Granny Crimson Curse
+# DANDADAN Omarchy 4.0 Quickshell Surface Styling — Wallpaper 01: Okarun & Turbo Granny Golden Spark
 
 [bar]
 background       = "#14161E"
 background-alpha = 0.95
 text             = "#F0F4FC"
-active           = "#C71275"
+active           = "#E80202"
 scale-with-font  = true
 size-horizontal  = 30
 size-vertical    = 32
 
 [hyprland]
-active-border            = "#C71275 #11C764 45deg"
+active-border            = "#E80202 #01E8E8 45deg"
 active-border-foreground = "#F0F4FC"
 
 [controls]
@@ -22,19 +22,19 @@ normal-border-alpha = 0.35
 
 hover-cursor-color        = "#FFFFFF"
 hover-cursor-fill-alpha   = 0.15
-hover-cursor-border       = "#C71275"
+hover-cursor-border       = "#E80202"
 hover-cursor-border-width = 1
 hover-cursor-border-alpha = 0.70
 
 focus-color        = "#FFFFFF"
 focus-fill-alpha   = 0.15
-focus-border       = "#C71275"
+focus-border       = "#E80202"
 focus-border-width = 1
 focus-border-alpha = 0.75
 
 selected-color        = "#FFFFFF"
 selected-fill-alpha   = 0.25
-selected-border       = "#C71275"
+selected-border       = "#E80202"
 selected-border-width = 1
 selected-border-alpha = 0.90
 
@@ -70,7 +70,7 @@ text             = "#F0F4FC"
 border           = "hyprland.active-border"
 border-alpha     = 1.0
 border-width     = 1
-countdown        = "#C71275"
+countdown        = "#E80202"
 
 [launcher]
 background                = "#14161E"
@@ -83,7 +83,7 @@ scrim-alpha               = 0.60
 selected-background       = "#F0F4FC"
 selected-background-alpha = 0.12
 selected-text             = "#FFFFFF"
-selected-border           = "#C71275"
+selected-border           = "#E80202"
 selected-border-alpha     = 0.70
 
 [menu]
@@ -97,39 +97,39 @@ scrim-alpha               = 0.60
 selected-background       = "#F0F4FC"
 selected-background-alpha = 0.12
 selected-text             = "#FFFFFF"
-selected-border           = "#C71275"
+selected-border           = "#E80202"
 selected-border-alpha     = 0.70
 
 [polkit]
 background       = "#14161E"
 background-alpha = 0.98
 text             = "#F0F4FC"
-text-error       = "#FF5555"
+text-error       = "#E3847B"
 border           = "hyprland.active-border"
-border-error     = "#FF5555"
+border-error     = "#E3847B"
 border-alpha     = 1.0
 scrim            = "#14161E"
 scrim-alpha      = 0.60
-accent           = "#C71275"
+accent           = "#E80202"
 
 [lock]
 background       = "#14161E"
 background-alpha = 0.88
 text             = "#F0F4FC"
 placeholder      = "#8B90A0"
-text-error       = "#FF5555"
+text-error       = "#E3847B"
 border           = "hyprland.active-border"
 border-active    = "hyprland.active-border"
-border-error     = "#FF5555"
+border-error     = "#E3847B"
 border-alpha     = 1.0
-selection        = "#C71275"
+selection        = "#E80202"
 selection-alpha  = 0.45
 
 [image-picker]
 scrim                   = "#14161E"
 scrim-alpha             = 0.60
 text                    = "#F0F4FC"
-selected-border         = "#C71275"
+selected-border         = "#E80202"
 selected-border-alpha   = 1.0
 unselected-border       = "#F0F4FC"
 unselected-border-alpha = 0.35

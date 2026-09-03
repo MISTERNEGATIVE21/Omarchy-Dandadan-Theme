@@ -1,22 +1,22 @@
-/* DANDADAN Walker — Wallpaper 02: Turbo Granny Crimson Curse */
+/* DANDADAN Walker — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
 #window {
   background: transparent;
 }
 #box {
   background-color: alpha(#14161E, 0.95);
-  border: 2px solid #C71275;
+  border: 2px solid #E80202;
   border-radius: 16px;
   padding: 16px;
 }
 #search {
   background-color: #1A1D2A;
   color: #F0F4FC;
-  border: 1px solid alpha(#C71275, 0.4);
+  border: 1px solid alpha(#E80202, 0.4);
   border-radius: 10px;
   padding: 10px 14px;
 }
 #item:selected {
-  background-color: alpha(#C71275, 0.22);
+  background-color: alpha(#E80202, 0.22);
   border-radius: 8px;
   color: #FFFFFF;
 }

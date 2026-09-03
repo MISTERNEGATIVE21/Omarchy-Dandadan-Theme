@@ -1,19 +1,19 @@
-// DANDADAN Telegram — Wallpaper 02: Turbo Granny Crimson Curse
+// DANDADAN Telegram — Wallpaper 01: Okarun & Turbo Granny Golden Spark
 windowBg: #14161E;
 windowFg: #F0F4FC;
 windowBgOver: #1A1D2A;
 windowBgRipple: #212536;
 windowFgActive: #FFFFFF;
-activeButtonBg: #C71275;
-activeButtonBgOver: #810B4C;
-activeButtonBgRipple: #AB38C8;
+activeButtonBg: #E80202;
+activeButtonBgOver: #960101;
+activeButtonBgRipple: #EF02F5;
 activeButtonFg: #FFFFFF;
 dialogsBg: #14161E;
 dialogsNameFg: #F0F4FC;
-dialogsChatIconFg: #C71275;
+dialogsChatIconFg: #E80202;
 dialogsDateFg: #7E859E;
 dialogsTextFg: #A0A5B5;
-dialogsTextFgService: #C71275;
-dialogsUnreadBg: #C71275;
+dialogsTextFgService: #E80202;
+dialogsUnreadBg: #E80202;
 dialogsUnreadBgMuted: #7E859E;
 dialogsUnreadFg: #FFFFFF;
