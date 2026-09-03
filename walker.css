@@ -1,50 +1,22 @@
-/* DANDADAN Walker — Wallpaper 02: Turbo Granny Crimson Curse */
-@define-color selected-text #690001;
-@define-color text          #F0F4FC;
-@define-color base          #14161E;
-@define-color border        #690001;
-@define-color foreground    #F0F4FC;
-@define-color background    #14161E;
-@define-color hover         #006968;
-@define-color selected-box  #690001;
-
-* {
-  font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', monospace;
+/* DANDADAN Walker — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
+#window {
+  background: transparent;
 }
-
-window { background: transparent; }
-
-window .search-container,
-window .search {
-  background: alpha(@base, 0.96);
-  box-shadow: 0 10px 36px rgba(0,0,0,0.5),
-              0 0 0 1px alpha(@border, 0.6);
-  color: @foreground;
-  border: 2px solid @border;
-  border-radius: 14px;
-  padding: 8px 18px;
-  margin-top: 1px;
-  font-size: 14px;
+#box {
+  background-color: alpha(#14161E, 0.95);
+  border: 2px solid #E80202;
+  border-radius: 16px;
+  padding: 16px;
 }
-
-.box-wrapper {
-  background: alpha(@base, 0.96);
-  border: 2px solid @border;
-  border-radius: 18px;
-  box-shadow: 0 14px 44px rgba(0,0,0,0.5),
-              0 0 0 1px alpha(@border, 0.4);
-  padding: 10px;
+#search {
+  background-color: #1A1D2A;
+  color: #F0F4FC;
+  border: 1px solid alpha(#E80202, 0.4);
+  border-radius: 10px;
+  padding: 10px 14px;
 }
-
-child:selected {
-  border-radius: 12px;
-  background-color: alpha(@selected-box, 0.20);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-  transition: background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+#item:selected {
+  background-color: alpha(#E80202, 0.22);
+  border-radius: 8px;
+  color: #FFFFFF;
 }
-child:selected .item-box {
-  transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1);
-  transform: translateX(4px);
-}
-child:selected .item-box * { color: @selected-text; }
-child:hover { background-color: alpha(@hover, 0.12); }

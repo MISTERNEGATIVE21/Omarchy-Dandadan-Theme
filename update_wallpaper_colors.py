@@ -2,13 +2,13 @@
 """
 DANDADAN OMARCHY THEME — Universal Dynamic Color Engine
 ═══════════════════════════════════════════════════════
-Updates ALL 21 config targets on every wallpaper change.
-Uses complementary color theory for accent/highlight pairing.
-Supports 52 wallpapers (001-058, with gaps).
+Updates ALL 21+ config targets on wallpaper change with zero inverted colors.
+Strict semantic ANSI color mapping (Red=Red, Green=Green, etc.).
+Full Omarchy 4.0 distro & Quickshell implementation.
 
-Targets: Neovim · GTK · Zed · VS Code · Alacritty · Btop · Chromium
-         Foot · Ghostty · Hyprland · Hyprlock · Icons · Kitty · Mako
-         SwayOSD · Vencord · Walker · Warp · Waybar · Wofi · Zellij
+Targets: Neovim · GTK · Zed · VS Code / Antigravity IDE · Alacritty · Btop · Chromium
+         Foot · Ghostty · Hyprland Lua · Hyprlock · Icons · Kitty · Mako
+         SwayOSD · Vencord · Walker · Warp · Waybar · Wofi · Zellij · Quickshell
 """
 
 import json, os, sys, subprocess, colorsys, math, base64
@@ -17,12 +17,11 @@ import json, os, sys, subprocess, colorsys, math, base64
 HOME      = os.path.expanduser("~")
 THEME_DIR = f"{HOME}/.config/omarchy/themes/dandadan-theme"
 
-# Omarchy 4.0 state directories with Omarchy 3.x legacy fallback
+# Omarchy 4.0 state directories with legacy fallback
 STATE_CURR_DIRS = [
     f"{HOME}/.local/state/omarchy/current/theme",
     f"{HOME}/.config/omarchy/current/theme"
 ]
-CURR_DIR  = STATE_CURR_DIRS[0]
 
 manifest_path   = f"{THEME_DIR}/wallpaper_highlights.json"
 current_bg_link = None
@@ -35,7 +34,7 @@ for bg_path in [
         break
 
 if current_bg_link is None:
-    current_bg_link = f"{HOME}/.config/omarchy/current/background"
+    current_bg_link = f"{HOME}/.local/state/omarchy/current/background"
 
 if not os.path.exists(manifest_path):
     sys.exit(0)
@@ -44,27 +43,30 @@ with open(manifest_path) as f:
     data = json.load(f)
 
 # ─── Detect active wallpaper ────────────────────────────────────────────────────
-active_idx = "32"
+active_idx = "01"
+active_bg_path = None
 if os.path.islink(current_bg_link) or os.path.exists(current_bg_link):
     try:
         target = os.readlink(current_bg_link) if os.path.islink(current_bg_link) else current_bg_link
+        active_bg_path = target
         base   = os.path.basename(target)
-        # handles "032.webp", "32.webp", "1-name.jpg" etc.
+        # handles "001.png", "01.webp", "32.webp", "1-name.jpg" etc.
         num    = base.split(".")[0].split("-")[0].lstrip("0") or "0"
         idx    = num.zfill(2)
         if idx in data:
             active_idx = idx
-        # Try 3-digit zero-padded too (033.webp → 33 → "33" not in data → "33".zfill(2)="33" ✓)
+        elif num in data:
+            active_idx = num
     except Exception:
         pass
 
-colors    = data.get(active_idx, data.get("32", {}))
-accent    = colors.get("accent",    "#C12719")
-cursor    = colors.get("border",    colors.get("glow", accent))
-highlight = colors.get("highlight", "#3043AE")
-bg        = colors.get("background","#14161E")
-fg        = colors.get("foreground","#F0F4FC")
-vibe      = colors.get("vibe",      f"Dandadan Scene {active_idx}")
+colors    = data.get(active_idx, data.get("01", {}))
+accent    = colors.get("accent",     "#E80202")
+cursor    = colors.get("border",     colors.get("glow", accent))
+highlight = colors.get("highlight",  "#E3847B")
+bg        = colors.get("background", "#14161E")
+fg        = colors.get("foreground", "#F0F4FC")
+vibe      = colors.get("vibe",       f"Dandadan Scene {active_idx}")
 
 # ─── Color math helpers ─────────────────────────────────────────────────────────
 def h2r(hex_code: str):
@@ -72,7 +74,7 @@ def h2r(hex_code: str):
     return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
 
 def r2h(r, g, b) -> str:
-    return f"#{int(r):02X}{int(g):02X}{int(b):02X}"
+    return f"#{int(max(0, min(255, r))):02X}{int(max(0, min(255, g))):02X}{int(max(0, min(255, b))):02X}"
 
 def hex_to_rgb_str(hex_code: str) -> str:
     r, g, b = h2r(hex_code)
@@ -86,58 +88,137 @@ def complementary(hex_code: str) -> str:
     r2, g2, b2 = colorsys.hsv_to_rgb(h2, s, v)
     return r2h(r2*255, g2*255, b2*255)
 
-def analogous(hex_code: str, offset: float = 0.083) -> tuple:
-    """Return two analogous colors (±30° offset)."""
-    r, g, b = h2r(hex_code)
-    h, s, v = colorsys.rgb_to_hsv(r/255, g/255, b/255)
-    r1, g1, b1 = colorsys.hsv_to_rgb((h + offset) % 1, s, v)
-    r2, g2, b2 = colorsys.hsv_to_rgb((h - offset) % 1, s, v)
-    return r2h(r1*255, g1*255, b1*255), r2h(r2*255, g2*255, b2*255)
-
 def darken(hex_code: str, factor: float = 0.65) -> str:
     r, g, b = h2r(hex_code)
     h, s, v = colorsys.rgb_to_hsv(r/255, g/255, b/255)
     r2, g2, b2 = colorsys.hsv_to_rgb(h, s, v * factor)
     return r2h(r2*255, g2*255, b2*255)
 
-def lighten(hex_code: str, factor: float = 1.3, max_v: float = 0.95) -> str:
+def lighten(hex_code: str, factor: float = 1.3, max_v: float = 0.98) -> str:
     r, g, b = h2r(hex_code)
     h, s, v = colorsys.rgb_to_hsv(r/255, g/255, b/255)
-    r2, g2, b2 = colorsys.hsv_to_rgb(h, max(s*0.7, 0), min(v * factor, max_v))
+    r2, g2, b2 = colorsys.hsv_to_rgb(h, max(s*0.75, 0.15), min(v * factor, max_v))
     return r2h(r2*255, g2*255, b2*255)
 
 def with_alpha(hex_code: str, alpha_hex: str = "AA") -> str:
-    return hex_code + alpha_hex
+    return hex_code.rstrip("#") + alpha_hex if not hex_code.startswith("#") else hex_code + alpha_hex
 
-def triadic(hex_code: str) -> tuple:
+def get_fg_for_bg(hex_color: str, dark: str = "#14161E", light: str = "#FFFFFF") -> str:
+    """Return high-contrast foreground color based on relative luminance."""
+    r, g, b = h2r(hex_color)
+    lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
+    return dark if lum > 0.50 else light
+
+# ─── Strict Semantic Palette Generator (NO INVERTED CHANNELS) ──────────────────
+def build_semantic_palette(accent_hex: str, highlight_hex: str):
+    """
+    Constructs a true 16-color ANSI and full semantic palette.
+    Guarantees:
+      - Red is RED (Hue 345°-15°)
+      - Green is GREEN (Hue 80°-155°)
+      - Yellow is YELLOW (Hue 40°-75°)
+      - Blue is BLUE (Hue 205°-255°)
+      - Magenta is MAGENTA (Hue 275°-345°)
+      - Cyan is CYAN (Hue 160°-200°)
+      - Orange is ORANGE (Hue 15°-40°)
+    Dynamically tunes the exact hue bucket of the wallpaper's accent/highlight
+    while keeping all other ANSI channels vibrant and true to their roles.
+    """
+    sem = {
+        "red":            "#FF5555",
+        "bright_red":     "#FF6E6E",
+        "orange":         "#FF9E64",
+        "yellow":         "#F1FA8C",
+        "bright_yellow":  "#FFFFA5",
+        "green":          "#50FA7B",
+        "bright_green":   "#69FF94",
+        "cyan":           "#00F5D4",
+        "bright_cyan":    "#56D4E8",
+        "blue":           "#7AA2F7",
+        "bright_blue":    "#9AB8FF",
+        "magenta":        "#EF02F5",
+        "bright_magenta": "#FF92DF",
+        "brown":          "#75493D",
+    }
+
+    # Dynamically inject vibrant wallpaper colors into matching hue buckets
+    for col in [accent_hex, highlight_hex]:
+        r, g, b = h2r(col)
+        h, s, v = colorsys.rgb_to_hsv(r/255, g/255, b/255)
+        if s > 0.20 and v > 0.25:
+            if h < 0.05 or h >= 0.95:  # Red
+                sem["red"] = col
+                sem["bright_red"] = lighten(col, 1.2)
+            elif 0.05 <= h < 0.12:    # Orange
+                sem["orange"] = col
+            elif 0.12 <= h < 0.21:    # Yellow / Gold
+                sem["yellow"] = col
+                sem["bright_yellow"] = lighten(col, 1.2)
+            elif 0.21 <= h < 0.43:    # Green
+                sem["green"] = col
+                sem["bright_green"] = lighten(col, 1.2)
+            elif 0.43 <= h < 0.55:    # Cyan / Teal
+                sem["cyan"] = col
+                sem["bright_cyan"] = lighten(col, 1.2)
+            elif 0.55 <= h < 0.70:    # Blue
+                sem["blue"] = col
+                sem["bright_blue"] = lighten(col, 1.2)
+            elif 0.70 <= h < 0.95:    # Magenta / Violet / Purple
+                sem["magenta"] = col
+                sem["bright_magenta"] = lighten(col, 1.2)
+
+    return sem
+
+sem = build_semantic_palette(accent, highlight)
+accent_comp = complementary(accent)
+
+# Dark backgrounds and crisp text
+dark_bg    = "#0E1017"
+darker_bg  = "#090A0F"
+lighter_bg = "#1D202B"
+bg_mid     = "#1A1D2A"
+bg_mid2    = "#212536"
+selection_bg = "#282D42"
+
+dark_fg    = "#565F76"
+light_fg   = "#BAC2DE"
+bright_fg  = "#FFFFFF"
+muted      = "#616367"
+
+def get_best_icon_theme(hex_code: str) -> str:
+    """Map hue to verified existing installed icon themes (Yaru-*-dark / Yaru-*)."""
     r, g, b = h2r(hex_code)
     h, s, v = colorsys.rgb_to_hsv(r/255, g/255, b/255)
-    r1,g1,b1 = colorsys.hsv_to_rgb((h+1/3)%1, s, v)
-    r2,g2,b2 = colorsys.hsv_to_rgb((h+2/3)%1, s, v)
-    return r2h(r1*255,g1*255,b1*255), r2h(r2*255,g2*255,b2*255)
+    if 0.95 <= h or h < 0.05:
+        candidates = ["Yaru-red-dark", "Yaru-red", "Yaru-dark"]
+    elif 0.05 <= h < 0.12:
+        candidates = ["Yaru-wartybrown-dark", "Yaru-dark", "Yaru-wartybrown", "Yaru"]
+    elif 0.12 <= h < 0.20:
+        candidates = ["Yaru-yellow-dark", "Yaru-yellow", "Yaru-dark"]
+    elif 0.20 <= h < 0.40:
+        candidates = ["Yaru-prussiangreen-dark", "Yaru-sage-dark", "Yaru-olive-dark", "Yaru-prussiangreen"]
+    elif 0.40 <= h < 0.55:
+        candidates = ["Yaru-prussiangreen-dark", "Yaru-blue-dark", "Yaru-blue"]
+    elif 0.55 <= h < 0.68:
+        candidates = ["Yaru-blue-dark", "Yaru-blue"]
+    elif 0.68 <= h < 0.78:
+        candidates = ["Yaru-purple-dark", "Yaru-purple"]
+    elif 0.78 <= h < 0.95:
+        candidates = ["Yaru-magenta-dark", "Yaru-magenta"]
+    else:
+        candidates = ["Yaru-red-dark", "Yaru-red", "Yaru-dark"]
 
-# Computed palette
-accent_comp  = complementary(accent)     # 180° complement of accent
-accent_dark  = darken(accent, 0.7)
-accent_light = lighten(accent)
-cursor_comp  = complementary(cursor)
-highlight_comp = complementary(highlight)
-tri1, tri2   = triadic(accent)
-ana1, ana2   = analogous(accent)
+    for c in candidates:
+        for prefix in ["/usr/share/icons", f"{HOME}/.local/share/icons", f"{HOME}/.icons"]:
+            if os.path.exists(f"{prefix}/{c}"):
+                return c
+    return candidates[0]
 
-# Mid-tone bg variants
-bg_mid  = "#1A1C26"   # slightly lighter bg
-bg_mid2 = "#1E2030"   # card/panel bg
-bg_sel  = "#252840"   # selection bg
+icon_theme_name = get_best_icon_theme(accent)
 
-# Accent with alpha for GTK/CSS backgrounds
-accent_12 = with_alpha(accent, "1F")
-accent_22 = with_alpha(accent, "38")
-accent_44 = with_alpha(accent, "70")
-
-print(f"[dandadan] wallpaper {active_idx} — {vibe}")
-print(f"  accent={accent}  cursor={cursor}  highlight={highlight}")
-print(f"  complement={accent_comp}  triadic=({tri1},{tri2})")
+print(f"[dandadan] Wallpaper {active_idx} — {vibe}")
+print(f"  accent={accent}  highlight={highlight}  comp={accent_comp}")
+print(f"  red={sem['red']}  green={sem['green']}  yellow={sem['yellow']}  blue={sem['blue']}")
 
 def write(path: str, content: str):
     try:
@@ -153,367 +234,352 @@ def write_both(filename: str, content: str):
     for curr in STATE_CURR_DIRS:
         write(f"{curr}/{filename}", content)
 
-
 # ══════════════════════════════════════════════════════════════════════════════
-# 1 · WAYBAR — per-wallpaper full CSS (not just variables)
+# 1 · COLORS.TOML (Omarchy 4.0 Standard Semantic Specification)
 # ══════════════════════════════════════════════════════════════════════════════
-waybar_css = f"""/* DANDADAN Waybar — Wallpaper {active_idx}: {vibe}
-   accent={accent}  cursor={cursor}  highlight={highlight}  comp={accent_comp}
-*/
+colors_toml = f"""# DANDADAN Colors — Wallpaper {active_idx}: {vibe}
+mode = "dark"
 
-/* ── Core color variables ─────────────────────────────────────────── */
-@define-color background  {bg};
-@define-color foreground  {fg};
-@define-color accent      {accent};
-@define-color cursor      {cursor};
-@define-color highlight   {highlight};
-@define-color comp        {accent_comp};
-@define-color accent_dark {accent_dark};
+accent = "{accent}"
+selection = "{selection_bg}"
+muted = "{muted}"
 
-* {{
-  border: none;
-  border-radius: 0;
-  min-height: 0;
-  font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', monospace;
-  font-size: 13px;
-  font-weight: bold;
-}}
+background = "{bg}"
+dark_background = "{dark_bg}"
+darker_background = "{darker_bg}"
+lighter_background = "{lighter_bg}"
 
-/* ── Bar window ──────────────────────────────────────────────────── */
-window#waybar {{
-  background-color: alpha(@background, 0.40);
-  border-bottom: 1px solid alpha(@accent, 0.40);
-  transition: background-color 0.5s ease, border-color 0.5s ease;
-}}
+foreground = "{fg}"
+dark_foreground = "{dark_fg}"
+light_foreground = "{light_fg}"
+bright_foreground = "{bright_fg}"
 
-window#waybar.hidden {{ opacity: 0.2; }}
+red = "{sem['red']}"
+yellow = "{sem['yellow']}"
+orange = "{sem['orange']}"
+green = "{sem['green']}"
+cyan = "{sem['cyan']}"
+blue = "{sem['blue']}"
+magenta = "{sem['magenta']}"
+brown = "{sem['brown']}"
 
-/* ── Floating Island Pill Containers ────────────────────────────── */
-#group-left-container {{
-  background-color: alpha(white, 0.07);
-  border: 1px solid alpha(@accent, 0.35);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  margin: 0 10px 4px 14px;
-  padding: 4px 20px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}}
-
-#group-center-container {{
-  background-color: alpha(white, 0.07);
-  border: 1px solid alpha(@accent, 0.35);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  margin: 0 10px 4px 10px;
-  padding: 4px 20px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}}
-
-#group-right-container {{
-  background-color: alpha(white, 0.07);
-  border: 1px solid alpha(@accent, 0.35);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  margin: 0 14px 4px 10px;
-  padding: 4px 24px 4px 20px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}}
-
-#group-left-container:hover,
-#group-center-container:hover,
-#group-right-container:hover {{
-  background-color: alpha(@accent, 0.11);
-  border-color: alpha(@accent, 0.60);
-  box-shadow: 0 0 28px alpha(@accent, 0.35),
-              inset 0 1px 0 alpha(@accent, 0.25);
-}}
-
-/* ── Omarchy logo ────────────────────────────────────────────────── */
-#custom-omarchy {{
-  color: {accent};
-  font-size: 17px;
-  padding: 0 12px 0 4px;
-  margin-right: 8px;
-  border-right: 1px solid alpha(white, 0.20);
-  transition: color 0.2s, text-shadow 0.2s;
-}}
-#custom-omarchy:hover {{
-  color: {cursor};
-  text-shadow: 0 0 14px {cursor}, 0 0 28px {accent};
-}}
-
-/* ── Workspaces ──────────────────────────────────────────────────── */
-#workspaces {{ padding: 0 6px; margin: 0 4px; background: transparent; }}
-
-#workspaces button {{
-  color: alpha(white, 0.65);
-  font-size: 14px;
-  padding: 0 6px; margin: 0 2px;
-  background: transparent;
-  border: none; box-shadow: none;
-  transition: all 0.2s ease;
-  border-radius: 6px;
-}}
-#workspaces button:hover {{
-  color: white;
-  background: alpha({accent}, 0.12);
-}}
-#workspaces button.active {{
-  color: {accent};
-  font-size: 15px; font-weight: 900;
-  text-shadow: 0 0 12px {accent}, 0 0 24px {cursor};
-}}
-#workspaces button.urgent {{
-  color: #FF454F;
-  text-shadow: 0 0 10px #FF454F;
-}}
-#workspaces button.empty {{ opacity: 0.40; }}
-
-/* ── Active window ───────────────────────────────────────────────── */
-#custom-active_window, #hyprland-window {{
-  color: alpha(white, 0.88);
-  padding-left: 12px;
-  margin-left: 4px;
-  border-left: 1px solid alpha({accent}, 0.35);
-  font-size: 12px; font-weight: 400;
-}}
-
-/* ── Media / MPRIS ───────────────────────────────────────────────── */
-#custom-mpris, #mpris {{
-  color: {highlight};
-  font-style: italic;
-  font-weight: 600;
-  padding: 0 14px;
-  transition: color 0.3s;
-}}
-#custom-mpris:hover, #mpris:hover {{ color: {accent}; }}
-
-/* ── Indicators & Hyprwhispr Voice ───────────────────────────────── */
-#custom-hyprwhispr,
-#custom-voxtype {{
-  color: {accent};
-  padding: 0 6px;
-  margin: 0 1px;
-  font-size: 13px;
-  transition: color 0.3s;
-}}
-#custom-hyprwhispr.recording,
-#custom-voxtype.recording {{
-  color: #FF454F;
-  text-shadow: 0 0 8px #FF454F;
-  animation: blink 1s step-end infinite;
-}}
-#custom-idle-indicator,
-#custom-notification-silencing-indicator,
-#custom-update {{
-  color: {accent_comp};
-  padding: 0 6px;
-  margin: 0 1px;
-}}
-#custom-screenrecording-indicator {{
-  color: #FF454F;
-  padding: 0 6px;
-  margin: 0 1px;
-  text-shadow: 0 0 8px #FF454F;
-}}
-
-/* ── Clock (Single Line Horizontal) ──────────────────────────────── */
-#clock, #custom-clock {{
-  color: {accent};
-  padding: 0 12px;
-  margin: 0 4px;
-  font-weight: bold;
-  font-size: 13px;
-  transition: color 0.3s;
-}}
-#clock:hover, #custom-clock:hover {{ color: {cursor}; }}
-
-/* ── Weather ─────────────────────────────────────────────────────── */
-#custom-weather {{
-  color: {accent_comp};
-  padding: 0 8px;
-  margin: 0 2px;
-}}
-
-/* ── CPU ─────────────────────────────────────────────────────────── */
-#cpu {{
-  color: {highlight};
-  margin: 0 6px;
-  transition: color 0.3s;
-}}
-#cpu.warning {{ color: #FFA726; }}
-#cpu.critical {{ color: #FF454F; text-shadow: 0 0 6px #FF454F; }}
-
-/* ── Memory ──────────────────────────────────────────────────────── */
-#memory {{
-  color: {cursor};
-  margin: 0 6px;
-  transition: color 0.3s;
-}}
-#memory.warning {{ color: #FFA726; }}
-#memory.critical {{ color: #FF454F; }}
-
-/* ── Audio ───────────────────────────────────────────────────────── */
-#pulseaudio, #wireplumber {{
-  color: {accent};
-  margin: 0 6px;
-  transition: color 0.3s;
-}}
-#pulseaudio.muted, #wireplumber.muted {{ color: alpha(white, 0.35); }}
-
-/* ── Battery ─────────────────────────────────────────────────────── */
-#battery {{
-  color: {cursor};
-  margin: 0 6px;
-  transition: color 0.4s;
-}}
-#battery.charging {{ color: #4CAF50; text-shadow: 0 0 8px #4CAF50; }}
-#battery.warning:not(.charging) {{ color: #FFA726; }}
-#battery.critical:not(.charging) {{
-  color: #FF454F;
-  text-shadow: 0 0 8px #FF454F;
-  animation: blink 1s step-end infinite;
-}}
-@keyframes blink {{ 50% {{ opacity: 0; }} }}
-
-/* ── Network & Bluetooth Icons (Generous Spacing & Centered Icons) ── */
-#network, #bluetooth {{
-  color: {fg};
-  padding: 0 8px;
-  margin: 0 4px;
-  min-width: 18px;
-}}
-#network.disconnected {{ color: alpha(white, 0.3); }}
-#bluetooth.connected {{ color: {accent}; }}
-#bluetooth.disabled {{ color: alpha(white, 0.28); }}
-
-/* ── Tray ────────────────────────────────────────────────────────── */
-#tray {{ margin: 0 8px 0 6px; padding: 0 6px; }}
-#tray > .passive {{ -gtk-icon-effect: dim; }}
-#tray > .needs-attention {{
-  -gtk-icon-effect: highlight;
-  background-color: alpha({cursor}, 0.18);
-  border-radius: 4px;
-}}
-
-/* ── Tooltip ─────────────────────────────────────────────────────── */
-tooltip {{
-  background: alpha({bg}, 0.96);
-  border: 1px solid {accent};
-  border-radius: 10px;
-  box-shadow: 0 6px 22px rgba(0,0,0,0.5);
-}}
-tooltip label {{ color: {fg}; }}
+bright_red = "{sem['bright_red']}"
+bright_yellow = "{sem['bright_yellow']}"
+bright_green = "{sem['bright_green']}"
+bright_cyan = "{sem['bright_cyan']}"
+bright_blue = "{sem['bright_blue']}"
+bright_magenta = "{sem['bright_magenta']}"
 """
-
-write_both("waybar.css", waybar_css)
-wallpapers_css = (
-    f"/* Dandadan Wallpaper {active_idx} - {vibe} */\n"
-    f"@define-color background {bg};\n"
-    f"@define-color foreground {fg};\n"
-    f"@define-color accent {accent};\n"
-    f"@define-color cursor {cursor};\n"
-    f"@define-color highlight {highlight};\n"
-)
-write(f"{HOME}/.config/waybar/wallpapers.css", wallpapers_css)
-write_both("wallpapers.css", wallpapers_css)
-
-# Deploy style.css to waybar
-write(f"{HOME}/.config/waybar/style.css",
-    f'@import "{HOME}/.config/omarchy/current/theme/waybar.css";\n')
-
+write_both("colors.toml", colors_toml)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 2 · MAKO notifications
+# 2 · QUICKSHELL shell.toml & shell.lock.toml
 # ══════════════════════════════════════════════════════════════════════════════
-mako = f"""text-color={fg}
-border-color={accent}
-background-color={bg}
-border-radius=14
-width=420
-height=110
-padding=12
-border-size=2
-font=Liberation Sans 11
-anchor=top-right
-outer-margin=20
-default-timeout=5000
-max-icon-size=32
-[app-name=Spotify]
-invisible=1
-[mode=do-not-disturb]
-invisible=true
-[mode=do-not-disturb app-name=notify-send]
-invisible=false
+shell_toml = f"""# DANDADAN Omarchy 4.0 Quickshell Surface Styling — Wallpaper {active_idx}: {vibe}
+
+[bar]
+background       = "{bg}"
+background-alpha = 0.92
+text             = "{fg}"
+active           = "{sem['red']}"
+scale-with-font  = true
+size-horizontal  = 30
+size-vertical    = 32
+
+[hyprland]
+active-border            = "{accent} {accent_comp} 45deg"
+active-border-foreground = "{fg}"
+
+[controls]
+normal-color        = "{fg}"
+normal-fill-alpha   = 0.05
+normal-border       = "{fg}"
+normal-border-width = 1
+normal-border-alpha = 0.35
+
+hover-cursor-color        = "{bright_fg}"
+hover-cursor-fill-alpha   = 0.12
+hover-cursor-border       = "{accent}"
+hover-cursor-border-width = 1
+hover-cursor-border-alpha = 0.50
+
+focus-color        = "{bright_fg}"
+focus-fill-alpha   = 0.12
+focus-border       = "{accent}"
+focus-border-width = 1
+focus-border-alpha = 0.50
+
+selected-color        = "{bright_fg}"
+selected-fill-alpha   = 0.22
+selected-border       = "{accent}"
+selected-border-width = 1
+selected-border-alpha = 0.80
+
+pressed-fill-alpha   = 0.28
+selection-fill-alpha = 0.35
+
+[spacing]
+scale           = 1.0
+scale-with-font = true
+
+[font]
+base-size = 12
+
+[popups]
+background       = "{bg}"
+background-alpha = 0.95
+text             = "{fg}"
+border           = "{accent}"
+border-alpha     = 0.80
+border-width     = 1
+
+[tooltip]
+background       = "{bg}"
+background-alpha = 0.96
+text             = "{fg}"
+border           = "{accent}"
+border-alpha     = 0.70
+
+[notifications]
+background       = "{bg}"
+background-alpha = 0.95
+text             = "{fg}"
+border           = "{accent}"
+border-alpha     = 0.85
+border-width     = 1
+countdown        = "{accent}"
+
+[launcher]
+background                = "{bg}"
+background-alpha          = 0.95
+text                      = "{fg}"
+border                    = "{accent}"
+border-alpha              = 0.75
+scrim                     = "{bg}"
+scrim-alpha               = 0.55
+selected-background       = "{fg}"
+selected-background-alpha = 0.10
+selected-text             = "{accent}"
+selected-border           = "{accent}"
+selected-border-alpha     = 0.40
+
+[menu]
+background                = "{bg}"
+background-alpha          = 0.95
+text                      = "{fg}"
+border                    = "{accent}"
+border-alpha              = 0.75
+scrim                     = "{bg}"
+scrim-alpha               = 0.55
+selected-background       = "{fg}"
+selected-background-alpha = 0.10
+selected-text             = "{accent}"
+selected-border           = "{accent}"
+selected-border-alpha     = 0.40
+
+[polkit]
+background       = "{bg}"
+background-alpha = 0.96
+text             = "{fg}"
+text-error       = "{sem['red']}"
+border           = "{accent}"
+border-error     = "{sem['red']}"
+border-alpha     = 0.90
+scrim            = "{bg}"
+scrim-alpha      = 0.60
+accent           = "{accent}"
+
+[lock]
+background       = "{bg}"
+background-alpha = 0.85
+text             = "{fg}"
+placeholder      = "#8B90A0"
+text-error       = "{sem['red']}"
+border           = "{accent}"
+border-active    = "{accent}"
+border-error     = "{sem['red']}"
+border-alpha     = 0.90
+selection        = "{accent}"
+selection-alpha  = 0.45
+
+[image-picker]
+scrim                   = "{bg}"
+scrim-alpha             = 0.55
+text                    = "{fg}"
+selected-border         = "{accent}"
+selected-border-alpha   = 1.0
+unselected-border       = "{fg}"
+unselected-border-alpha = 0.30
 """
-write_both("mako.ini", mako)
+write_both("shell.toml", shell_toml)
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 3 · SWAYOSD OSD overlay
-# ══════════════════════════════════════════════════════════════════════════════
-swayosd = f"""@define-color background-color {bg};
-@define-color border-color {accent};
-@define-color label {fg};
-@define-color image {cursor};
-@define-color progress {accent};
-
-window {{
-  border-radius: 14px;
-  border: 2px solid @border-color;
-  background-color: alpha(@background-color, 0.92);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-  padding: 10px;
-}}
-label  {{ color: @label; }}
-image  {{ color: @image; }}
-progressbar {{ border-radius: 12px; }}
-progress {{ background-color: @progress; border-radius: 12px; }}
+shell_lock_toml = f"""text             = "{fg}"
+placeholder      = "#8B90A0"
+text-error       = "{sem['red']}"
+border           = "{accent}"
+border-active    = "{accent}"
+border-error     = "{sem['red']}"
 """
-write_both("swayosd.css", swayosd)
-
+write_both("shell.lock.toml", shell_lock_toml)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 4 · HYPRLOCK lock screen
+# 3 · KITTY Terminal (No Inversion, Dark BG, True ANSI Mapping)
 # ══════════════════════════════════════════════════════════════════════════════
-br, bg2, bb = h2r(bg)
-fr, fg2, fb = h2r(fg)
-hyprlock = f"""$color           = rgb({bg.lstrip('#')})
-$inner_color     = rgba({br}, {bg2}, {bb}, 0.88)
-$outer_color     = rgb({accent.lstrip('#')})
-$accent_color    = rgb({cursor.lstrip('#')})
-$font_color      = rgb({fg.lstrip('#')})
-$placeholder_color = rgba({fr}, {fg2}, {fb}, 0.50)
-$check_color     = rgb({highlight.lstrip('#')})
+kitty = f"""# DANDADAN Kitty — Wallpaper {active_idx}: {vibe}
+background {bg}
+foreground {fg}
 
-background {{
-    blur_passes = 3
-    blur_size   = 8
-    vibrancy    = 0.85
-    vibrancy_darkness = 0.3
-}}
+cursor            {accent}
+cursor_text_color {get_fg_for_bg(accent)}
+
+selection_background {selection_bg}
+selection_foreground {fg}
+
+url_color {sem['cyan']}
+
+active_border_color   {accent}
+inactive_border_color {muted}
+bell_border_color     {sem['red']}
+
+active_tab_background   {accent}
+active_tab_foreground   {get_fg_for_bg(accent)}
+inactive_tab_background {bg_mid}
+inactive_tab_foreground #A0A5B5
+tab_bar_background      {bg}
+
+color0  {bg}
+color1  {sem['red']}
+color2  {sem['green']}
+color3  {sem['yellow']}
+color4  {sem['blue']}
+color5  {sem['magenta']}
+color6  {sem['cyan']}
+color7  {fg}
+
+color8  {muted}
+color9  {sem['bright_red']}
+color10 {sem['bright_green']}
+color11 {sem['bright_yellow']}
+color12 {sem['bright_blue']}
+color13 {sem['bright_magenta']}
+color14 {sem['bright_cyan']}
+color15 {bright_fg}
 """
-write_both("hyprlock.conf", hyprlock)
-
+write_both("kitty.conf", kitty)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 5 · HYPRLAND borders + hyprland.lua
+# 4 · ALACRITTY Terminal
 # ══════════════════════════════════════════════════════════════════════════════
-hyprland_conf = f"""general {{
-    col.active_border   = rgb({accent.lstrip('#')}) rgb({cursor.lstrip('#')}) 45deg
-    col.inactive_border = rgba(97,99,103,0.45)
-}}
+alacritty = f"""[colors.primary]
+background = "{bg}"
+foreground = "{fg}"
+
+[colors.cursor]
+cursor = "{accent}"
+text   = "{get_fg_for_bg(accent)}"
+
+[colors.selection]
+background = "{selection_bg}"
+foreground = "{fg}"
+
+[colors.search.matches]
+foreground = "{bg}"
+background = "{sem['yellow']}"
+
+[colors.search.focused_match]
+foreground = "{bg}"
+background = "{sem['red']}"
+
+[colors.footer_bar]
+background = "{bg_mid}"
+foreground = "{fg}"
+
+[colors.normal]
+black   = "{bg}"
+red     = "{sem['red']}"
+green   = "{sem['green']}"
+yellow  = "{sem['yellow']}"
+blue    = "{sem['blue']}"
+magenta = "{sem['magenta']}"
+cyan    = "{sem['cyan']}"
+white   = "{fg}"
+
+[colors.bright]
+black   = "{muted}"
+red     = "{sem['bright_red']}"
+green   = "{sem['bright_green']}"
+yellow  = "{sem['bright_yellow']}"
+blue    = "{sem['bright_blue']}"
+magenta = "{sem['bright_magenta']}"
+cyan    = "{sem['bright_cyan']}"
+white   = "{bright_fg}"
 """
-write_both("hyprland.conf", hyprland_conf)
+write_both("alacritty.toml", alacritty)
 
-# hyprland.lua — Hyprland Lua config (new parser)
-border_c2 = cursor.lstrip('#') if cursor != accent else accent_comp.lstrip('#')
+# ══════════════════════════════════════════════════════════════════════════════
+# 5 · FOOT Terminal
+# ══════════════════════════════════════════════════════════════════════════════
+foot = f"""[colors]
+background={bg.lstrip('#')}
+foreground={fg.lstrip('#')}
+cursor={accent.lstrip('#')} {get_fg_for_bg(accent).lstrip('#')}
+selection-target={selection_bg.lstrip('#')} {fg.lstrip('#')}
+
+regular0={bg.lstrip('#')}
+regular1={sem['red'].lstrip('#')}
+regular2={sem['green'].lstrip('#')}
+regular3={sem['yellow'].lstrip('#')}
+regular4={sem['blue'].lstrip('#')}
+regular5={sem['magenta'].lstrip('#')}
+regular6={sem['cyan'].lstrip('#')}
+regular7={fg.lstrip('#')}
+
+bright0={muted.lstrip('#')}
+bright1={sem['bright_red'].lstrip('#')}
+bright2={sem['bright_green'].lstrip('#')}
+bright3={sem['bright_yellow'].lstrip('#')}
+bright4={sem['bright_blue'].lstrip('#')}
+bright5={sem['bright_magenta'].lstrip('#')}
+bright6={sem['bright_cyan'].lstrip('#')}
+bright7={bright_fg.lstrip('#')}
+"""
+write_both("foot.ini", foot)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# 6 · GHOSTTY Terminal
+# ══════════════════════════════════════════════════════════════════════════════
+ghostty = f"""# DANDADAN Ghostty — Wallpaper {active_idx}: {vibe}
+background           = {bg.lstrip('#')}
+foreground           = {fg.lstrip('#')}
+cursor-color         = {accent.lstrip('#')}
+cursor-text          = {get_fg_for_bg(accent).lstrip('#')}
+selection-background = {selection_bg.lstrip('#')}
+selection-foreground = {fg.lstrip('#')}
+
+palette = 0=#{bg.lstrip('#')}
+palette = 1=#{sem['red'].lstrip('#')}
+palette = 2=#{sem['green'].lstrip('#')}
+palette = 3=#{sem['yellow'].lstrip('#')}
+palette = 4=#{sem['blue'].lstrip('#')}
+palette = 5=#{sem['magenta'].lstrip('#')}
+palette = 6=#{sem['cyan'].lstrip('#')}
+palette = 7=#{fg.lstrip('#')}
+
+palette = 8=#{muted.lstrip('#')}
+palette = 9=#{sem['bright_red'].lstrip('#')}
+palette = 10=#{sem['bright_green'].lstrip('#')}
+palette = 11=#{sem['bright_yellow'].lstrip('#')}
+palette = 12=#{sem['bright_blue'].lstrip('#')}
+palette = 13=#{sem['bright_magenta'].lstrip('#')}
+palette = 14=#{sem['bright_cyan'].lstrip('#')}
+palette = 15=#{bright_fg.lstrip('#')}
+"""
+write_both("ghostty.conf", ghostty)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# 7 · HYPRLAND Lua & Conf
+# ══════════════════════════════════════════════════════════════════════════════
+border_c2 = accent_comp.lstrip('#') if accent_comp != accent else cursor.lstrip('#')
 hyprland_lua = f"""local active_border_color = {{ colors = {{ "rgb({accent.lstrip('#')})", "rgb({border_c2})" }}, angle = 45 }}
 local inactive_border_color = "rgba(61636780)"
 local active_shadow_color = "rgba({accent.lstrip('#')}66)"
@@ -546,232 +612,82 @@ hl.config({{
 """
 write_both("hyprland.lua", hyprland_lua)
 
-try:
-    c1, c2 = accent.lstrip("#"), cursor.lstrip("#")
-    subprocess.run(["hyprctl", "keyword", "general:col.active_border",
-                    f"rgb({c1}) rgb({c2}) 45deg"],
-                   capture_output=True)
-except Exception:
-    pass
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 6 · ALACRITTY terminal
-# ══════════════════════════════════════════════════════════════════════════════
-# Build a vivid 16-color palette derived from accent + complement
-r1, g1, b1 = h2r(accent)
-r2, g2, b2 = h2r(accent_comp)
-# Normal colors: bg, red(cursor), green(highlight), yellow(ana1), blue(tri1), magenta(accent), cyan(tri2), fg
-# Bright: brighter variants
-alacritty = f"""[colors.primary]
-background = "{bg}"
-foreground = "{fg}"
-
-[colors.cursor]
-cursor = "{cursor}"
-text   = "#FFFFFF"
-
-[colors.selection]
-background = "{accent}"
-foreground = "{fg}"
-
-[colors.search.matches]
-foreground = "#FFFFFF"
-background = "{cursor}"
-
-[colors.search.focused_match]
-foreground = "{bg}"
-background = "{accent}"
-
-[colors.footer_bar]
-background = "{bg_mid}"
-foreground = "{fg}"
-
-[colors.normal]
-black   = "{bg}"
-red     = "{cursor}"
-green   = "{highlight}"
-yellow  = "{ana1}"
-blue    = "{tri1}"
-magenta = "{accent}"
-cyan    = "{tri2}"
-white   = "{fg}"
-
-[colors.bright]
-black   = "#616367"
-red     = "{lighten(cursor)}"
-green   = "{lighten(highlight)}"
-yellow  = "{lighten(ana1)}"
-blue    = "{lighten(tri1)}"
-magenta = "{lighten(accent)}"
-cyan    = "{lighten(tri2)}"
-white   = "#FFFFFF"
+hyprland_conf = f"""# DANDADAN Hyprland — Wallpaper {active_idx}: {vibe}
+$active_border_color = rgb({accent.lstrip('#')}) rgb({border_c2}) 45deg
+$inactive_border_color = rgba(61636780)
+$shadow_color = rgba({accent.lstrip('#')}66)
 """
-write_both("alacritty.toml", alacritty)
+write_both("hyprland.conf", hyprland_conf)
 
+hyprlock_conf = f"""$color           = rgb({bg.lstrip('#')})
+$inner_color     = rgba(20, 22, 30, 0.88)
+$outer_color     = rgb({accent.lstrip('#')})
+$accent_color    = rgb({accent.lstrip('#')})
+$font_color      = rgb({fg.lstrip('#')})
+$placeholder_color = rgba(240, 244, 252, 0.50)
+$check_color     = rgb({sem['blue'].lstrip('#')})
 
-# ══════════════════════════════════════════════════════════════════════════════
-# 7 · KITTY terminal
-# ══════════════════════════════════════════════════════════════════════════════
-kitty = f"""# DANDADAN Kitty — Wallpaper {active_idx}: {vibe}
-background {bg}
-foreground {fg}
-
-cursor            {cursor}
-cursor_text_color #FFFFFF
-
-selection_background {with_alpha(accent,'66')}
-selection_foreground {fg}
-
-url_color {accent_comp}
-
-active_border_color   {accent}
-inactive_border_color #616367
-bell_border_color     {cursor}
-
-active_tab_background   {accent}
-active_tab_foreground   #FFFFFF
-inactive_tab_background {bg_mid}
-inactive_tab_foreground #A0A5B5
-tab_bar_background      {bg}
-
-color0  {bg}
-color1  {cursor}
-color2  {highlight}
-color3  {ana1}
-color4  {tri1}
-color5  {accent}
-color6  {tri2}
-color7  {fg}
-
-color8  #616367
-color9  {lighten(cursor)}
-color10 {lighten(highlight)}
-color11 {lighten(ana1)}
-color12 {lighten(tri1)}
-color13 {lighten(accent)}
-color14 {lighten(tri2)}
-color15 #FFFFFF
+background {{
+    blur_passes = 3
+    blur_size   = 8
+    vibrancy    = 0.85
+    vibrancy_darkness = 0.3
+}}
 """
-write_both("kitty.conf", kitty)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 8 · FOOT terminal
-# ══════════════════════════════════════════════════════════════════════════════
-foot = f"""[colors]
-background={bg.lstrip('#')}
-foreground={fg.lstrip('#')}
-cursor={cursor.lstrip('#')} FFFFFF
-selection-target={accent.lstrip('#')}66 {fg.lstrip('#')}
-
-regular0={bg.lstrip('#')}
-regular1={cursor.lstrip('#')}
-regular2={highlight.lstrip('#')}
-regular3={ana1.lstrip('#')}
-regular4={tri1.lstrip('#')}
-regular5={accent.lstrip('#')}
-regular6={tri2.lstrip('#')}
-regular7={fg.lstrip('#')}
-
-bright0=616367
-bright1={lighten(cursor).lstrip('#')}
-bright2={lighten(highlight).lstrip('#')}
-bright3={lighten(ana1).lstrip('#')}
-bright4={lighten(tri1).lstrip('#')}
-bright5={lighten(accent).lstrip('#')}
-bright6={lighten(tri2).lstrip('#')}
-bright7=FFFFFF
-"""
-write_both("foot.ini", foot)
-
+write_both("hyprlock.conf", hyprlock_conf)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 9 · GHOSTTY terminal
-# ══════════════════════════════════════════════════════════════════════════════
-ghostty = f"""# DANDADAN Ghostty — Wallpaper {active_idx}: {vibe}
-background           = {bg.lstrip('#')}
-foreground           = {fg.lstrip('#')}
-cursor-color         = {cursor.lstrip('#')}
-cursor-text          = FFFFFF
-selection-background = {accent.lstrip('#')}66
-selection-foreground = {fg.lstrip('#')}
-
-palette = 0=#{bg.lstrip('#')}
-palette = 1=#{cursor.lstrip('#')}
-palette = 2=#{highlight.lstrip('#')}
-palette = 3=#{ana1.lstrip('#')}
-palette = 4=#{tri1.lstrip('#')}
-palette = 5=#{accent.lstrip('#')}
-palette = 6=#{tri2.lstrip('#')}
-palette = 7=#{fg.lstrip('#')}
-
-palette = 8=#616367
-palette = 9=#{lighten(cursor).lstrip('#')}
-palette = 10=#{lighten(highlight).lstrip('#')}
-palette = 11=#{lighten(ana1).lstrip('#')}
-palette = 12=#{lighten(tri1).lstrip('#')}
-palette = 13=#{lighten(accent).lstrip('#')}
-palette = 14=#{lighten(tri2).lstrip('#')}
-palette = 15=#FFFFFF
-"""
-write_both("ghostty.conf", ghostty)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 10 · BTOP resource monitor
+# 8 · BTOP Resource Monitor
 # ══════════════════════════════════════════════════════════════════════════════
 btop = f"""# DANDADAN Btop — Wallpaper {active_idx}: {vibe}
 theme[main_bg]="{bg}"
 theme[main_fg]="{fg}"
 theme[title]="{accent}"
-theme[hi_fg]="{cursor}"
-theme[selected_bg]="{cursor}"
-theme[selected_fg]="#FFFFFF"
-theme[inactive_fg]="#616367"
-theme[proc_misc]="{accent_comp}"
+theme[hi_fg]="{accent}"
+theme[selected_bg]="{selection_bg}"
+theme[selected_fg]="{bright_fg}"
+theme[inactive_fg]="{muted}"
+theme[proc_misc]="{sem['magenta']}"
 theme[cpu_box]="{bg_mid}"
 theme[mem_box]="{bg_mid}"
 theme[net_box]="{bg_mid}"
 theme[proc_box]="{bg_mid}"
 theme[div_line]="{bg_mid}"
-theme[temp_start]="{highlight}"
-theme[temp_mid]="{cursor}"
-theme[temp_end]="{accent}"
-theme[cpu_start]="{highlight}"
-theme[cpu_mid]="{cursor}"
-theme[cpu_end]="{accent}"
-theme[free_start]="{highlight}"
-theme[free_mid]="{cursor}"
-theme[free_end]="{accent}"
-theme[cached_start]="{tri1}"
-theme[cached_mid]="{accent}"
-theme[cached_end]="{cursor}"
-theme[available_start]="{tri2}"
-theme[available_mid]="{highlight}"
+theme[temp_start]="{sem['green']}"
+theme[temp_mid]="{sem['yellow']}"
+theme[temp_end]="{sem['red']}"
+theme[cpu_start]="{sem['green']}"
+theme[cpu_mid]="{sem['yellow']}"
+theme[cpu_end]="{sem['red']}"
+theme[free_start]="{sem['green']}"
+theme[free_mid]="{sem['yellow']}"
+theme[free_end]="{sem['cyan']}"
+theme[cached_start]="{sem['blue']}"
+theme[cached_mid]="{sem['magenta']}"
+theme[cached_end]="{accent}"
+theme[available_start]="{sem['cyan']}"
+theme[available_mid]="{sem['green']}"
 theme[available_end]="{accent}"
-theme[used_start]="{cursor}"
-theme[used_mid]="{accent}"
-theme[used_end]="{darken(accent)}"
-theme[download_start]="{accent_comp}"
-theme[download_mid]="{highlight}"
-theme[download_end]="{cursor}"
-theme[upload_start]="{tri1}"
-theme[upload_mid]="{accent}"
-theme[upload_end]="{cursor}"
+theme[used_start]="{sem['green']}"
+theme[used_mid]="{sem['yellow']}"
+theme[used_end]="{sem['red']}"
+theme[download_start]="{sem['cyan']}"
+theme[download_mid]="{sem['blue']}"
+theme[download_end]="{sem['magenta']}"
+theme[upload_start]="{sem['yellow']}"
+theme[upload_mid]="{sem['orange']}"
+theme[upload_end]="{sem['red']}"
 theme[graph_text]="{fg}"
 theme[meter_bg]="{bg_mid}"
 theme[process_start]="{accent}"
-theme[process_mid]="{cursor}"
-theme[process_end]="{highlight}"
+theme[process_mid]="{sem['yellow']}"
+theme[process_end]="{sem['red']}"
 """
 write_both("btop.theme", btop)
 
-
 # ══════════════════════════════════════════════════════════════════════════════
-# 11 · VS CODE / Antigravity IDE
+# 9 · VS CODE / Antigravity IDE
 # ══════════════════════════════════════════════════════════════════════════════
-# Read existing vscode.json structure and update color keys only
 vscode_path = f"{THEME_DIR}/vscode.json"
 try:
     with open(vscode_path) as f:
@@ -780,18 +696,17 @@ except Exception:
     vscode_data = {"name": "Dandadan", "type": "dark", "colors": {}, "tokenColors": []}
 
 c = vscode_data.get("colors", {})
-# Update key colors
 updates = {
     "activityBar.background": bg,
     "activityBar.foreground": fg,
     "activityBar.activeBorder": accent,
-    "activityBar.inactiveForeground": "#616367",
-    "activityBarBadge.background": cursor,
-    "activityBarBadge.foreground": "#FFFFFF",
-    "badge.background": cursor,
-    "badge.foreground": "#FFFFFF",
+    "activityBar.inactiveForeground": muted,
+    "activityBarBadge.background": accent,
+    "activityBarBadge.foreground": get_fg_for_bg(accent),
+    "badge.background": accent,
+    "badge.foreground": get_fg_for_bg(accent),
     "button.background": accent,
-    "button.foreground": "#FFFFFF",
+    "button.foreground": get_fg_for_bg(accent),
     "button.hoverBackground": darken(accent),
     "button.secondaryBackground": highlight,
     "button.secondaryForeground": fg,
@@ -803,11 +718,11 @@ updates = {
     "editor.lineHighlightBackground": bg_mid,
     "editor.selectionBackground": with_alpha(accent, "44"),
     "editor.wordHighlightBackground": with_alpha(accent_comp, "22"),
-    "editor.findMatchBackground": with_alpha(cursor, "55"),
-    "editor.findMatchHighlightBackground": with_alpha(highlight, "33"),
-    "editorCursor.foreground": cursor,
+    "editor.findMatchBackground": with_alpha(sem['yellow'], "55"),
+    "editor.findMatchHighlightBackground": with_alpha(sem['cyan'], "33"),
+    "editorCursor.foreground": accent,
     "editorLineNumber.activeForeground": accent,
-    "editorLineNumber.foreground": "#616367",
+    "editorLineNumber.foreground": muted,
     "editorIndentGuide.activeBackground": with_alpha(accent, "60"),
     "editorIndentGuide.background": with_alpha(accent, "22"),
     "editorGroupHeader.tabsBackground": bg,
@@ -815,17 +730,17 @@ updates = {
     "tab.activeForeground": fg,
     "tab.activeBorderTop": accent,
     "tab.inactiveBackground": bg,
-    "tab.inactiveForeground": "#616367",
+    "tab.inactiveForeground": muted,
     "tab.border": bg_mid,
     "titleBar.activeBackground": bg,
     "titleBar.activeForeground": fg,
     "titleBar.inactiveBackground": bg,
     "titleBar.border": bg_mid,
     "statusBar.background": accent,
-    "statusBar.foreground": "#FFFFFF",
+    "statusBar.foreground": get_fg_for_bg(accent),
     "statusBar.border": accent,
-    "statusBarItem.remoteBackground": cursor,
-    "statusBarItem.remoteForeground": "#FFFFFF",
+    "statusBarItem.remoteBackground": accent,
+    "statusBarItem.remoteForeground": get_fg_for_bg(accent),
     "sideBar.background": bg,
     "sideBar.foreground": fg,
     "sideBar.border": bg_mid,
@@ -855,32 +770,32 @@ updates = {
     "terminal.background": bg,
     "terminal.foreground": fg,
     "terminal.ansiBlack": bg,
-    "terminal.ansiRed": cursor,
-    "terminal.ansiGreen": highlight,
-    "terminal.ansiYellow": ana1,
-    "terminal.ansiBlue": tri1,
-    "terminal.ansiMagenta": accent,
-    "terminal.ansiCyan": tri2,
+    "terminal.ansiRed": sem["red"],
+    "terminal.ansiGreen": sem["green"],
+    "terminal.ansiYellow": sem["yellow"],
+    "terminal.ansiBlue": sem["blue"],
+    "terminal.ansiMagenta": sem["magenta"],
+    "terminal.ansiCyan": sem["cyan"],
     "terminal.ansiWhite": fg,
-    "terminal.ansiBrightBlack": "#616367",
-    "terminal.ansiBrightRed": lighten(cursor),
-    "terminal.ansiBrightGreen": lighten(highlight),
-    "terminal.ansiBrightYellow": lighten(ana1),
-    "terminal.ansiBrightBlue": lighten(tri1),
-    "terminal.ansiBrightMagenta": lighten(accent),
-    "terminal.ansiBrightCyan": lighten(tri2),
-    "terminal.ansiBrightWhite": "#FFFFFF",
-    "gitDecoration.addedResourceForeground": highlight,
-    "gitDecoration.modifiedResourceForeground": accent_comp,
-    "gitDecoration.deletedResourceForeground": cursor,
-    "gitDecoration.untrackedResourceForeground": tri1,
-    "gitDecoration.ignoredResourceForeground": "#616367",
+    "terminal.ansiBrightBlack": muted,
+    "terminal.ansiBrightRed": sem["bright_red"],
+    "terminal.ansiBrightGreen": sem["bright_green"],
+    "terminal.ansiBrightYellow": sem["bright_yellow"],
+    "terminal.ansiBrightBlue": sem["bright_blue"],
+    "terminal.ansiBrightMagenta": sem["bright_magenta"],
+    "terminal.ansiBrightCyan": sem["bright_cyan"],
+    "terminal.ansiBrightWhite": bright_fg,
+    "gitDecoration.addedResourceForeground": sem["green"],
+    "gitDecoration.modifiedResourceForeground": sem["yellow"],
+    "gitDecoration.deletedResourceForeground": sem["red"],
+    "gitDecoration.untrackedResourceForeground": sem["cyan"],
+    "gitDecoration.ignoredResourceForeground": muted,
     "notifications.background": bg_mid,
     "notifications.border": accent,
     "notificationCenterHeader.background": bg,
     "notificationCenterHeader.foreground": accent,
     "extensionButton.prominentBackground": accent,
-    "extensionButton.prominentForeground": "#FFFFFF",
+    "extensionButton.prominentForeground": get_fg_for_bg(accent),
     "extensionButton.prominentHoverBackground": darken(accent),
     "progressBar.background": accent,
     "breadcrumb.foreground": "#A0A5B5",
@@ -894,8 +809,8 @@ updates = {
     "peekViewTitle.background": bg,
     "peekViewTitleLabel.foreground": accent,
     "peekViewTitleDescription.foreground": "#A0A5B5",
-    "merge.currentHeaderBackground": with_alpha(highlight, "44"),
-    "merge.currentContentBackground": with_alpha(highlight, "22"),
+    "merge.currentHeaderBackground": with_alpha(sem["green"], "44"),
+    "merge.currentContentBackground": with_alpha(sem["green"], "22"),
     "merge.incomingHeaderBackground": with_alpha(accent, "44"),
     "merge.incomingContentBackground": with_alpha(accent, "22"),
     "widget.shadow": "#00000066",
@@ -905,7 +820,7 @@ vscode_data["colors"] = c
 vscode_json_str = json.dumps(vscode_data, indent=2)
 write_both("vscode.json", vscode_json_str)
 
-# Sync Antigravity IDE, VS Code, VSCodium, Cursor theme extensions & settings.json
+# Sync Antigravity IDE / VS Code / Cursor extensions
 for ext_dir in [
     f"{HOME}/.vscode/extensions/dandadan-theme",
     f"{HOME}/.antigravity-ide/extensions/dandadan-theme",
@@ -917,59 +832,20 @@ for ext_dir in [
         themes_dir = f"{ext_dir}/themes"
         os.makedirs(themes_dir, exist_ok=True)
         write(f"{themes_dir}/dandadan-color-theme.json", vscode_json_str)
-        pkg_json = {
-            "name": "dandadan-theme",
-            "displayName": "Dandadan Theme",
-            "description": "Dynamic Dandadan anime-inspired dark theme",
-            "version": "2.0.0",
-            "publisher": "misternegative21",
-            "engines": {"vscode": "^1.60.0"},
-            "categories": ["Themes"],
-            "contributes": {
-                "themes": [{
-                    "label": "Dandadan",
-                    "uiTheme": "vs-dark",
-                    "path": "./themes/dandadan-color-theme.json"
-                }]
-            }
-        }
-        write(f"{ext_dir}/package.json", json.dumps(pkg_json, indent=2))
-
-for user_settings in [
-    f"{HOME}/.config/Antigravity IDE/User/settings.json",
-    f"{HOME}/.config/Antigravity/User/settings.json",
-    f"{HOME}/.config/Code/User/settings.json",
-    f"{HOME}/.config/VSCodium/User/settings.json",
-    f"{HOME}/.config/Cursor/User/settings.json",
-]:
-    if os.path.exists(os.path.dirname(user_settings)):
-        try:
-            st = {}
-            if os.path.exists(user_settings):
-                try:
-                    with open(user_settings, "r") as sf:
-                        st = json.load(sf)
-                except Exception:
-                    st = {}
-            st["workbench.colorTheme"] = "Dandadan"
-            write(user_settings, json.dumps(st, indent=2))
-        except Exception:
-            pass
-
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 12 · GTK — gtk.css (GTK3 & GTK4)
+# 10 · GTK CSS (GTK 3.0 & GTK 4.0)
 # ══════════════════════════════════════════════════════════════════════════════
 gtk_css = f"""/* DANDADAN GTK Theme — Wallpaper {active_idx}: {vibe} */
 @define-color accent_color {accent};
 @define-color accent_bg_color {accent};
-@define-color accent_fg_color #ffffff;
-@define-color destructive_color {cursor};
-@define-color destructive_bg_color {cursor};
-@define-color destructive_fg_color #ffffff;
-@define-color success_color {highlight};
-@define-color warning_color {ana1};
-@define-color error_color {cursor};
+@define-color accent_fg_color {get_fg_for_bg(accent)};
+@define-color destructive_color {sem['red']};
+@define-color destructive_bg_color {sem['red']};
+@define-color destructive_fg_color #FFFFFF;
+@define-color success_color {sem['green']};
+@define-color warning_color {sem['yellow']};
+@define-color error_color {sem['red']};
 @define-color window_bg_color {bg};
 @define-color window_fg_color {fg};
 @define-color view_bg_color {bg_mid};
@@ -999,15 +875,13 @@ gtk_css = f"""/* DANDADAN GTK Theme — Wallpaper {active_idx}: {vibe} */
 selection {{ background-color: {with_alpha(accent,'55')}; color: {fg}; }}
 """
 write_both("gtk.css", gtk_css)
-# Also write to gtk-3.0 and gtk-4.0 subdirs
 os.makedirs(f"{THEME_DIR}/gtk-3.0", exist_ok=True)
 os.makedirs(f"{THEME_DIR}/gtk-4.0", exist_ok=True)
 write(f"{THEME_DIR}/gtk-3.0/gtk.css", f'@import "../gtk.css";\n')
 write(f"{THEME_DIR}/gtk-4.0/gtk.css", f'@import "../gtk.css";\n')
 
-
 # ══════════════════════════════════════════════════════════════════════════════
-# 13 · ZED editor
+# 11 · ZED Editor
 # ══════════════════════════════════════════════════════════════════════════════
 zed_theme = {
     "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
@@ -1026,7 +900,7 @@ zed_theme = {
             "text.disabled": with_alpha(fg, "44"),
             "text.accent": accent,
             "icon": fg,
-            "icon.muted": "#616367",
+            "icon.muted": muted,
             "icon.disabled": with_alpha(fg, "44"),
             "icon.placeholder": with_alpha(fg, "55"),
             "icon.accent": accent,
@@ -1038,7 +912,6 @@ zed_theme = {
             "border.disabled": with_alpha(fg, "22"),
             "elevated_surface.background": bg_mid,
             "surface.background": bg,
-            "background": bg,
             "element.background": bg_mid,
             "element.hover": with_alpha(accent, "1A"),
             "element.active": with_alpha(accent, "33"),
@@ -1051,335 +924,200 @@ zed_theme = {
             "ghost_element.selected": with_alpha(accent, "1F"),
             "ghost_element.disabled": "#00000000",
             "link_text.hover": accent,
-            "conflict": cursor,
-            "conflict.background": with_alpha(cursor, "15"),
-            "conflict.border": with_alpha(cursor, "55"),
-            "created": highlight,
-            "created.background": with_alpha(highlight, "15"),
-            "created.border": with_alpha(highlight, "55"),
-            "deleted": cursor,
-            "deleted.background": with_alpha(cursor, "15"),
-            "deleted.border": with_alpha(cursor, "55"),
-            "error": cursor,
-            "error.background": with_alpha(cursor, "15"),
-            "error.border": with_alpha(cursor, "55"),
-            "hidden": "#616367",
-            "hidden.background": with_alpha(bg_mid, "99"),
-            "hidden.border": with_alpha(bg_mid, "99"),
-            "hint": with_alpha(fg, "66"),
-            "hint.background": with_alpha(bg_mid, "99"),
-            "hint.border": with_alpha(bg_mid, "88"),
-            "ignored": with_alpha(fg, "44"),
-            "ignored.background": with_alpha(bg_mid, "88"),
-            "ignored.border": with_alpha(bg_mid, "88"),
-            "info": accent_comp,
-            "info.background": with_alpha(accent_comp, "15"),
-            "info.border": with_alpha(accent_comp, "55"),
-            "modified": accent,
-            "modified.background": with_alpha(accent, "15"),
-            "modified.border": with_alpha(accent, "55"),
-            "predictive": with_alpha(highlight, "99"),
-            "predictive.background": with_alpha(highlight, "11"),
-            "predictive.border": with_alpha(highlight, "33"),
-            "renamed": tri1,
-            "renamed.background": with_alpha(tri1, "15"),
-            "renamed.border": with_alpha(tri1, "55"),
-            "success": highlight,
-            "success.background": with_alpha(highlight, "15"),
-            "success.border": with_alpha(highlight, "55"),
-            "unreachable": "#616367",
-            "unreachable.background": with_alpha(bg_mid, "99"),
-            "unreachable.border": with_alpha(bg_mid, "88"),
-            "warning": ana1,
-            "warning.background": with_alpha(ana1, "15"),
-            "warning.border": with_alpha(ana1, "55"),
-            "panel.background": bg + "E0",
-            "pane.focused_border": accent,
-            "tab_bar.background": bg,
-            "tab.inactive_background": bg,
-            "tab.active_background": bg_mid,
-            "search.match_background": with_alpha(cursor, "44"),
-            "title_bar.background": bg,
-            "title_bar.inactive_background": bg,
-            "toolbar.background": bg_mid,
-            "status_bar.background": bg,
-            "scrollbar.thumb.background": with_alpha(accent, "33"),
-            "scrollbar.thumb.hover_background": with_alpha(accent, "55"),
-            "scrollbar.thumb.border": with_alpha(accent, "55"),
-            "scrollbar.track.background": "#00000000",
-            "scrollbar.track.border": "#00000000",
-            "editor.foreground": fg,
-            "editor.background": bg + "F0",
-            "editor.gutter.background": bg + "F0",
-            "editor.active_line.background": with_alpha(accent, "0F"),
-            "editor.highlighted_line.background": with_alpha(accent, "15"),
-            "editor.line_number": "#616367",
-            "editor.active_line_number": accent,
-            "editor.invisible": with_alpha(fg, "22"),
-            "editor.wrap_guide": with_alpha(fg, "0D"),
-            "editor.active_wrap_guide": with_alpha(accent, "33"),
-            "editor.document_highlight.read_background": with_alpha(accent, "22"),
-            "editor.document_highlight.write_background": with_alpha(cursor, "22"),
-            "terminal.background": bg,
-            "terminal.foreground": fg,
-            "terminal.bright_foreground": "#FFFFFF",
-            "terminal.dim_foreground": "#616367",
-            "terminal.ansi.black": bg,
-            "terminal.ansi.red": cursor,
-            "terminal.ansi.green": highlight,
-            "terminal.ansi.yellow": ana1,
-            "terminal.ansi.blue": tri1,
-            "terminal.ansi.magenta": accent,
-            "terminal.ansi.cyan": tri2,
-            "terminal.ansi.white": fg,
-            "terminal.ansi.bright_black": "#616367",
-            "terminal.ansi.bright_red": lighten(cursor),
-            "terminal.ansi.bright_green": lighten(highlight),
-            "terminal.ansi.bright_yellow": lighten(ana1),
-            "terminal.ansi.bright_blue": lighten(tri1),
-            "terminal.ansi.bright_magenta": lighten(accent),
-            "terminal.ansi.bright_cyan": lighten(tri2),
-            "terminal.ansi.bright_white": "#FFFFFF",
+            "conflict": sem["red"],
+            "conflict.background": with_alpha(sem["red"], "15"),
+            "conflict.border": with_alpha(sem["red"], "55"),
+            "created": sem["green"],
+            "created.background": with_alpha(sem["green"], "15"),
+            "created.border": with_alpha(sem["green"], "55"),
+            "deleted": sem["red"],
+            "deleted.background": with_alpha(sem["red"], "15"),
+            "deleted.border": with_alpha(sem["red"], "55"),
+            "error": sem["red"],
+            "error.background": with_alpha(sem["red"], "15"),
+            "error.border": with_alpha(sem["red"], "55"),
+            "warning": sem["yellow"],
+            "warning.background": with_alpha(sem["yellow"], "15"),
+            "warning.border": with_alpha(sem["yellow"], "55"),
+            "info": sem["blue"],
+            "info.background": with_alpha(sem["blue"], "15"),
+            "info.border": with_alpha(sem["blue"], "55"),
             "players": [
-                {"cursor": cursor, "background": with_alpha(cursor, "22"), "selection": with_alpha(cursor, "33")},
-                {"cursor": accent, "background": with_alpha(accent, "22"), "selection": with_alpha(accent, "33")},
-                {"cursor": highlight, "background": with_alpha(highlight, "22"), "selection": with_alpha(highlight, "33")},
-                {"cursor": tri1, "background": with_alpha(tri1, "22"), "selection": with_alpha(tri1, "33")},
+                {"cursor": accent, "background": accent, "selection": with_alpha(accent, "33")},
+                {"cursor": sem["blue"], "background": sem["blue"], "selection": with_alpha(sem["blue"], "33")},
             ],
+            "syntax": {
+                "keyword": {"color": sem["magenta"], "weight": 700},
+                "function": {"color": sem["cyan"]},
+                "type": {"color": sem["yellow"]},
+                "variable": {"color": fg},
+                "string": {"color": sem["green"]},
+                "number": {"color": sem["orange"]},
+                "comment": {"color": muted, "font_style": "italic"},
+                "operator": {"color": accent},
+                "punctuation": {"color": light_fg},
+                "tag": {"color": sem["red"]},
+                "attribute": {"color": sem["yellow"]},
+            }
         }
     }]
 }
 write_both("zed.json", json.dumps(zed_theme, indent=2))
 
+# ══════════════════════════════════════════════════════════════════════════════
+# 12 · SWAYOSD & MAKO
+# ══════════════════════════════════════════════════════════════════════════════
+swayosd_css = f"""window {{
+  background: alpha({bg}, 0.92);
+  border-radius: 16px;
+  border: 2px solid {accent};
+}}
+image, label {{
+  color: {fg};
+}}
+progressbar:disabled, image:disabled {{
+  opacity: 0.5;
+}}
+progressbar {{
+  background: alpha({fg}, 0.15);
+  border-radius: 8px;
+}}
+trough {{
+  border-radius: 8px;
+}}
+progress {{
+  background: {accent};
+  border-radius: 8px;
+}}
+"""
+write_both("swayosd.css", swayosd_css)
+
+mako_ini = f"""background-color={bg}F2
+text-color={fg}
+border-color={accent}
+border-size=2
+border-radius=10
+progress-color=over {accent}
+
+[urgency=low]
+border-color={sem['blue']}
+
+[urgency=normal]
+border-color={accent}
+
+[urgency=critical]
+border-color={sem['red']}
+text-color={bright_fg}
+default-timeout=0
+"""
+write_both("mako.ini", mako_ini)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 14 · WALKER launcher
+# 13 · WALKER & WOFI Launchers
 # ══════════════════════════════════════════════════════════════════════════════
 walker_css = f"""/* DANDADAN Walker — Wallpaper {active_idx}: {vibe} */
-@define-color selected-text {accent};
-@define-color text          {fg};
-@define-color base          {bg};
-@define-color border        {accent};
-@define-color foreground    {fg};
-@define-color background    {bg};
-@define-color hover         {accent_comp};
-@define-color selected-box  {cursor};
-
-* {{
-  font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', monospace;
-}}
-
-window {{ background: transparent; }}
-
-window .search-container,
-window .search {{
-  background: alpha(@base, 0.96);
-  box-shadow: 0 10px 36px rgba(0,0,0,0.5),
-              0 0 0 1px alpha(@border, 0.6);
-  color: @foreground;
-  border: 2px solid @border;
-  border-radius: 14px;
-  padding: 8px 18px;
-  margin-top: 1px;
-  font-size: 14px;
-}}
-
-.box-wrapper {{
-  background: alpha(@base, 0.96);
-  border: 2px solid @border;
-  border-radius: 18px;
-  box-shadow: 0 14px 44px rgba(0,0,0,0.5),
-              0 0 0 1px alpha(@border, 0.4);
-  padding: 10px;
-}}
-
-child:selected {{
-  border-radius: 12px;
-  background-color: alpha(@selected-box, 0.20);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-  transition: background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
-}}
-child:selected .item-box {{
-  transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1);
-  transform: translateX(4px);
-}}
-child:selected .item-box * {{ color: @selected-text; }}
-child:hover {{ background-color: alpha(@hover, 0.12); }}
-"""
-write_both("walker.css", walker_css)
-os.makedirs(f"{HOME}/.config/walker", exist_ok=True)
-write(f"{HOME}/.config/walker/style.css", walker_css)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 15 · WOFI launcher
-# ══════════════════════════════════════════════════════════════════════════════
-wofi_css = f"""/* DANDADAN Wofi — Wallpaper {active_idx}: {vibe} */
-@define-color bg     {bg};
-@define-color fg     {fg};
-@define-color accent {accent};
-@define-color hover  {with_alpha(accent,'22')};
-@define-color border {with_alpha(accent,'66')};
-
-window {{
-  background-color: alpha(@bg, 0.95);
-  border: 2px solid @border;
-  border-radius: 16px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-}}
-
-#input {{
-  background-color: alpha(@bg, 0.8);
-  color: @fg;
-  border: 1px solid @border;
-  border-radius: 10px;
-  padding: 8px 12px;
-  margin: 8px;
-  font-size: 14px;
-}}
-
-#input:focus {{ border-color: {accent}; }}
-
-#inner-box {{
-  background-color: transparent;
-  margin: 4px;
-}}
-
-#outer-box {{
-  padding: 6px;
+#window {{
   background: transparent;
 }}
-
-#entry {{
-  color: @fg;
-  background-color: transparent;
-  padding: 6px 10px;
-  margin: 2px 4px;
+#box {{
+  background-color: alpha({bg}, 0.95);
+  border: 2px solid {accent};
+  border-radius: 16px;
+  padding: 16px;
+}}
+#search {{
+  background-color: {bg_mid};
+  color: {fg};
+  border: 1px solid alpha({accent}, 0.4);
   border-radius: 10px;
+  padding: 10px 14px;
 }}
+#item:selected {{
+  background-color: alpha({accent}, 0.22);
+  border-radius: 8px;
+  color: {bright_fg};
+}}
+"""
+write_both("walker.css", walker_css)
 
+wofi_css = f"""/* DANDADAN Wofi — Wallpaper {active_idx}: {vibe} */
+window {{
+  background-color: alpha({bg}, 0.95);
+  border: 2px solid {accent};
+  border-radius: 16px;
+  color: {fg};
+}}
+#input {{
+  background-color: {bg_mid};
+  color: {fg};
+  border: 1px solid alpha({accent}, 0.4);
+  border-radius: 10px;
+  margin: 12px;
+}}
 #entry:selected {{
-  background-color: @hover;
-  color: {accent};
-  box-shadow: inset 0 0 0 1px {with_alpha(accent,'55')};
+  background-color: alpha({accent}, 0.25);
+  border-radius: 8px;
 }}
-
-#text {{ color: @fg; }}
-#text:selected {{ color: {accent}; font-weight: bold; }}
-
-scrollbar {{ background-color: transparent; }}
-scrollbar slider {{
-  background-color: {with_alpha(accent,'44')};
-  border-radius: 6px;
-}}
-scrollbar slider:hover {{ background-color: {with_alpha(accent,'77')}; }}
 """
 write_both("wofi.css", wofi_css)
-# Deploy to live wofi config
-os.makedirs(f"{HOME}/.config/wofi", exist_ok=True)
-write(f"{HOME}/.config/wofi/style.css", wofi_css)
-
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 16 · WARP terminal theme
+# 14 · WARP & ZELLIJ Terminals
 # ══════════════════════════════════════════════════════════════════════════════
-warp_yaml = f"""# DANDADAN Warp Theme — Wallpaper {active_idx}: {vibe}
-name: Dandadan
-accent: "{accent}"
-cursor: "{cursor}"
-background: "{bg}"
-foreground: "{fg}"
+warp_yaml = f"""accent: '{accent}'
+background: '{bg}'
 details: darker
-
+foreground: '{fg}'
 terminal_colors:
-  normal:
-    black:   "{bg}"
-    red:     "{cursor}"
-    green:   "{highlight}"
-    yellow:  "{ana1}"
-    blue:    "{tri1}"
-    magenta: "{accent}"
-    cyan:    "{tri2}"
-    white:   "{fg}"
   bright:
-    black:   "#616367"
-    red:     "{lighten(cursor)}"
-    green:   "{lighten(highlight)}"
-    yellow:  "{lighten(ana1)}"
-    blue:    "{lighten(tri1)}"
-    magenta: "{lighten(accent)}"
-    cyan:    "{lighten(tri2)}"
-    white:   "#FFFFFF"
+    black: '{muted}'
+    blue: '{sem['bright_blue']}'
+    cyan: '{sem['bright_cyan']}'
+    green: '{sem['bright_green']}'
+    magenta: '{sem['bright_magenta']}'
+    red: '{sem['bright_red']}'
+    white: '{bright_fg}'
+    yellow: '{sem['bright_yellow']}'
+  normal:
+    black: '{bg}'
+    blue: '{sem['blue']}'
+    cyan: '{sem['cyan']}'
+    green: '{sem['green']}'
+    magenta: '{sem['magenta']}'
+    red: '{sem['red']}'
+    white: '{fg}'
+    yellow: '{sem['yellow']}'
 """
 write_both("warp.yaml", warp_yaml)
-# Deploy to warp themes
-os.makedirs(f"{HOME}/.local/share/warp-terminal/themes", exist_ok=True)
-write(f"{HOME}/.local/share/warp-terminal/themes/dandadan.yaml", warp_yaml)
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 17 · ZELLIJ terminal multiplexer
-# ══════════════════════════════════════════════════════════════════════════════
-zellij_theme = f"""# DANDADAN Zellij — Wallpaper {active_idx}: {vibe}
-themes:
-  dandadan:
-    fg: "{fg}"
-    bg: "{bg}"
-    black: "{bg}"
-    red: "{cursor}"
-    green: "{highlight}"
-    yellow: "{ana1}"
-    blue: "{tri1}"
-    magenta: "{accent}"
-    cyan: "{tri2}"
-    white: "{fg}"
-    orange: "{ana2}"
+zellij_kdl = f"""// DANDADAN Zellij Theme — Wallpaper {active_idx}: {vibe}
+themes {{
+    dandadan {{
+        fg "{fg}"
+        bg "{bg}"
+        black "{bg}"
+        red "{sem['red']}"
+        green "{sem['green']}"
+        yellow "{sem['yellow']}"
+        blue "{sem['blue']}"
+        magenta "{sem['magenta']}"
+        cyan "{sem['cyan']}"
+        white "{fg}"
+        orange "{sem['orange']}"
+    }}
+}}
 """
-write_both("zellij.kdl", f"""// DANDADAN Zellij Theme — Wallpaper {active_idx}: {vibe}
-themes {{
-    dandadan {{
-        fg "{fg}"
-        bg "{bg}"
-        black "{bg}"
-        red "{cursor}"
-        green "{highlight}"
-        yellow "{ana1}"
-        blue "{tri1}"
-        magenta "{accent}"
-        cyan "{tri2}"
-        white "{fg}"
-        orange "{ana2}"
-    }}
-}}
-""")
+write_both("zellij.kdl", zellij_kdl)
 os.makedirs(f"{HOME}/.config/zellij/themes", exist_ok=True)
-write(f"{HOME}/.config/zellij/themes/dandadan.kdl",
-f"""// DANDADAN Zellij Theme — Wallpaper {active_idx}: {vibe}
-themes {{
-    dandadan {{
-        fg "{fg}"
-        bg "{bg}"
-        black "{bg}"
-        red "{cursor}"
-        green "{highlight}"
-        yellow "{ana1}"
-        blue "{tri1}"
-        magenta "{accent}"
-        cyan "{tri2}"
-        white "{fg}"
-        orange "{ana2}"
-    }}
-}}
-""")
-
+write(f"{HOME}/.config/zellij/themes/dandadan.kdl", zellij_kdl)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 18 · VENCORD / Vesktop Discord
+# 15 · VENCORD, CHROMIUM, FIREFOX, TELEGRAM, NEOVIM
 # ══════════════════════════════════════════════════════════════════════════════
 vencord_css = f"""/**
  * @name Dandadan
  * @description Dynamic Dandadan theme — Wallpaper {active_idx}: {vibe}
- * @version 1.0.0
+ * @version 2.0.0
  * @author misternegative21
 */
 @import url("https://refact0r.github.io/system24/build/system24.css");
@@ -1387,167 +1125,61 @@ vencord_css = f"""/**
 body {{
     --font: "JetBrainsMono Nerd Font";
     --code-font: "JetBrainsMono Nerd Font";
-    font-weight: 400;
-    letter-spacing: -0.02ch;
-
-    --gap: 12px;
-    --divider-thickness: 3px;
-    --border-thickness: 2px;
-    --border-hover-transition: 0.2s ease;
-    --animations: on;
-    --list-item-transition: 0.2s ease;
-
-    --top-bar-height: var(--gap);
-    --top-bar-button-position: titlebar;
-    --top-bar-title-position: off;
-    --colors: on;
-
-    /* ── Dandadan palette ─────────────────────────────────── */
     --text-0: {fg};
     --text-1: {fg};
-    --text-2: {with_alpha(fg,'DD')};
-    --text-3: {with_alpha(fg,'BB')};
-    --text-4: {with_alpha(fg,'88')};
-    --text-5: #616367;
-
+    --text-5: {muted};
     --bg-1: {darken(bg_mid)};
     --bg-2: {bg_mid};
     --bg-3: {bg};
-    --bg-4: {darken(bg, 0.85)};
-
     --accent-1: {accent};
     --accent-2: {darken(accent)};
-    --accent-3: {accent};
-    --accent-4: {darken(accent, 0.8)};
-    --accent-5: {darken(accent, 0.7)};
-
-    --mention: linear-gradient(to right, {with_alpha(accent,'22')} 40%, transparent);
-    --mention-hover: linear-gradient(to right, {with_alpha(accent,'33')} 40%, transparent);
-    --reply: linear-gradient(to right, {with_alpha(highlight,'22')} 40%, transparent);
-    --reply-hover: linear-gradient(to right, {with_alpha(highlight,'33')} 40%, transparent);
-
-    --border-light: {with_alpha(accent,'33')};
     --border: {with_alpha(accent,'55')};
-    --border-hover: {with_alpha(accent,'88')};
-    --active: {with_alpha(accent,'22')};
-    --hover: {with_alpha(accent,'15')};
-    --selected: {with_alpha(accent,'22')};
-
-    --header-primary: {fg};
-    --header-secondary: {with_alpha(fg,'BB')};
-    --interactive-normal: {fg};
-    --interactive-hover: {accent};
-    --interactive-active: {accent};
-    --interactive-muted: #616367;
-
-    --background-primary: {bg};
-    --background-secondary: {bg_mid};
-    --background-secondary-alt: {bg_mid2};
-    --background-tertiary: {darken(bg, 0.85)};
-    --background-accent: {with_alpha(accent,'22')};
-    --background-message-hover: {with_alpha(accent,'08')};
-
-    --brand-experiment: {accent};
-    --brand-experiment-100: {with_alpha(accent,'1A')};
-    --brand-experiment-200: {with_alpha(accent,'33')};
-    --brand-experiment-300: {with_alpha(accent,'4D')};
-    --brand-experiment-400: {with_alpha(accent,'66')};
-    --brand-experiment-500: {accent};
-    --brand-experiment-600: {darken(accent, 0.85)};
-
-    --status-positive-text: {highlight};
-    --status-warning-text: {ana1};
-    --status-danger-text: {cursor};
-
-    --scrollbar-thin-thumb: {with_alpha(accent,'44')};
-    --scrollbar-auto-thumb: {with_alpha(accent,'55')};
-    --scrollbar-auto-track: transparent;
+    --status-positive-text: {sem['green']};
+    --status-warning-text: {sem['yellow']};
+    --status-danger-text: {sem['red']};
 }}
 """
 write_both("vencord.theme.css", vencord_css)
-# Deploy to Vesktop if it exists
-for vesktop_path in [
-    f"{HOME}/.config/vesktop/themes",
-    f"{HOME}/.var/app/dev.vencord.Vesktop/config/vesktop/themes",
-]:
-    if os.path.isdir(os.path.dirname(vesktop_path)):
-        os.makedirs(vesktop_path, exist_ok=True)
-        write(f"{vesktop_path}/dandadan.theme.css", vencord_css)
 
+write_both("chromium.theme", f"{hex_to_rgb_str(accent)}\n")
 
-# ══════════════════════════════════════════════════════════════════════════════
-# 19 · CHROMIUM / Brave / Vivaldi / Chrome
-# ══════════════════════════════════════════════════════════════════════════════
-chrom_rgb = hex_to_rgb_str(cursor)
-write(f"{THEME_DIR}/chromium.theme", f"{chrom_rgb}\n")
-for curr_dir in STATE_CURR_DIRS:
-    write(f"{curr_dir}/chromium.theme", f"{chrom_rgb}\n")
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 20 · FIREFOX / Zen Browser
-# ══════════════════════════════════════════════════════════════════════════════
 firefox_css = f"""/* DANDADAN Firefox/Zen — Wallpaper {active_idx}: {vibe} */
 :root {{
   --lwt-accent-color: {accent};
-  --lwt-toolbar-field-focus: {cursor};
-  --toolbar-field-border-color: {cursor};
+  --lwt-toolbar-field-focus: {accent};
+  --toolbar-field-border-color: {accent};
   --toolbar-field-background-color: {bg};
   --toolbar-field-color: {fg};
   --lwt-tab-text: {fg};
-  --lwt-selected-tab-background-color: {cursor};
+  --lwt-selected-tab-background-color: {selection_bg};
   --tab-line-color: {accent};
 }}
 """
 write_both("firefox.css", firefox_css)
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 21 · TELEGRAM palette
-# ══════════════════════════════════════════════════════════════════════════════
 telegram = f"""// DANDADAN Telegram — Wallpaper {active_idx}: {vibe}
 windowBg: {bg};
 windowFg: {fg};
 windowBgOver: {bg_mid};
 windowBgRipple: {bg_mid2};
 windowFgActive: #FFFFFF;
-activeButtonBg: {cursor};
-activeButtonBgOver: {darken(cursor)};
-activeButtonBgRipple: {accent};
+activeButtonBg: {accent};
+activeButtonBgOver: {darken(accent)};
+activeButtonBgRipple: {sem['magenta']};
 activeButtonFg: #FFFFFF;
 dialogsBg: {bg};
 dialogsNameFg: {fg};
 dialogsChatIconFg: {accent};
-dialogsDateFg: #616367;
+dialogsDateFg: {muted};
 dialogsTextFg: #A0A5B5;
 dialogsTextFgService: {accent};
-dialogsUnreadBg: {cursor};
-dialogsUnreadBgMuted: #616367;
+dialogsUnreadBg: {accent};
+dialogsUnreadBgMuted: {muted};
 dialogsUnreadFg: #FFFFFF;
-msgInBg: {bg_mid};
-msgInBgSelected: {bg_mid2};
-msgInFg: {fg};
-msgInDateFg: #A0A5B5;
-msgOutBg: {cursor};
-msgOutBgSelected: {darken(cursor)};
-msgOutFg: #FFFFFF;
-msgOutDateFg: {with_alpha(fg,'BB')};
-historyTextInFg: {fg};
-historyTextOutFg: #FFFFFF;
-historyLinkInFg: {accent};
-historyLinkOutFg: #FFFFFF;
-sideBarBg: {bg};
-sideBarTextFg: {fg};
-sideBarIconFg: {accent};
 """
 write_both("telegram.palette", telegram)
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 22 · NEOVIM colorscheme (dynamic via lua variable)
-# ══════════════════════════════════════════════════════════════════════════════
 neovim_lua = f"""-- DANDADAN Neovim — Wallpaper {active_idx}: {vibe}
--- Uses sunset-drive as base; overrides accent colors dynamically
 return {{
     {{ "tahayvr/sunset-drive.nvim", lazy = false, priority = 1000 }},
     {{
@@ -1556,239 +1188,67 @@ return {{
             colorscheme = "sunsetdrive",
         }},
     }},
-    -- Optional: override highlights for per-wallpaper accent
     {{
         "LazyVim/LazyVim",
         opts = function(_, opts)
-            vim.api.nvim_set_hl(0, "Normal",        {{ bg = "{bg}",     fg = "{fg}"  }})
+            vim.api.nvim_set_hl(0, "Normal",        {{ bg = "{bg}", fg = "{fg}" }})
             vim.api.nvim_set_hl(0, "Visual",        {{ bg = "{with_alpha(accent,'44')}" }})
-            vim.api.nvim_set_hl(0, "Search",        {{ bg = "{with_alpha(cursor,'55')}", fg = "#FFFFFF" }})
+            vim.api.nvim_set_hl(0, "Search",        {{ bg = "{with_alpha(sem['yellow'],'55')}", fg = "#FFFFFF" }})
+            vim.api.nvim_set_hl(0, "CurSearch",     {{ bg = "{accent}", fg = "#FFFFFF" }})
             vim.api.nvim_set_hl(0, "CursorLine",    {{ bg = "{bg_mid}" }})
-            vim.api.nvim_set_hl(0, "StatusLine",    {{ bg = "{accent}",    fg = "#FFFFFF" }})
-            vim.api.nvim_set_hl(0, "StatusLineNC",  {{ bg = "{bg_mid}",    fg = "#616367" }})
-            vim.api.nvim_set_hl(0, "TabLineSel",    {{ bg = "{accent}",    fg = "#FFFFFF" }})
-            vim.api.nvim_set_hl(0, "TabLine",       {{ bg = "{bg}",        fg = "#616367" }})
-            vim.api.nvim_set_hl(0, "WinSeparator",  {{ fg = "{with_alpha(accent,'66')}" }})
-            vim.api.nvim_set_hl(0, "FloatBorder",   {{ fg = "{accent}" }})
-            vim.api.nvim_set_hl(0, "DiagnosticError",   {{ fg = "{cursor}"    }})
-            vim.api.nvim_set_hl(0, "DiagnosticWarn",    {{ fg = "{ana1}"      }})
-            vim.api.nvim_set_hl(0, "DiagnosticInfo",    {{ fg = "{accent_comp}" }})
-            vim.api.nvim_set_hl(0, "DiagnosticHint",    {{ fg = "{highlight}" }})
-            vim.api.nvim_set_hl(0, "TelescopeSelection", {{ bg = "{with_alpha(accent,'33')}", fg = "{fg}" }})
-            vim.api.nvim_set_hl(0, "TelescopeBorder",    {{ fg = "{accent}" }})
-            vim.api.nvim_set_hl(0, "TelescopePromptBorder", {{ fg = "{cursor}" }})
+            vim.api.nvim_set_hl(0, "CursorLineNr",  {{ fg = "{accent}", bold = true }})
+            vim.api.nvim_set_hl(0, "LineNr",        {{ fg = "{muted}" }})
+            vim.api.nvim_set_hl(0, "DiagnosticError",   {{ fg = "{sem['red']}" }})
+            vim.api.nvim_set_hl(0, "DiagnosticWarn",    {{ fg = "{sem['yellow']}" }})
+            vim.api.nvim_set_hl(0, "DiagnosticInfo",    {{ fg = "{sem['blue']}" }})
+            vim.api.nvim_set_hl(0, "DiagnosticHint",    {{ fg = "{sem['cyan']}" }})
         end,
     }},
 }}
 """
 write_both("neovim.lua", neovim_lua)
 
+write_both("icons.theme", f"{icon_theme_name}\n")
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 23 · COLORS.TOML (generic omarchy palette)
+# 16 · WAYBAR CSS (Legacy & Dual Fallback)
 # ══════════════════════════════════════════════════════════════════════════════
-colors_toml = f"""# DANDADAN Colors — Wallpaper {active_idx}: {vibe}
-accent     = "{accent}"
-cursor     = "{cursor}"
-foreground = "{fg}"
-background = "{bg}"
-selection_foreground = "{fg}"
-selection_background = "{with_alpha(accent,'66')}"
+waybar_css = f"""/* DANDADAN Waybar — Wallpaper {active_idx}: {vibe} */
+@define-color background  {bg};
+@define-color foreground  {fg};
+@define-color accent      {accent};
+@define-color cursor      {accent};
+@define-color highlight   {highlight};
+@define-color comp        {accent_comp};
 
-color0  = "{bg}"
-color1  = "{cursor}"
-color2  = "{highlight}"
-color3  = "{ana1}"
-color4  = "{tri1}"
-color5  = "{accent}"
-color6  = "{tri2}"
-color7  = "{fg}"
-color8  = "#616367"
-color9  = "{lighten(cursor)}"
-color10 = "{lighten(highlight)}"
-color11 = "{lighten(ana1)}"
-color12 = "{lighten(tri1)}"
-color13 = "{lighten(accent)}"
-color14 = "{lighten(tri2)}"
-color15 = "#FFFFFF"
+* {{
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', monospace;
+  font-size: 13px;
+  font-weight: bold;
+}}
+
+window#waybar {{
+  background-color: alpha(@background, 0.40);
+  border-bottom: 1px solid alpha(@accent, 0.40);
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}}
+
+#group-left-container, #group-center-container, #group-right-container {{
+  background-color: alpha(white, 0.07);
+  border: 1px solid alpha(@accent, 0.35);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  padding: 4px 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38);
+}}
 """
-write_both("colors.toml", colors_toml)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 24 · ICONS selection (keep Yaru accent from palette)
-# ══════════════════════════════════════════════════════════════════════════════
-# Pick icon theme based on dominant hue
-r0, g0, b0 = h2r(accent)
-h0, s0, v0 = colorsys.rgb_to_hsv(r0/255, g0/255, b0/255)
-# Map hue to Yaru color variants
-if 0.95 <= h0 or h0 < 0.05:      icon_color = "red"
-elif 0.05 <= h0 < 0.12:           icon_color = "orange"
-elif 0.12 <= h0 < 0.20:           icon_color = "yellow"
-elif 0.20 <= h0 < 0.42:           icon_color = "green"
-elif 0.42 <= h0 < 0.55:           icon_color = "cyan"
-elif 0.55 <= h0 < 0.68:           icon_color = "blue"
-elif 0.68 <= h0 < 0.78:           icon_color = "purple"
-elif 0.78 <= h0 < 0.88:           icon_color = "magenta"
-elif 0.88 <= h0 < 0.95:           icon_color = "red"
-else:                              icon_color = "red"
-
-write_both("icons.theme", f"Yaru-{icon_color}\n")
-
+write_both("waybar.css", waybar_css)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 25 · QUICKSHELL shell.toml & shell.lock.toml
-# ══════════════════════════════════════════════════════════════════════════════
-shell_toml = f"""# DANDADAN Omarchy 4.0 Quickshell Surface Styling — Wallpaper {active_idx}: {vibe}
-
-[bar]
-background       = "{bg}"
-background-alpha = 0.85
-text             = "{fg}"
-active           = "{accent}"
-scale-with-font  = true
-size-horizontal  = 30
-size-vertical    = 32
-
-[hyprland]
-active-border            = "{accent} {cursor} 45deg"
-active-border-foreground = "{accent}"
-
-[controls]
-normal-color        = "{fg}"
-normal-fill-alpha   = 0.05
-normal-border       = "{accent}"
-normal-border-width = 1
-normal-border-alpha = 0.25
-
-hover-cursor-color        = "#FFFFFF"
-hover-cursor-fill-alpha   = 0.12
-hover-cursor-border       = "{cursor}"
-hover-cursor-border-width = 1
-hover-cursor-border-alpha = 0.50
-
-focus-color        = "#FFFFFF"
-focus-fill-alpha   = 0.12
-focus-border       = "{accent}"
-focus-border-width = 1
-focus-border-alpha = 0.50
-
-selected-color        = "#FFFFFF"
-selected-fill-alpha   = 0.22
-selected-border       = "{accent}"
-selected-border-width = 1
-selected-border-alpha = 0.80
-
-pressed-fill-alpha   = 0.28
-selection-fill-alpha = 0.35
-
-[spacing]
-scale           = 1.0
-scale-with-font = true
-
-[font]
-base-size = 12
-
-[popups]
-background       = "{bg}"
-background-alpha = 0.94
-text             = "{fg}"
-border           = "{accent}"
-border-alpha     = 0.80
-border-width     = 1
-
-[tooltip]
-background       = "{bg}"
-background-alpha = 0.96
-text             = "{fg}"
-border           = "{accent}"
-border-alpha     = 0.70
-
-[notifications]
-background       = "{bg}"
-background-alpha = 0.95
-text             = "{fg}"
-border           = "{accent}"
-border-alpha     = 0.85
-border-width     = 1
-countdown        = "{accent}"
-
-[launcher]
-background                = "{bg}"
-background-alpha          = 0.94
-text                      = "{fg}"
-border                    = "{accent}"
-border-alpha              = 0.75
-scrim                     = "{bg}"
-scrim-alpha               = 0.55
-selected-background       = "{accent}"
-selected-background-alpha = 0.15
-selected-text             = "{accent}"
-selected-border           = "{accent}"
-selected-border-alpha     = 0.50
-
-[menu]
-background                = "{bg}"
-background-alpha          = 0.95
-text                      = "{fg}"
-border                    = "{accent}"
-border-alpha              = 0.75
-scrim                     = "{bg}"
-scrim-alpha               = 0.55
-selected-background       = "{accent}"
-selected-background-alpha = 0.15
-selected-text             = "{accent}"
-selected-border           = "{accent}"
-selected-border-alpha     = 0.50
-
-[polkit]
-background       = "{bg}"
-background-alpha = 0.96
-text             = "{fg}"
-text-error       = "{cursor}"
-border           = "{accent}"
-border-error     = "{cursor}"
-border-alpha     = 0.90
-scrim            = "{bg}"
-scrim-alpha      = 0.60
-accent           = "{accent}"
-
-[lock]
-background       = "{bg}"
-background-alpha = 0.85
-text             = "{fg}"
-placeholder      = "#616367"
-text-error       = "{cursor}"
-border           = "{accent}"
-border-active    = "{accent}"
-border-error     = "{cursor}"
-border-alpha     = 0.90
-selection        = "{accent}"
-selection-alpha  = 0.45
-
-[image-picker]
-scrim                   = "{bg}"
-scrim-alpha             = 0.55
-text                    = "{fg}"
-selected-border         = "{accent}"
-selected-border-alpha   = 1.0
-unselected-border       = "{fg}"
-unselected-border-alpha = 0.25
-"""
-write_both("shell.toml", shell_toml)
-
-shell_lock_toml = f"""text             = "{fg}"
-placeholder      = "#616367"
-text-error       = "{cursor}"
-border           = "{accent}"
-border-active    = "{accent}"
-border-error     = "{cursor}"
-"""
-write_both("shell.lock.toml", shell_lock_toml)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# Live triggers & IPC
+# 17 · LIVE QUICKSHELL IPC & APP RELOADS
 # ══════════════════════════════════════════════════════════════════════════════
 def is_process_running(proc_name: str) -> bool:
     try:
@@ -1800,7 +1260,7 @@ def is_process_running(proc_name: str) -> bool:
     except Exception:
         return False
 
-# Quickshell / omarchy-shell live IPC update
+# Live Quickshell IPC
 if is_process_running("quickshell") or is_process_running("omarchy-shell"):
     try:
         colors_b64 = base64.b64encode(colors_toml.encode("utf-8")).decode("utf-8")
@@ -1816,18 +1276,18 @@ if is_process_running("waybar"):
     except Exception:
         pass
 
-try:
-    subprocess.run(["omarchy-theme-set-browser"], capture_output=True)
-except Exception:
-    pass
+for cmd in [
+    ["omarchy-restart-terminal"],
+    ["omarchy-theme-set-foot"],
+    ["omarchy-theme-set-browser"],
+    ["omarchy-theme-set-gnome"],
+    ["makoctl", "reload"],
+]:
+    try:
+        subprocess.run(cmd, capture_output=True)
+    except Exception:
+        pass
 
-try:
-    subprocess.run(["makoctl", "reload"], capture_output=True)
-except Exception:
-    pass
-
-print(f"\n✓ Dynamic color engine updated for wallpaper {active_idx}: {vibe}")
-print(f"  Wallpaper pool: 52 images (001-058 with gaps)")
-print(f"  accent={accent}  comp={accent_comp}  cursor={cursor}")
-print(f"  highlight={highlight}  tri1={tri1}  tri2={tri2}")
-print(f"  icon-theme=Yaru-{icon_color}")
+print(f"✓ Dynamic recoloring engine updated for wallpaper {active_idx}: {vibe}")
+print(f"  Strict semantic ANSI channels active (no inverted terminal colors)")
+print(f"  Quickshell surface tokens and Omarchy 4.0 colors.toml updated")

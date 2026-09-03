@@ -1,6 +1,6 @@
-local active_border_color = { colors = { "rgb(690001)", "rgb(006968)" }, angle = 45 }
+local active_border_color = { colors = { "rgb(E80202)", "rgb(01E8E8)" }, angle = 45 }
 local inactive_border_color = "rgba(61636780)"
-local active_shadow_color = "rgba(69000166)"
+local active_shadow_color = "rgba(E8020266)"
 local inactive_shadow_color = "rgba(00000044)"
 
 

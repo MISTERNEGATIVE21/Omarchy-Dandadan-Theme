@@ -116,9 +116,9 @@ if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
   DANDADAN_DIR="$HOME/.config/omarchy/themes/dandadan-theme"
   DETECT_SCRIPT="$DANDADAN_DIR/scripts/detect_shell.sh"
 
-  SHELL_MODE="waybar"
+  SHELL_MODE="quickshell"
   if [[ -x "$DETECT_SCRIPT" ]]; then
-    SHELL_MODE=$("$DETECT_SCRIPT" --primary 2>/dev/null || echo "waybar")
+    SHELL_MODE=$("$DETECT_SCRIPT" --primary 2>/dev/null || echo "quickshell")
   elif command -v quickshell &>/dev/null || command -v omarchy-shell &>/dev/null; then
     SHELL_MODE="quickshell"
   fi
@@ -135,8 +135,6 @@ if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
     if [[ -f "$DANDADAN_DIR/shell.json" ]]; then
       cp -f "$DANDADAN_DIR/shell.json" "$HOME/.config/omarchy/shell.json"
     fi
-
-    (omarchy-shell-reload >/dev/null 2>&1 || quickshell --reload >/dev/null 2>&1 || pkill -SIGUSR1 quickshell >/dev/null 2>&1) &
   fi
 
   if [[ "$SHELL_MODE" == "waybar" || "$SHELL_MODE" == "dual" ]]; then
@@ -152,7 +150,7 @@ if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
       cp -f "$DANDADAN_DIR/waybar_config.jsonc" "$HOME/.config/waybar/config.jsonc"
     fi
 
-    (omarchy-restart-waybar >/dev/null 2>&1) &
+    (pkill -SIGUSR2 waybar >/dev/null 2>&1 || true) &
   fi
 
   SCRIPT_PATH="$HOME/.local/state/omarchy/current/theme/update_wallpaper_colors.py"
@@ -174,11 +172,11 @@ else
 
   if [[ -f "$HOME/.config/waybar/config.jsonc.omarchy-default" ]]; then
     cp -f "$HOME/.config/waybar/config.jsonc.omarchy-default" "$HOME/.config/waybar/config.jsonc"
-  elif [[ -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" ]]; then
-    cp -f "$HOME/.local/share/omarchy/config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
+  elif [[ -f "/usr/share/omarchy/config/waybar/config.jsonc" ]]; then
+    cp -f "/usr/share/omarchy/config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
   fi
 
-  (omarchy-restart-waybar >/dev/null 2>&1; omarchy-shell-reload >/dev/null 2>&1) &
+  (pkill -SIGUSR2 waybar >/dev/null 2>&1 || true) &
 fi
 HOOK
   chmod +x "$THEME_SET_HOOK"

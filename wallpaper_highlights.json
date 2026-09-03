@@ -1,434 +1,407 @@
 {
   "01": {
-    "accent": "#08F503",
-    "highlight": "#EA0B08",
-    "background": "#14161E",
-    "foreground": "#F0F4FC",
-    "border": "#08F503",
-    "glow": "#EA0B08",
-    "vibe": "Okarun & Turbo Granny Golden Spark"
-  },
-  "02": {
-    "accent": "#690001",
-    "highlight": "#C05F58",
-    "background": "#14161E",
-    "foreground": "#F0F4FC",
-    "border": "#690001",
-    "glow": "#C05F58",
-    "vibe": "Turbo Granny Crimson Curse"
-  },
-  "03": {
-    "accent": "#F70102",
-    "highlight": "#E24B36",
-    "background": "#14161E",
-    "foreground": "#F0F4FC",
-    "border": "#F70102",
-    "glow": "#E24B36",
-    "vibe": "Momo Astral Pink & Blood Red"
-  },
-  "04": {
     "accent": "#E80202",
     "highlight": "#E3847B",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#E80202",
     "glow": "#E3847B",
-    "vibe": "Curse Transformation Scarlet"
+    "vibe": "Okarun & Turbo Granny Golden Spark"
   },
-  "05": {
+  "02": {
     "accent": "#C71275",
     "highlight": "#AB38C8",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#C71275",
     "glow": "#AB38C8",
-    "vibe": "Seiko Shrine Magenta Magic"
+    "vibe": "Turbo Granny Crimson Curse"
   },
-  "06": {
+  "03": {
     "accent": "#CE0438",
     "highlight": "#07D8E4",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#CE0438",
     "glow": "#07D8E4",
-    "vibe": "Serpo Alien Cyan & Magenta Blast"
+    "vibe": "Momo Astral Pink & Blood Red"
   },
-  "07": {
+  "04": {
     "accent": "#0DCAF9",
     "highlight": "#DC121A",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#0DCAF9",
     "glow": "#DC121A",
-    "vibe": "High Octane Electric Cyan & Crimson"
+    "vibe": "Curse Transformation Scarlet"
   },
-  "08": {
+  "05": {
     "accent": "#DE0909",
     "highlight": "#903F41",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#DE0909",
     "glow": "#903F41",
-    "vibe": "St. Germain Vermilion Mystery"
+    "vibe": "Seiko Shrine Magenta Magic"
   },
-  "09": {
+  "07": {
     "accent": "#D22B34",
     "highlight": "#F1827C",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#D22B34",
     "glow": "#F1827C",
-    "vibe": "Acrobat Silky Scarlet Tears"
+    "vibe": "High Octane Electric Cyan & Crimson"
   },
-  "10": {
+  "08": {
     "accent": "#1B35D1",
     "highlight": "#D41E38",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#1B35D1",
     "glow": "#D41E38",
-    "vibe": "Alien Tech Deep Sapphire & Pink"
+    "vibe": "St. Germain Vermilion Mystery"
   },
-  "11": {
+  "09": {
     "accent": "#0B3996",
     "highlight": "#E618E7",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#0B3996",
     "glow": "#E618E7",
-    "vibe": "Subterranean Neon Violet & Turquoise"
+    "vibe": "Acrobat Silky Scarlet Tears"
   },
-  "12": {
+  "10": {
     "accent": "#AA8A2C",
     "highlight": "#C87B5D",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#AA8A2C",
     "glow": "#C87B5D",
-    "vibe": "Golden Hour Okamomo Warmth"
+    "vibe": "Alien Tech Deep Sapphire & Pink"
   },
-  "13": {
+  "11": {
     "accent": "#2A7386",
     "highlight": "#233846",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#2A7386",
     "glow": "#233846",
-    "vibe": "Yokai Night Midnight Teal & Bronze"
+    "vibe": "Subterranean Neon Violet & Turquoise"
   },
-  "14": {
-    "accent": "#0DE1E5",
-    "highlight": "#F6F65F",
-    "background": "#14161E",
-    "foreground": "#F0F4FC",
-    "border": "#0DE1E5",
-    "glow": "#F6F65F",
-    "vibe": "Kamo Cursed Gold & Emerald Glow"
-  },
-  "15": {
+  "12": {
     "accent": "#047CE5",
     "highlight": "#0771CB",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#047CE5",
     "glow": "#0771CB",
-    "vibe": "Turbo Form Azure Lightning"
+    "vibe": "Golden Hour Okamomo Warmth"
   },
-  "16": {
+  "13": {
     "accent": "#F54603",
     "highlight": "#2D87F2",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#F54603",
     "glow": "#2D87F2",
-    "vibe": "Sunset Showdown Orange & Cobalt"
+    "vibe": "Yokai Night Midnight Teal & Bronze"
   },
-  "17": {
+  "14": {
     "accent": "#66041B",
     "highlight": "#780908",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#66041B",
     "glow": "#780908",
-    "vibe": "Flatwoods Monster Blood Crimson"
+    "vibe": "Kamo Cursed Gold & Emerald Glow"
   },
-  "18": {
+  "15": {
     "accent": "#9D0D0D",
     "highlight": "#976665",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#9D0D0D",
     "glow": "#976665",
-    "vibe": "Evil Eye Wrathful Carmine"
+    "vibe": "Turbo Form Azure Lightning"
   },
-  "19": {
+  "16": {
     "accent": "#3E3E40",
     "highlight": "#403E3F",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#3E3E40",
     "glow": "#403E3F",
-    "vibe": "Dandadan Iconic Pastel & Magenta"
+    "vibe": "Sunset Showdown Orange & Cobalt"
   },
-  "20": {
+  "17": {
     "accent": "#DE0808",
     "highlight": "#A83F40",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#DE0808",
     "glow": "#A83F40",
-    "vibe": "Spiritual Energy Flame Red"
+    "vibe": "Flatwoods Monster Blood Crimson"
   },
-  "21": {
+  "18": {
     "accent": "#D8381B",
     "highlight": "#F5CB67",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#D8381B",
     "glow": "#F5CB67",
-    "vibe": "Hyperdrive Neon Cyan & Coral"
+    "vibe": "Evil Eye Wrathful Carmine"
   },
-  "22": {
+  "19": {
     "accent": "#8C3639",
     "highlight": "#4C7085",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#8C3639",
     "glow": "#4C7085",
-    "vibe": "Vintage Manga Sepia & Vermilion"
+    "vibe": "Dandadan Iconic Pastel & Magenta"
   },
-  "23": {
+  "20": {
     "accent": "#842E36",
     "highlight": "#96B3CB",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#842E36",
     "glow": "#96B3CB",
-    "vibe": "Astral Projection Violet Aura"
+    "vibe": "Spiritual Energy Flame Red"
   },
-  "24": {
+  "21": {
     "accent": "#E76C5D",
     "highlight": "#74D5D3",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#E76C5D",
     "glow": "#74D5D3",
-    "vibe": "Abyssal Alien Void Indigo"
+    "vibe": "Hyperdrive Neon Cyan & Coral"
   },
-  "25": {
+  "22": {
     "accent": "#5203D9",
     "highlight": "#F9EF0A",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#5203D9",
     "glow": "#F9EF0A",
-    "vibe": "Pyrotechnic Spark Amber & Purple"
+    "vibe": "Vintage Manga Sepia & Vermilion"
   },
-  "26": {
+  "23": {
     "accent": "#F1C81D",
     "highlight": "#3C44B2",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#F1C81D",
     "glow": "#3C44B2",
-    "vibe": "Masterpiece Action Splash Neon"
+    "vibe": "Astral Projection Violet Aura"
   },
-  "27": {
+  "25": {
     "accent": "#7016D2",
     "highlight": "#3292CB",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#7016D2",
     "glow": "#3292CB",
-    "vibe": "Cursed Realm Shadow & Ruby"
+    "vibe": "Pyrotechnic Spark Amber & Purple"
   },
-  "28": {
-    "accent": "#D73363",
-    "highlight": "#2A84A4",
+  "26": {
+    "accent": "#D73364",
+    "highlight": "#2A84A5",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#D73363",
-    "glow": "#2A84A4",
-    "vibe": "Giant Kaiju Battle Emerald & Gold"
+    "border": "#D73364",
+    "glow": "#2A84A5",
+    "vibe": "Masterpiece Action Splash Neon"
   },
-  "29": {
-    "accent": "#D8A20F",
-    "highlight": "#A73944",
-    "background": "#14161E",
-    "foreground": "#F0F4FC",
-    "border": "#D8A20F",
-    "glow": "#A73944",
-    "vibe": "Chiquitita Micro-Cosmos Pastel"
-  },
-  "30": {
+  "27": {
     "accent": "#B76716",
     "highlight": "#E43B40",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#B76716",
     "glow": "#E43B40",
-    "vibe": "Spectral Haunting Ghostly Jade"
+    "vibe": "Cursed Realm Shadow & Ruby"
   },
-  "31": {
+  "28": {
     "accent": "#A60607",
     "highlight": "#379AA5",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#A60607",
     "glow": "#379AA5",
-    "vibe": "Invasion Mothership Electric Blue"
+    "vibe": "Giant Kaiju Battle Emerald & Gold"
   },
-  "32": {
+  "29": {
     "accent": "#C12719",
     "highlight": "#3043AE",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#C12719",
     "glow": "#3043AE",
-    "vibe": "Momo & Okarun Midnight Starlight"
+    "vibe": "Chiquitita Micro-Cosmos Pastel"
   },
-  "33": {
+  "30": {
     "accent": "#DD141F",
     "highlight": "#DBAB2E",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#DD141F",
     "glow": "#DBAB2E",
-    "vibe": "Unidentified Flying Object Glow"
+    "vibe": "Spectral Haunting Ghostly Jade"
   },
-  "34": {
+  "31": {
     "accent": "#EC022E",
     "highlight": "#3C029F",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#EC022E",
     "glow": "#3C029F",
-    "vibe": "Subterranean Sub-surface Lava"
+    "vibe": "Invasion Mothership Electric Blue"
   },
-  "35": {
+  "32": {
     "accent": "#06F502",
     "highlight": "#E90C09",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#06F502",
     "glow": "#E90C09",
-    "vibe": "Turbo Sprint Crimson Spark"
+    "vibe": "Momo & Okarun Midnight Starlight"
   },
-  "36": {
+  "33": {
     "accent": "#CD353B",
     "highlight": "#E48A78",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#CD353B",
     "glow": "#E48A78",
-    "vibe": "Classroom Commotion Warm Amber"
+    "vibe": "Unidentified Flying Object Glow"
   },
-  "37": {
+  "34": {
     "accent": "#EA3103",
     "highlight": "#D4758E",
     "background": "#14161E",
     "foreground": "#F0F4FC",
     "border": "#EA3103",
     "glow": "#D4758E",
-    "vibe": "Dimensional Rift Ultra Violet"
+    "vibe": "Subterranean Sub-surface Lava"
   },
-  "38": {
-    "accent": "#EA5E14",
+  "35": {
+    "accent": "#EB5D14",
     "highlight": "#1B50A6",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#EA5E14",
+    "border": "#EB5D14",
     "glow": "#1B50A6",
+    "vibe": "Turbo Sprint Crimson Spark"
+  },
+  "36": {
+    "accent": "#0B33DA",
+    "highlight": "#E41961",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#0B33DA",
+    "glow": "#E41961",
+    "vibe": "Classroom Commotion Warm Amber"
+  },
+  "37": {
+    "accent": "#D4272A",
+    "highlight": "#F1D35F",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#D4272A",
+    "glow": "#F1D35F",
+    "vibe": "Dimensional Rift Ultra Violet"
+  },
+  "38": {
+    "accent": "#8CDB10",
+    "highlight": "#EB7AD4",
+    "background": "#14161E",
+    "foreground": "#F0F4FC",
+    "border": "#8CDB10",
+    "glow": "#EB7AD4",
     "vibe": "Battlefield Destruction Fiery Ochre"
   },
   "39": {
-    "accent": "#E3180D",
-    "highlight": "#9F4638",
+    "accent": "#D4231C",
+    "highlight": "#5D2794",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#E3180D",
-    "glow": "#9F4638",
+    "border": "#D4231C",
+    "glow": "#5D2794",
     "vibe": "Curse Unleashed Dark Ruby"
   },
   "40": {
-    "accent": "#E8304A",
-    "highlight": "#4A8FD4",
+    "accent": "#9F301E",
+    "highlight": "#2E53C4",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#E8304A",
-    "glow": "#4A8FD4",
+    "border": "#9F301E",
+    "glow": "#2E53C4",
     "vibe": "Possessed Spirit Crimson Tide"
   },
   "41": {
-    "accent": "#CB1F2E",
-    "highlight": "#D4A823",
+    "accent": "#BF8129",
+    "highlight": "#C4352D",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#CB1F2E",
-    "glow": "#D4A823",
+    "border": "#BF8129",
+    "glow": "#C4352D",
     "vibe": "Thunder God Battle Scarlet"
   },
   "42": {
-    "accent": "#D42055",
-    "highlight": "#2BC4C8",
+    "accent": "#E9A606",
+    "highlight": "#29CEC6",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#D42055",
-    "glow": "#2BC4C8",
+    "border": "#E9A606",
+    "glow": "#29CEC6",
     "vibe": "Alien Queen Neon Rose & Aqua"
   },
   "43": {
-    "accent": "#0E9FD8",
-    "highlight": "#E82040",
+    "accent": "#E6F51B",
+    "highlight": "#6AA4D7",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#0E9FD8",
-    "glow": "#E82040",
+    "border": "#E6F51B",
+    "glow": "#6AA4D7",
     "vibe": "Deep Sea Ghost Electric Blue"
   },
-  "44": {
-    "accent": "#CC2030",
-    "highlight": "#8832CC",
-    "background": "#14161E",
-    "foreground": "#F0F4FC",
-    "border": "#CC2030",
-    "glow": "#8832CC",
-    "vibe": "Yokai Summoning Blood & Violet"
-  },
   "45": {
-    "accent": "#E04820",
-    "highlight": "#20A8E0",
+    "accent": "#8C3139",
+    "highlight": "#916C68",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#E04820",
-    "glow": "#20A8E0",
+    "border": "#8C3139",
+    "glow": "#916C68",
     "vibe": "Spirit Burst Ember & Sky"
   },
   "46": {
-    "accent": "#B8181E",
-    "highlight": "#18B8B2",
+    "accent": "#DE2622",
+    "highlight": "#F9C761",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#B8181E",
-    "glow": "#18B8B2",
+    "border": "#DE2622",
+    "glow": "#F9C761",
     "vibe": "Supernatural Stand-off Teal Blaze"
   },
   "47": {
-    "accent": "#D91060",
-    "highlight": "#F0C020",
+    "accent": "#7210C7",
+    "highlight": "#DA222B",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#D91060",
-    "glow": "#F0C020",
+    "border": "#7210C7",
+    "glow": "#DA222B",
     "vibe": "Paranormal Rift Magenta Spark"
   },
   "48": {
-    "accent": "#E62828",
-    "highlight": "#28C4E6",
+    "accent": "#DF0F0A",
+    "highlight": "#9D3D42",
     "background": "#14161E",
     "foreground": "#F0F4FC",
-    "border": "#E62828",
-    "glow": "#28C4E6",
+    "border": "#DF0F0A",
+    "glow": "#9D3D42",
     "vibe": "Final Form Crimson & Cyber Teal"
   },
   "49": {

@@ -1,15 +1,10 @@
-/* DANDADAN Waybar — Wallpaper 02: Turbo Granny Crimson Curse
-   accent=#690001  cursor=#690001  highlight=#C05F58  comp=#006968
-*/
-
-/* ── Core color variables ─────────────────────────────────────────── */
+/* DANDADAN Waybar — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
 @define-color background  #14161E;
 @define-color foreground  #F0F4FC;
-@define-color accent      #690001;
-@define-color cursor      #690001;
-@define-color highlight   #C05F58;
-@define-color comp        #006968;
-@define-color accent_dark #490000;
+@define-color accent      #E80202;
+@define-color cursor      #E80202;
+@define-color highlight   #E3847B;
+@define-color comp        #01E8E8;
 
 * {
   border: none;
@@ -20,234 +15,17 @@
   font-weight: bold;
 }
 
-/* ── Bar window ──────────────────────────────────────────────────── */
 window#waybar {
   background-color: alpha(@background, 0.40);
   border-bottom: 1px solid alpha(@accent, 0.40);
   transition: background-color 0.5s ease, border-color 0.5s ease;
 }
 
-window#waybar.hidden { opacity: 0.2; }
-
-/* ── Floating Island Pill Containers ────────────────────────────── */
-#group-left-container {
+#group-left-container, #group-center-container, #group-right-container {
   background-color: alpha(white, 0.07);
   border: 1px solid alpha(@accent, 0.35);
   border-top: none;
   border-radius: 0 0 20px 20px;
-  margin: 0 10px 4px 14px;
   padding: 4px 20px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38);
 }
-
-#group-center-container {
-  background-color: alpha(white, 0.07);
-  border: 1px solid alpha(@accent, 0.35);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  margin: 0 10px 4px 10px;
-  padding: 4px 20px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-#group-right-container {
-  background-color: alpha(white, 0.07);
-  border: 1px solid alpha(@accent, 0.35);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  margin: 0 14px 4px 10px;
-  padding: 4px 24px 4px 20px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38),
-              inset 0 1px 0 alpha(@accent, 0.15);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-#group-left-container:hover,
-#group-center-container:hover,
-#group-right-container:hover {
-  background-color: alpha(@accent, 0.11);
-  border-color: alpha(@accent, 0.60);
-  box-shadow: 0 0 28px alpha(@accent, 0.35),
-              inset 0 1px 0 alpha(@accent, 0.25);
-}
-
-/* ── Omarchy logo ────────────────────────────────────────────────── */
-#custom-omarchy {
-  color: #690001;
-  font-size: 17px;
-  padding: 0 12px 0 4px;
-  margin-right: 8px;
-  border-right: 1px solid alpha(white, 0.20);
-  transition: color 0.2s, text-shadow 0.2s;
-}
-#custom-omarchy:hover {
-  color: #690001;
-  text-shadow: 0 0 14px #690001, 0 0 28px #690001;
-}
-
-/* ── Workspaces ──────────────────────────────────────────────────── */
-#workspaces { padding: 0 6px; margin: 0 4px; background: transparent; }
-
-#workspaces button {
-  color: alpha(white, 0.65);
-  font-size: 14px;
-  padding: 0 6px; margin: 0 2px;
-  background: transparent;
-  border: none; box-shadow: none;
-  transition: all 0.2s ease;
-  border-radius: 6px;
-}
-#workspaces button:hover {
-  color: white;
-  background: alpha(#690001, 0.12);
-}
-#workspaces button.active {
-  color: #690001;
-  font-size: 15px; font-weight: 900;
-  text-shadow: 0 0 12px #690001, 0 0 24px #690001;
-}
-#workspaces button.urgent {
-  color: #FF454F;
-  text-shadow: 0 0 10px #FF454F;
-}
-#workspaces button.empty { opacity: 0.40; }
-
-/* ── Active window ───────────────────────────────────────────────── */
-#custom-active_window, #hyprland-window {
-  color: alpha(white, 0.88);
-  padding-left: 12px;
-  margin-left: 4px;
-  border-left: 1px solid alpha(#690001, 0.35);
-  font-size: 12px; font-weight: 400;
-}
-
-/* ── Media / MPRIS ───────────────────────────────────────────────── */
-#custom-mpris, #mpris {
-  color: #C05F58;
-  font-style: italic;
-  font-weight: 600;
-  padding: 0 14px;
-  transition: color 0.3s;
-}
-#custom-mpris:hover, #mpris:hover { color: #690001; }
-
-/* ── Indicators & Hyprwhispr Voice ───────────────────────────────── */
-#custom-hyprwhispr,
-#custom-voxtype {
-  color: #690001;
-  padding: 0 6px;
-  margin: 0 1px;
-  font-size: 13px;
-  transition: color 0.3s;
-}
-#custom-hyprwhispr.recording,
-#custom-voxtype.recording {
-  color: #FF454F;
-  text-shadow: 0 0 8px #FF454F;
-  animation: blink 1s step-end infinite;
-}
-#custom-idle-indicator,
-#custom-notification-silencing-indicator,
-#custom-update {
-  color: #006968;
-  padding: 0 6px;
-  margin: 0 1px;
-}
-#custom-screenrecording-indicator {
-  color: #FF454F;
-  padding: 0 6px;
-  margin: 0 1px;
-  text-shadow: 0 0 8px #FF454F;
-}
-
-/* ── Clock (Single Line Horizontal) ──────────────────────────────── */
-#clock, #custom-clock {
-  color: #690001;
-  padding: 0 12px;
-  margin: 0 4px;
-  font-weight: bold;
-  font-size: 13px;
-  transition: color 0.3s;
-}
-#clock:hover, #custom-clock:hover { color: #690001; }
-
-/* ── Weather ─────────────────────────────────────────────────────── */
-#custom-weather {
-  color: #006968;
-  padding: 0 8px;
-  margin: 0 2px;
-}
-
-/* ── CPU ─────────────────────────────────────────────────────────── */
-#cpu {
-  color: #C05F58;
-  margin: 0 6px;
-  transition: color 0.3s;
-}
-#cpu.warning { color: #FFA726; }
-#cpu.critical { color: #FF454F; text-shadow: 0 0 6px #FF454F; }
-
-/* ── Memory ──────────────────────────────────────────────────────── */
-#memory {
-  color: #690001;
-  margin: 0 6px;
-  transition: color 0.3s;
-}
-#memory.warning { color: #FFA726; }
-#memory.critical { color: #FF454F; }
-
-/* ── Audio ───────────────────────────────────────────────────────── */
-#pulseaudio, #wireplumber {
-  color: #690001;
-  margin: 0 6px;
-  transition: color 0.3s;
-}
-#pulseaudio.muted, #wireplumber.muted { color: alpha(white, 0.35); }
-
-/* ── Battery ─────────────────────────────────────────────────────── */
-#battery {
-  color: #690001;
-  margin: 0 6px;
-  transition: color 0.4s;
-}
-#battery.charging { color: #4CAF50; text-shadow: 0 0 8px #4CAF50; }
-#battery.warning:not(.charging) { color: #FFA726; }
-#battery.critical:not(.charging) {
-  color: #FF454F;
-  text-shadow: 0 0 8px #FF454F;
-  animation: blink 1s step-end infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-
-/* ── Network & Bluetooth Icons (Generous Spacing & Centered Icons) ── */
-#network, #bluetooth {
-  color: #F0F4FC;
-  padding: 0 8px;
-  margin: 0 4px;
-  min-width: 18px;
-}
-#network.disconnected { color: alpha(white, 0.3); }
-#bluetooth.connected { color: #690001; }
-#bluetooth.disabled { color: alpha(white, 0.28); }
-
-/* ── Tray ────────────────────────────────────────────────────────── */
-#tray { margin: 0 8px 0 6px; padding: 0 6px; }
-#tray > .passive { -gtk-icon-effect: dim; }
-#tray > .needs-attention {
-  -gtk-icon-effect: highlight;
-  background-color: alpha(#690001, 0.18);
-  border-radius: 4px;
-}
-
-/* ── Tooltip ─────────────────────────────────────────────────────── */
-tooltip {
-  background: alpha(#14161E, 0.96);
-  border: 1px solid #690001;
-  border-radius: 10px;
-  box-shadow: 0 6px 22px rgba(0,0,0,0.5);
-}
-tooltip label { color: #F0F4FC; }

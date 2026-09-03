@@ -1,27 +1,23 @@
-# DANDADAN Warp Theme — Wallpaper 02: Turbo Granny Crimson Curse
-name: Dandadan
-accent: "#690001"
-cursor: "#690001"
-background: "#14161E"
-foreground: "#F0F4FC"
+accent: '#E80202'
+background: '#14161E'
 details: darker
-
+foreground: '#F0F4FC'
 terminal_colors:
-  normal:
-    black:   "#14161E"
-    red:     "#690001"
-    green:   "#C05F58"
-    yellow:  "#693300"
-    blue:    "#016900"
-    magenta: "#690001"
-    cyan:    "#000169"
-    white:   "#F0F4FC"
   bright:
-    black:   "#616367"
-    red:     "#882829"
-    green:   "#F29C96"
-    yellow:  "#885728"
-    blue:    "#298828"
-    magenta: "#882829"
-    cyan:    "#282988"
-    white:   "#FFFFFF"
+    black: '#616367'
+    blue: '#9AB8FF'
+    cyan: '#56D4E8'
+    green: '#69FF94'
+    magenta: '#FF92DF'
+    red: '#F9ABA4'
+    white: '#FFFFFF'
+    yellow: '#FFFFA5'
+  normal:
+    black: '#14161E'
+    blue: '#7AA2F7'
+    cyan: '#00F5D4'
+    green: '#50FA7B'
+    magenta: '#EF02F5'
+    red: '#E3847B'
+    white: '#F0F4FC'
+    yellow: '#F1FA8C'

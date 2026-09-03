@@ -3,41 +3,41 @@ background = "#14161E"
 foreground = "#F0F4FC"
 
 [colors.cursor]
-cursor = "#690001"
+cursor = "#E80202"
 text   = "#FFFFFF"
 
 [colors.selection]
-background = "#690001"
+background = "#282D42"
 foreground = "#F0F4FC"
 
 [colors.search.matches]
-foreground = "#FFFFFF"
-background = "#690001"
+foreground = "#14161E"
+background = "#F1FA8C"
 
 [colors.search.focused_match]
 foreground = "#14161E"
-background = "#690001"
+background = "#E3847B"
 
 [colors.footer_bar]
-background = "#1A1C26"
+background = "#1A1D2A"
 foreground = "#F0F4FC"
 
 [colors.normal]
 black   = "#14161E"
-red     = "#690001"
-green   = "#C05F58"
-yellow  = "#693300"
-blue    = "#016900"
-magenta = "#690001"
-cyan    = "#000169"
+red     = "#E3847B"
+green   = "#50FA7B"
+yellow  = "#F1FA8C"
+blue    = "#7AA2F7"
+magenta = "#EF02F5"
+cyan    = "#00F5D4"
 white   = "#F0F4FC"
 
 [colors.bright]
 black   = "#616367"
-red     = "#882829"
-green   = "#F29C96"
-yellow  = "#885728"
-blue    = "#298828"
-magenta = "#882829"
-cyan    = "#282988"
+red     = "#F9ABA4"
+green   = "#69FF94"
+yellow  = "#FFFFA5"
+blue    = "#9AB8FF"
+magenta = "#FF92DF"
+cyan    = "#56D4E8"
 white   = "#FFFFFF"

@@ -1,11 +1,11 @@
-/* DANDADAN Firefox/Zen — Wallpaper 02: Turbo Granny Crimson Curse */
+/* DANDADAN Firefox/Zen — Wallpaper 01: Okarun & Turbo Granny Golden Spark */
 :root {
-  --lwt-accent-color: #690001;
-  --lwt-toolbar-field-focus: #690001;
-  --toolbar-field-border-color: #690001;
+  --lwt-accent-color: #E80202;
+  --lwt-toolbar-field-focus: #E80202;
+  --toolbar-field-border-color: #E80202;
   --toolbar-field-background-color: #14161E;
   --toolbar-field-color: #F0F4FC;
   --lwt-tab-text: #F0F4FC;
-  --lwt-selected-tab-background-color: #690001;
-  --tab-line-color: #690001;
+  --lwt-selected-tab-background-color: #282D42;
+  --tab-line-color: #E80202;
 }

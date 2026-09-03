@@ -145,20 +145,26 @@ def pick_accent_and_contrast(colors):
 
 result = {}
 
-# Discover all wallpapers — handles both 2-digit (01.webp) and 3-digit (049.webp) names
-webp_files = {}
-for fname in sorted(os.listdir(WALLPAPER_DIR)):
-    if fname.endswith(".webp"):
-        num_str = fname.replace(".webp", "")        # e.g. '049'
-        num_int = int(num_str)                       # 49
-        key     = f"{num_int:02d}"                   # '49'
-        webp_files[key] = os.path.join(WALLPAPER_DIR, fname)
+# Discover all wallpapers — handles png, webp, jpg, jpeg
+valid_exts = (".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif")
+image_files = {}
+if os.path.isdir(WALLPAPER_DIR):
+    for fname in sorted(os.listdir(WALLPAPER_DIR)):
+        ext = os.path.splitext(fname)[1].lower()
+        if ext in valid_exts:
+            base = os.path.splitext(fname)[0]
+            try:
+                num_int = int(base.split("-")[0].lstrip("0") or "0")
+                key = f"{num_int:02d}"
+                image_files[key] = os.path.join(WALLPAPER_DIR, fname)
+            except ValueError:
+                continue
 
-print(f"Found {len(webp_files)} wallpapers in {WALLPAPER_DIR}")
-print(f"Keys: {sorted(webp_files.keys(), key=int)}")
+print(f"Found {len(image_files)} wallpapers in {WALLPAPER_DIR}")
+print(f"Keys: {sorted(image_files.keys(), key=int)}")
 
-for idx in sorted(webp_files.keys(), key=int):
-    path = webp_files[idx]
+for idx in sorted(image_files.keys(), key=int):
+    path = image_files[idx]
     print(f"Processing {idx} ({os.path.basename(path)})...", end=" ", flush=True)
     colors = extract_palette(path)
     accent, highlight, glow = pick_accent_and_contrast(colors)
@@ -181,3 +187,4 @@ with open(OUTPUT_PATH, "w") as f:
     json.dump(result_sorted, f, indent=2)
 
 print(f"\n✓ Wrote {len(result_sorted)} wallpaper palettes to {OUTPUT_PATH}")
+
