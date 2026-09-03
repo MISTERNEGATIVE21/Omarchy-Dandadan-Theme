@@ -92,8 +92,12 @@ install_theme() {
 
   # Clone or pull latest
   if [[ -d "$THEME_DIR/.git" ]]; then
-    log "Updating existing installation..."
-    git -C "$THEME_DIR" pull --ff-only
+    if [[ "$THEME_DIR" != "$(pwd)" ]]; then
+      log "Updating existing installation..."
+      git -C "$THEME_DIR" pull --ff-only || true
+    else
+      log "Running from repository directory – using current repository files"
+    fi
   else
     log "Cloning from GitHub..."
     git clone --depth 1 "$REPO_URL" "$THEME_DIR"
@@ -401,11 +405,73 @@ FOOTCONF
   fi
 }
 
+install_quickshell_extensions() {
+  step "Configuring Quickshell extensions (Dandadan Theme Control & Menu Extensions)"
+
+  # 1. Install Plugin
+  PLUGIN_SRC="$THEME_DIR/plugins/dandadan.theme-control"
+  PLUGIN_DEST="$HOME/.config/omarchy/plugins/dandadan.theme-control"
+  if [[ -d "$PLUGIN_SRC" ]]; then
+    mkdir -p "$PLUGIN_DEST"
+    cp -rf "$PLUGIN_SRC"/* "$PLUGIN_DEST"/
+    if command -v omarchy &>/dev/null; then
+      omarchy plugin validate "$PLUGIN_DEST" &>/dev/null || true
+    fi
+    log "Installed Dandadan Theme Control plugin to ~/.config/omarchy/plugins/"
+  fi
+
+  # 2. Install Menu Extensions
+  MENU_SRC="$THEME_DIR/extensions/omarchy-menu.jsonc"
+  MENU_DEST="$HOME/.config/omarchy/extensions/omarchy-menu.jsonc"
+  if [[ -f "$MENU_SRC" ]]; then
+    mkdir -p "$(dirname "$MENU_DEST")"
+    if [[ ! -f "$MENU_DEST" ]] || ! grep -q "dandadan" "$MENU_DEST"; then
+      cp -f "$MENU_SRC" "$MENU_DEST"
+      log "Installed Dandadan Menu Extension to ~/.config/omarchy/extensions/"
+    fi
+  fi
+
+  # 3. Ensure dandadan.theme-control is enabled and on bar
+  SHELL_JSON="$HOME/.config/omarchy/shell.json"
+  if [[ -f "$SHELL_JSON" ]]; then
+    python3 -c '
+import json, os
+p = os.path.expanduser("~/.config/omarchy/shell.json")
+try:
+    with open(p) as f:
+        data = json.load(f)
+    changed = False
+    plugins = data.setdefault("plugins", [])
+    if "dandadan.theme-control" not in plugins:
+        plugins.append("dandadan.theme-control")
+        changed = True
+    right = data.setdefault("bar", {}).setdefault("layout", {}).setdefault("right", [])
+    has_widget = any(w.get("id") == "dandadan.theme-control" for w in right if isinstance(w, dict))
+    if not has_widget:
+        right.insert(0, {"id": "dandadan.theme-control"})
+        changed = True
+    if changed:
+        with open(p, "w") as f:
+            json.dump(data, f, indent=2)
+except Exception:
+    pass
+'
+    log "Registered dandadan.theme-control widget in ~/.config/omarchy/shell.json"
+  fi
+
+  # 4. Trigger Quickshell rescan
+  if command -v omarchy-shell &>/dev/null; then
+    omarchy-shell -q shell rescanPlugins &>/dev/null || true
+    omarchy-shell -q shell reloadConfig &>/dev/null || true
+  fi
+}
+
 uninstall_theme() {
   step "Uninstalling Dandadan theme"
   [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR" && log "Removed $THEME_DIR"
   [[ -f "$HOOKS_DIR/bg-set" ]] && rm -f "$HOOKS_DIR/bg-set" && log "Removed bg-set hook"
   [[ -f "$HOOKS_DIR/theme-set" ]] && rm -f "$HOOKS_DIR/theme-set" && log "Removed theme-set hook"
+  [[ -d "$HOME/.config/omarchy/plugins/dandadan.theme-control" ]] && rm -rf "$HOME/.config/omarchy/plugins/dandadan.theme-control" && log "Removed dandadan.theme-control plugin"
   log "Uninstall complete. Run: omarchy-theme-set <your-theme>"
   exit 0
 }
@@ -423,6 +489,7 @@ case "${1:-}" in
     install_theme --update
     extract_colors
     install_terminal_configs
+    install_quickshell_extensions
     install_vscode_theme
     install_zellij_theme
     install_warp_theme
@@ -437,6 +504,7 @@ case "${1:-}" in
     install_hooks
     extract_colors
     install_terminal_configs
+    install_quickshell_extensions
     install_vscode_theme
     install_zellij_theme
     install_warp_theme

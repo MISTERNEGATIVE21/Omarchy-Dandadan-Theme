@@ -1,6 +1,6 @@
 /**
  * @name Dandadan
- * @description Dynamic Dandadan theme — Wallpaper 01: Okarun & Turbo Granny Golden Spark
+ * @description Dynamic Dandadan theme — Wallpaper 02: Turbo Granny Crimson Curse
  * @version 2.0.0
  * @author misternegative21
 */
@@ -15,10 +15,10 @@ body {
     --bg-1: #10121B;
     --bg-2: #1A1D2A;
     --bg-3: #14161E;
-    --accent-1: #E80202;
-    --accent-2: #960101;
-    --border: #E8020255;
+    --accent-1: #C71275;
+    --accent-2: #810B4C;
+    --border: #C7127555;
     --status-positive-text: #50FA7B;
     --status-warning-text: #F1FA8C;
-    --status-danger-text: #E3847B;
+    --status-danger-text: #FF5555;
 }

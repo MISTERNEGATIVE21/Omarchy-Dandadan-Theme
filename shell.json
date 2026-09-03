@@ -32,6 +32,9 @@
       ],
       "right": [
         {
+          "id": "dandadan.theme-control"
+        },
+        {
           "id": "omarchy.tray"
         },
         {
@@ -64,6 +67,8 @@
     "lock": 300,
     "screensaver": 150
   },
-  "plugins": [],
+  "plugins": [
+    "dandadan.theme-control"
+  ],
   "version": 1
 }

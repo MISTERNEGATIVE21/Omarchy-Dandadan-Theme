@@ -1311,18 +1311,41 @@ try:
             with open(theme_shell_json) as sf:
                 sj_data = json.load(sf)
             sj_data.setdefault("bar", {})["transparent"] = False
+            plugins = sj_data.setdefault("plugins", [])
+            if "dandadan.theme-control" not in plugins:
+                plugins.append("dandadan.theme-control")
+            right = sj_data.setdefault("bar", {}).setdefault("layout", {}).setdefault("right", [])
+            if not any(w.get("id") == "dandadan.theme-control" for w in right if isinstance(w, dict)):
+                right.insert(0, {"id": "dandadan.theme-control"})
             write_both("shell.json", json.dumps(sj_data, indent=2) + "\n")
             need_user_update = True
             if os.path.exists(user_shell_json):
                 with open(user_shell_json) as uf:
                     try:
                         u_data = json.load(uf)
-                        if u_data.get("bar", {}).get("transparent") is False:
+                        u_right = u_data.get("bar", {}).get("layout", {}).get("right", [])
+                        has_w = any(w.get("id") == "dandadan.theme-control" for w in u_right if isinstance(w, dict))
+                        if u_data.get("bar", {}).get("transparent") is False and has_w:
                             need_user_update = False
                     except Exception:
                         pass
             if need_user_update:
                 write(user_shell_json, json.dumps(sj_data, indent=2) + "\n")
+
+        # Keep Quickshell user plugin synced
+        for plugin_name in ["dandadan.theme-control"]:
+            p_src = f"{THEME_DIR}/plugins/{plugin_name}"
+            p_dst = f"{HOME}/.config/omarchy/plugins/{plugin_name}"
+            if os.path.isdir(p_src):
+                os.makedirs(p_dst, exist_ok=True)
+                for item in os.listdir(p_src):
+                    s_file = os.path.join(p_src, item)
+                    d_file = os.path.join(p_dst, item)
+                    if os.path.isfile(s_file):
+                        with open(s_file, "rb") as rf:
+                            content = rf.read()
+                        with open(d_file, "wb") as wf:
+                            wf.write(content)
 except Exception:
     pass
 
@@ -1346,6 +1369,7 @@ if is_process_running("quickshell") or is_process_running("omarchy-shell"):
         shell_b64  = base64.b64encode(shell_toml.encode("utf-8")).decode("utf-8")
         subprocess.run(["omarchy-shell", "-q", "shell", "applyTheme", colors_b64, shell_b64], capture_output=True)
         subprocess.run(["omarchy-shell", "-q", "shell", "reloadConfig"], capture_output=True)
+        subprocess.run(["omarchy-shell", "-q", "shell", "rescanPlugins"], capture_output=True)
     except Exception:
         pass
 

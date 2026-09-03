@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "dandadan.theme-control",
+  "name": "Dandadan Theme Control",
+  "version": "2.0.0",
+  "author": "misternegative21",
+  "description": "Interactive Quickshell status bar widget and popup control center for Dandadan Dynamic Theme",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "Widget.qml"
+  },
+  "barWidget": {
+    "displayName": "Dandadan Theme Control",
+    "category": "Theme",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

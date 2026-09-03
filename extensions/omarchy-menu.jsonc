@@ -1,0 +1,48 @@
+{
+  // Dandadan Dynamic Theme Menu Extensions for Quickshell
+  "dandadan": {
+    "icon": "󰄛",
+    "label": "Dandadan",
+    "aliases": ["dandadan", "theme", "anime"]
+  },
+  "dandadan.next": {
+    "icon": "󰒭",
+    "label": "Next Wallpaper",
+    "action": "python3 ~/.config/omarchy/current/theme/scripts/cycle-wallpaper.py next"
+  },
+  "dandadan.prev": {
+    "icon": "󰒮",
+    "label": "Previous Wallpaper",
+    "action": "python3 ~/.config/omarchy/current/theme/scripts/cycle-wallpaper.py prev"
+  },
+  "dandadan.random": {
+    "icon": "󰄛",
+    "label": "Random Vibe",
+    "action": "python3 ~/.config/omarchy/current/theme/scripts/cycle-wallpaper.py random"
+  },
+  "dandadan.picker": {
+    "icon": "󰋩",
+    "label": "Wallpaper Gallery Picker",
+    "action": "omarchy-menu-images"
+  },
+  "dandadan.control": {
+    "icon": "󰒓",
+    "label": "Toggle Theme Control Panel",
+    "action": "omarchy-shell dandadan.theme-control toggle"
+  },
+  "dandadan.transparency": {
+    "icon": "󰔎",
+    "label": "Toggle Bar Transparency",
+    "action": "omarchy-shell shell toggleBarTransparency"
+  },
+  "dandadan.recolor": {
+    "icon": "",
+    "label": "Recolor Desktop & Sync",
+    "action": "python3 ~/.config/omarchy/current/theme/update_wallpaper_colors.py"
+  },
+  "dandadan.rescan": {
+    "icon": "",
+    "label": "Rescan Quickshell Plugins",
+    "action": "omarchy-shell shell rescanPlugins"
+  }
+}

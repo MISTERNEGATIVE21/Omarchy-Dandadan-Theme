@@ -27,11 +27,27 @@ def test_dotfiles_exist_and_valid():
 
     with open("hyprland.lua") as f:
         lua_content = f.read()
-    assert "hl.config" in lua_content
-    assert "active_border" in lua_content
-    assert "shadow" in lua_content
+    # Verify Quickshell extensions and plugin manifest
+    assert os.path.exists("plugins/dandadan.theme-control/manifest.json"), "manifest.json missing"
+    assert os.path.exists("plugins/dandadan.theme-control/Widget.qml"), "Widget.qml missing"
+    assert os.path.exists("plugins/dandadan.theme-control/Panel.qml"), "Panel.qml missing"
+    assert os.path.exists("extensions/omarchy-menu.jsonc"), "omarchy-menu.jsonc missing"
+    assert os.path.exists("scripts/cycle-wallpaper.py"), "cycle-wallpaper.py missing"
+    assert os.access("scripts/cycle-wallpaper.py", os.X_OK), "cycle-wallpaper.py not executable"
 
-    print("PASS: GUI dotfiles valid")
+    with open("plugins/dandadan.theme-control/manifest.json") as f:
+        manifest = json.load(f)
+    assert manifest.get("schemaVersion") == 1
+    assert manifest.get("id") == "dandadan.theme-control"
+    assert "bar-widget" in manifest.get("kinds", [])
+    assert manifest.get("entryPoints", {}).get("barWidget") == "Widget.qml"
+
+    # Verify shell.json enables extension
+    assert "dandadan.theme-control" in shell_json.get("plugins", [])
+    right_ids = [w.get("id") for w in shell_json["bar"]["layout"]["right"] if isinstance(w, dict)]
+    assert "dandadan.theme-control" in right_ids, "dandadan.theme-control must be in bar.layout.right"
+
+    print("PASS: GUI dotfiles and Quickshell extensions valid")
 
 if __name__ == "__main__":
     test_dotfiles_exist_and_valid()

@@ -1,4 +1,4 @@
-accent: '#E80202'
+accent: '#C71275'
 background: '#14161E'
 details: darker
 foreground: '#F0F4FC'
@@ -8,8 +8,8 @@ terminal_colors:
     blue: '#9AB8FF'
     cyan: '#56D4E8'
     green: '#69FF94'
-    magenta: '#FF92DF'
-    red: '#F9ABA4'
+    magenta: '#D56EF0'
+    red: '#FF6E6E'
     white: '#FFFFFF'
     yellow: '#FFFFA5'
   normal:
@@ -17,7 +17,7 @@ terminal_colors:
     blue: '#7AA2F7'
     cyan: '#00F5D4'
     green: '#50FA7B'
-    magenta: '#EF02F5'
-    red: '#E3847B'
+    magenta: '#AB38C8'
+    red: '#FF5555'
     white: '#F0F4FC'
     yellow: '#F1FA8C'

@@ -1,7 +1,7 @@
 window {
   background: alpha(#14161E, 0.92);
   border-radius: 16px;
-  border: 2px solid #E80202;
+  border: 2px solid #C71275;
 }
 image, label {
   color: #F0F4FC;
@@ -17,6 +17,6 @@ trough {
   border-radius: 8px;
 }
 progress {
-  background: #E80202;
+  background: #C71275;
   border-radius: 8px;
 }
