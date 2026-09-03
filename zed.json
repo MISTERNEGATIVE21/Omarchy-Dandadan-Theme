@@ -16,7 +16,7 @@
         "text.disabled": "#F0F4FC44",
         "text.accent": "#E80202",
         "icon": "#F0F4FC",
-        "icon.muted": "#616367",
+        "icon.muted": "#7E859E",
         "icon.disabled": "#F0F4FC44",
         "icon.placeholder": "#F0F4FC55",
         "icon.accent": "#E80202",
@@ -91,14 +91,14 @@
             "color": "#FF9E64"
           },
           "comment": {
-            "color": "#616367",
+            "color": "#7E859E",
             "font_style": "italic"
           },
           "operator": {
             "color": "#E80202"
           },
           "punctuation": {
-            "color": "#BAC2DE"
+            "color": "#C5CDE3"
           },
           "tag": {
             "color": "#E3847B"

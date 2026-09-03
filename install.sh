@@ -334,6 +334,73 @@ activate_theme() {
   fi
 }
 
+install_terminal_configs() {
+  step "Configuring terminal themes (Kitty, Alacritty, Ghostty, Foot)"
+
+  # Kitty
+  if command -v kitty &>/dev/null || [[ -d "$HOME/.config/kitty" ]]; then
+    mkdir -p "$HOME/.config/kitty"
+    KITTY_USER="$HOME/.config/kitty/kitty.conf"
+    if [[ -f "$KITTY_USER" ]]; then
+      if ! grep -q "current/theme/kitty.conf" "$KITTY_USER"; then
+        sed -i '1iinclude ~/.local/state/omarchy/current/theme/kitty.conf\n' "$KITTY_USER"
+      fi
+    else
+      echo "include ~/.local/state/omarchy/current/theme/kitty.conf" > "$KITTY_USER"
+    fi
+    log "Kitty configured to import theme"
+  fi
+
+  # Alacritty
+  if command -v alacritty &>/dev/null || [[ -d "$HOME/.config/alacritty" ]]; then
+    mkdir -p "$HOME/.config/alacritty"
+    ALACRITTY_USER="$HOME/.config/alacritty/alacritty.toml"
+    if [[ -f "$ALACRITTY_USER" ]]; then
+      if ! grep -q "current/theme/alacritty.toml" "$ALACRITTY_USER"; then
+        sed -i '1igeneral.import = [ "~/.local/state/omarchy/current/theme/alacritty.toml" ]\n' "$ALACRITTY_USER"
+      fi
+    else
+      echo 'general.import = [ "~/.local/state/omarchy/current/theme/alacritty.toml" ]' > "$ALACRITTY_USER"
+    fi
+    log "Alacritty configured to import theme"
+  fi
+
+  # Ghostty
+  if command -v ghostty &>/dev/null || [[ -d "$HOME/.config/ghostty" ]]; then
+    mkdir -p "$HOME/.config/ghostty"
+    GHOSTTY_USER="$HOME/.config/ghostty/config"
+    if [[ -f "$GHOSTTY_USER" ]]; then
+      if ! grep -q "current/theme/ghostty.conf" "$GHOSTTY_USER"; then
+        sed -i '1iconfig-file = ?"~/.local/state/omarchy/current/theme/ghostty.conf"\n' "$GHOSTTY_USER"
+      fi
+    else
+      echo 'config-file = ?"~/.local/state/omarchy/current/theme/ghostty.conf"' > "$GHOSTTY_USER"
+    fi
+    log "Ghostty configured to import theme"
+  fi
+
+  # Foot
+  if command -v foot &>/dev/null || [[ -d "$HOME/.config/foot" ]]; then
+    mkdir -p "$HOME/.config/foot"
+    FOOT_USER="$HOME/.config/foot/foot.ini"
+    if [[ -f "$FOOT_USER" ]]; then
+      if ! grep -q "current/theme/foot.ini" "$FOOT_USER"; then
+        if grep -q "^\[main\]" "$FOOT_USER"; then
+          sed -i '/^\[main\]/a include=~/.local/state/omarchy/current/theme/foot.ini' "$FOOT_USER"
+        else
+          sed -i '1i[main]\ninclude=~/.local/state/omarchy/current/theme/foot.ini\n' "$FOOT_USER"
+        fi
+      fi
+    else
+      cat > "$FOOT_USER" << 'FOOTCONF'
+[main]
+include=~/.local/state/omarchy/current/theme/foot.ini
+FOOTCONF
+    fi
+    log "Foot configured to import theme"
+  fi
+}
+
 uninstall_theme() {
   step "Uninstalling Dandadan theme"
   [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR" && log "Removed $THEME_DIR"
@@ -355,6 +422,7 @@ case "${1:-}" in
     check_deps
     install_theme --update
     extract_colors
+    install_terminal_configs
     install_vscode_theme
     install_zellij_theme
     install_warp_theme
@@ -368,6 +436,7 @@ case "${1:-}" in
     install_theme
     install_hooks
     extract_colors
+    install_terminal_configs
     install_vscode_theme
     install_zellij_theme
     install_warp_theme

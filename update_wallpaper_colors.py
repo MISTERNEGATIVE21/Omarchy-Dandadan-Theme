@@ -175,17 +175,19 @@ border_c2 = accent_comp.lstrip('#') if accent_comp != accent else cursor.lstrip(
 border_c2_hex = f"#{border_c2}"
 
 # Dark backgrounds and crisp text
-dark_bg    = "#0E1017"
-darker_bg  = "#090A0F"
-lighter_bg = "#1D202B"
-bg_mid     = "#1A1D2A"
-bg_mid2    = "#212536"
-selection_bg = "#282D42"
+dark_bg      = "#0E1017"
+darker_bg    = "#090A0F"
+lighter_bg   = "#1D202B"
+bg_mid       = "#1A1D2A"
+bg_mid2      = "#212536"
+selection_bg = "#384166"   # Enhanced visible indigo-slate highlight (>10:1 contrast with white text)
+selection_fg = "#FFFFFF"
 
-dark_fg    = "#565F76"
-light_fg   = "#BAC2DE"
-bright_fg  = "#FFFFFF"
-muted      = "#616367"
+ansi_black   = "#26293B"   # Distinct dark slate black (never identical to bg, so black badges/text are visible!)
+dark_fg      = "#6A738C"
+light_fg     = "#C5CDE3"
+bright_fg    = "#FFFFFF"
+muted        = "#7E859E"   # Enhanced muted/bright black (>4.5:1 WCAG AA contrast for comments/line numbers)
 
 def get_best_icon_theme(hex_code: str) -> str:
     """Map hue to verified existing installed icon themes (Yaru-*-dark / Yaru-*)."""
@@ -438,21 +440,31 @@ cursor            {accent}
 cursor_text_color {get_fg_for_bg(accent)}
 
 selection_background {selection_bg}
-selection_foreground {fg}
+selection_foreground {selection_fg}
 
 url_color {sem['cyan']}
+url_style curly
 
 active_border_color   {accent}
-inactive_border_color {muted}
+inactive_border_color {bg_mid}
 bell_border_color     {sem['red']}
 
 active_tab_background   {accent}
 active_tab_foreground   {get_fg_for_bg(accent)}
 inactive_tab_background {bg_mid}
-inactive_tab_foreground #A0A5B5
-tab_bar_background      {bg}
+inactive_tab_foreground {muted}
+tab_bar_background      {darker_bg}
 
-color0  {bg}
+# Search and mark highlights
+mark1_foreground {darker_bg}
+mark1_background {accent}
+mark2_foreground {darker_bg}
+mark2_background {sem['cyan']}
+mark3_foreground {darker_bg}
+mark3_background {sem['yellow']}
+
+# Normal ANSI Colors
+color0  {ansi_black}
 color1  {sem['red']}
 color2  {sem['green']}
 color3  {sem['yellow']}
@@ -461,6 +473,7 @@ color5  {sem['magenta']}
 color6  {sem['cyan']}
 color7  {fg}
 
+# Bright ANSI Colors
 color8  {muted}
 color9  {sem['bright_red']}
 color10 {sem['bright_green']}
@@ -483,24 +496,36 @@ foreground = "{fg}"
 cursor = "{accent}"
 text   = "{get_fg_for_bg(accent)}"
 
+[colors.vi_mode_cursor]
+cursor = "{highlight}"
+text   = "{get_fg_for_bg(highlight)}"
+
 [colors.selection]
 background = "{selection_bg}"
-foreground = "{fg}"
+text       = "{selection_fg}"
 
 [colors.search.matches]
-foreground = "{bg}"
+foreground = "{darker_bg}"
 background = "{sem['yellow']}"
 
 [colors.search.focused_match]
-foreground = "{bg}"
-background = "{sem['red']}"
+foreground = "{get_fg_for_bg(accent)}"
+background = "{accent}"
+
+[colors.hints.start]
+foreground = "{darker_bg}"
+background = "{sem['yellow']}"
+
+[colors.hints.end]
+foreground = "{darker_bg}"
+background = "{sem['green']}"
 
 [colors.footer_bar]
 background = "{bg_mid}"
 foreground = "{fg}"
 
 [colors.normal]
-black   = "{bg}"
+black   = "{ansi_black}"
 red     = "{sem['red']}"
 green   = "{sem['green']}"
 yellow  = "{sem['yellow']}"
@@ -528,9 +553,9 @@ foot = f"""[colors]
 background={bg.lstrip('#')}
 foreground={fg.lstrip('#')}
 cursor={accent.lstrip('#')} {get_fg_for_bg(accent).lstrip('#')}
-selection-target={selection_bg.lstrip('#')} {fg.lstrip('#')}
+selection-target={selection_bg.lstrip('#')} {selection_fg.lstrip('#')}
 
-regular0={bg.lstrip('#')}
+regular0={ansi_black.lstrip('#')}
 regular1={sem['red'].lstrip('#')}
 regular2={sem['green'].lstrip('#')}
 regular3={sem['yellow'].lstrip('#')}
@@ -559,9 +584,9 @@ foreground           = {fg.lstrip('#')}
 cursor-color         = {accent.lstrip('#')}
 cursor-text          = {get_fg_for_bg(accent).lstrip('#')}
 selection-background = {selection_bg.lstrip('#')}
-selection-foreground = {fg.lstrip('#')}
+selection-foreground = {selection_fg.lstrip('#')}
 
-palette = 0=#{bg.lstrip('#')}
+palette = 0=#{ansi_black.lstrip('#')}
 palette = 1=#{sem['red'].lstrip('#')}
 palette = 2=#{sem['green'].lstrip('#')}
 palette = 3=#{sem['yellow'].lstrip('#')}
@@ -1084,7 +1109,7 @@ terminal_colors:
     white: '{bright_fg}'
     yellow: '{sem['bright_yellow']}'
   normal:
-    black: '{bg}'
+    black: '{ansi_black}'
     blue: '{sem['blue']}'
     cyan: '{sem['cyan']}'
     green: '{sem['green']}'
@@ -1100,7 +1125,7 @@ themes {{
     dandadan {{
         fg "{fg}"
         bg "{bg}"
-        black "{bg}"
+        black "{ansi_black}"
         red "{sem['red']}"
         green "{sem['green']}"
         yellow "{sem['yellow']}"
@@ -1196,17 +1221,24 @@ return {{
     {{
         "LazyVim/LazyVim",
         opts = function(_, opts)
-            vim.api.nvim_set_hl(0, "Normal",        {{ bg = "{bg}", fg = "{fg}" }})
-            vim.api.nvim_set_hl(0, "Visual",        {{ bg = "{with_alpha(accent,'44')}" }})
-            vim.api.nvim_set_hl(0, "Search",        {{ bg = "{with_alpha(sem['yellow'],'55')}", fg = "#FFFFFF" }})
-            vim.api.nvim_set_hl(0, "CurSearch",     {{ bg = "{accent}", fg = "#FFFFFF" }})
-            vim.api.nvim_set_hl(0, "CursorLine",    {{ bg = "{bg_mid}" }})
-            vim.api.nvim_set_hl(0, "CursorLineNr",  {{ fg = "{accent}", bold = true }})
-            vim.api.nvim_set_hl(0, "LineNr",        {{ fg = "{muted}" }})
-            vim.api.nvim_set_hl(0, "DiagnosticError",   {{ fg = "{sem['red']}" }})
-            vim.api.nvim_set_hl(0, "DiagnosticWarn",    {{ fg = "{sem['yellow']}" }})
-            vim.api.nvim_set_hl(0, "DiagnosticInfo",    {{ fg = "{sem['blue']}" }})
-            vim.api.nvim_set_hl(0, "DiagnosticHint",    {{ fg = "{sem['cyan']}" }})
+            vim.api.nvim_set_hl(0, "Normal",          {{ bg = "{bg}", fg = "{fg}" }})
+            vim.api.nvim_set_hl(0, "Visual",          {{ bg = "{selection_bg}", fg = "{bright_fg}", bold = true }})
+            vim.api.nvim_set_hl(0, "Search",          {{ bg = "{sem['yellow']}", fg = "{darker_bg}", bold = true }})
+            vim.api.nvim_set_hl(0, "CurSearch",       {{ bg = "{accent}", fg = "{get_fg_for_bg(accent)}", bold = true }})
+            vim.api.nvim_set_hl(0, "IncSearch",       {{ bg = "{accent}", fg = "{get_fg_for_bg(accent)}", bold = true }})
+            vim.api.nvim_set_hl(0, "CursorLine",      {{ bg = "{bg_mid}" }})
+            vim.api.nvim_set_hl(0, "CursorLineNr",    {{ fg = "{accent}", bold = true }})
+            vim.api.nvim_set_hl(0, "LineNr",          {{ fg = "{muted}" }})
+            vim.api.nvim_set_hl(0, "Comment",         {{ fg = "{muted}", italic = true }})
+            vim.api.nvim_set_hl(0, "StatusLine",      {{ bg = "{bg_mid}", fg = "{fg}" }})
+            vim.api.nvim_set_hl(0, "StatusLineNC",    {{ bg = "{dark_bg}", fg = "{muted}" }})
+            vim.api.nvim_set_hl(0, "Pmenu",           {{ bg = "{bg_mid}", fg = "{fg}" }})
+            vim.api.nvim_set_hl(0, "PmenuSel",        {{ bg = "{selection_bg}", fg = "{bright_fg}", bold = true }})
+            vim.api.nvim_set_hl(0, "PmenuThumb",      {{ bg = "{accent}" }})
+            vim.api.nvim_set_hl(0, "DiagnosticError", {{ fg = "{sem['red']}" }})
+            vim.api.nvim_set_hl(0, "DiagnosticWarn",  {{ fg = "{sem['yellow']}" }})
+            vim.api.nvim_set_hl(0, "DiagnosticInfo",  {{ fg = "{sem['blue']}" }})
+            vim.api.nvim_set_hl(0, "DiagnosticHint",  {{ fg = "{sem['cyan']}" }})
         end,
     }},
 }}

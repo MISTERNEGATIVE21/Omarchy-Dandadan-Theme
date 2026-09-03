@@ -84,15 +84,37 @@ def test_engine_execution():
     assert 0.43 <= cyan_h <= 0.55, f"ANSI Cyan ({colors['cyan']}, hue={cyan_h}) is not in Cyan hue range!"
     assert 0.73 <= magenta_h <= 0.95, f"ANSI Magenta ({colors['magenta']}, hue={magenta_h}) is not in Magenta hue range!"
 
-    # Verify Kitty terminal config
+    # Verify Kitty terminal config & visibility
     with open("kitty.conf") as f:
         kitty_conf = f.read()
     assert "background #14161E" in kitty_conf, "Kitty must use clean dark background #14161E"
     assert "foreground #F0F4FC" in kitty_conf, "Kitty must use clean crisp foreground #F0F4FC"
+    assert "color0  #14161E" not in kitty_conf, "Kitty color0 (black) must not be identical to canvas background #14161E"
+    assert "selection_background #282D42" not in kitty_conf, "Kitty selection must use enhanced visible highlight"
+    assert "cursor_text_color" in kitty_conf, "Kitty cursor_text_color must be set"
     assert f"color1  {colors['red']}" in kitty_conf, "Kitty color1 must map to true red"
     assert f"color2  {colors['green']}" in kitty_conf, "Kitty color2 must map to true green"
 
-    print(f"PASS: Dynamic color engine executed successfully (strict non-inverted ANSI channels verified)")
+    # Verify Alacritty terminal config & highlights
+    with open("alacritty.toml") as f:
+        alacritty_conf = f.read()
+    assert 'black   = "#14161E"' not in alacritty_conf, "Alacritty black must not be identical to canvas background"
+    assert "[colors.selection]" in alacritty_conf
+    assert "[colors.search.matches]" in alacritty_conf
+    assert "[colors.search.focused_match]" in alacritty_conf
+
+    # Verify Foot & Ghostty terminal configs
+    with open("foot.ini") as f:
+        foot_conf = f.read()
+    assert "regular0=14161E" not in foot_conf, "Foot regular0 must not be identical to background"
+    assert "selection-target=" in foot_conf
+
+    with open("ghostty.conf") as f:
+        ghostty_conf = f.read()
+    assert "palette = 0=#14161E" not in ghostty_conf, "Ghostty palette 0 must not be identical to background"
+    assert "selection-background =" in ghostty_conf
+
+    print(f"PASS: Dynamic color engine executed successfully (strict non-inverted ANSI channels & terminal visibility verified)")
 
 if __name__ == "__main__":
     test_engine_execution()

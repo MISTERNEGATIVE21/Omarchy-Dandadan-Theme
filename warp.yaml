@@ -4,7 +4,7 @@ details: darker
 foreground: '#F0F4FC'
 terminal_colors:
   bright:
-    black: '#616367'
+    black: '#7E859E'
     blue: '#9AB8FF'
     cyan: '#56D4E8'
     green: '#69FF94'
@@ -13,7 +13,7 @@ terminal_colors:
     white: '#FFFFFF'
     yellow: '#FFFFA5'
   normal:
-    black: '#14161E'
+    black: '#26293B'
     blue: '#7AA2F7'
     cyan: '#00F5D4'
     green: '#50FA7B'
