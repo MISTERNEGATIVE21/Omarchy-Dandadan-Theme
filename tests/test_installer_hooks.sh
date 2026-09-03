@@ -27,7 +27,10 @@ echo "PASS: generated bg-set hook syntax valid"
 
 grep -q "shell.json" "$TMP_DIR/hooks/theme-set"
 grep -q "waybar_config.jsonc" "$TMP_DIR/hooks/theme-set"
+grep -q "dandadan-music" "$TMP_DIR/hooks/theme-set"
+grep -q "dandadan-bg-watch" "$TMP_DIR/hooks/theme-set"
+grep -q "fastfetch" "$TMP_DIR/hooks/theme-set"
 grep -q "update_wallpaper_colors.py" "$TMP_DIR/hooks/bg-set"
-echo "PASS: generated hooks contain expected Quickshell and Waybar logic"
+echo "PASS: generated hooks contain expected Quickshell, Waybar, music & anime deactivation logic"
 
 echo "ALL TESTS PASSED."

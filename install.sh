@@ -157,6 +157,30 @@ if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
     (pkill -SIGUSR2 waybar >/dev/null 2>&1 || true) &
   fi
 
+  # Deploy Fastfetch Dandadan config
+  if [[ -f "$DANDADAN_DIR/fastfetch/config.jsonc" ]]; then
+    mkdir -p "$HOME/.config/fastfetch"
+    if [[ ! -f "$HOME/.config/fastfetch/config.jsonc.omarchy-default" && -f "$HOME/.config/fastfetch/config.jsonc" ]]; then
+      cp -f "$HOME/.config/fastfetch/config.jsonc" "$HOME/.config/fastfetch/config.jsonc.omarchy-default"
+    fi
+    cp -f "$DANDADAN_DIR/fastfetch/config.jsonc" "$HOME/.config/fastfetch/config.jsonc"
+  fi
+
+  # Deploy Quickshell Menu Extension
+  if [[ -f "$DANDADAN_DIR/extensions/omarchy-menu.jsonc" ]]; then
+    mkdir -p "$HOME/.config/omarchy/extensions"
+    if [[ ! -f "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc.omarchy-bak" && -f "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc" ]]; then
+      cp -f "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc" "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc.omarchy-bak"
+    fi
+    cp -f "$DANDADAN_DIR/extensions/omarchy-menu.jsonc" "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc"
+  fi
+
+  # Deploy Plugin to ~/.config/omarchy/plugins/dandadan.theme-control
+  if [[ -d "$DANDADAN_DIR/plugins/dandadan.theme-control" ]]; then
+    mkdir -p "$HOME/.config/omarchy/plugins/dandadan.theme-control"
+    cp -rf "$DANDADAN_DIR/plugins/dandadan.theme-control"/* "$HOME/.config/omarchy/plugins/dandadan.theme-control"/
+  fi
+
   SCRIPT_PATH="$HOME/.local/state/omarchy/current/theme/update_wallpaper_colors.py"
   if [[ ! -f "$SCRIPT_PATH" ]]; then
     SCRIPT_PATH="$HOME/.config/omarchy/current/theme/update_wallpaper_colors.py"
@@ -175,18 +199,58 @@ if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
     (bash "$WATCH_SCRIPT" >/dev/null 2>&1) &
   fi
 else
-  # Restore standard Omarchy shell/waybar config when switching away from dandadan
+  # Switching away to another Omarchy theme: Cleanly turn OFF all Dandadan addons, music & ricing
+
+  # 1. Terminate all Dandadan background music, radio, and watcher daemons
+  pkill -f "dandadan-music" >/dev/null 2>&1 || true
+  pkill -f "dandadan-anime-radio" >/dev/null 2>&1 || true
+  pkill -f "dandadan-bg-watch" >/dev/null 2>&1 || true
+  rm -f /tmp/dandadan-music.pid 2>/dev/null || true
+
+  # 2. Restore standard Omarchy shell.json layout (removing dandadan.theme-control widget)
   if [[ -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]]; then
     cp -f "$HOME/.config/omarchy/shell.json.omarchy-default" "$HOME/.config/omarchy/shell.json"
+  else
+    python3 -c '
+import json, os
+p = os.path.expanduser("~/.config/omarchy/shell.json")
+try:
+    with open(p) as f: d = json.load(f)
+    d["plugins"] = [x for x in d.get("plugins", []) if "dandadan" not in str(x)]
+    for sec in ["left", "center", "right"]:
+        if sec in d.get("bar", {}).get("layout", {}):
+            d["bar"]["layout"][sec] = [w for w in d["bar"]["layout"][sec] if "dandadan" not in str(w.get("id", ""))]
+    with open(p, "w") as f: json.dump(d, f, indent=2)
+except Exception: pass
+' 2>/dev/null || true
   fi
 
+  # 3. Restore standard Waybar config
   if [[ -f "$HOME/.config/waybar/config.jsonc.omarchy-default" ]]; then
     cp -f "$HOME/.config/waybar/config.jsonc.omarchy-default" "$HOME/.config/waybar/config.jsonc"
   elif [[ -f "/usr/share/omarchy/config/waybar/config.jsonc" ]]; then
     cp -f "/usr/share/omarchy/config/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
   fi
 
-  pkill -f "dandadan-bg-watch" >/dev/null 2>&1 || true
+  # 4. Restore fastfetch config
+  if [[ -f "$HOME/.config/fastfetch/config.jsonc.omarchy-default" ]]; then
+    cp -f "$HOME/.config/fastfetch/config.jsonc.omarchy-default" "$HOME/.config/fastfetch/config.jsonc"
+  else
+    rm -f "$HOME/.config/fastfetch/config.jsonc" 2>/dev/null || true
+  fi
+
+  # 5. Remove Dandadan user menu extension so other themes have a standard menu
+  if [[ -f "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc.omarchy-bak" ]]; then
+    cp -f "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc.omarchy-bak" "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc"
+  elif [[ -f "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc" ]]; then
+    rm -f "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc"
+  fi
+
+  # 6. Notify running shell to rescan plugins and reload config
+  if command -v omarchy-shell &>/dev/null; then
+    omarchy-shell -q shell rescanPlugins >/dev/null 2>&1 || true
+    omarchy-shell -q shell reloadConfig >/dev/null 2>&1 || true
+  fi
   (pkill -SIGUSR2 waybar >/dev/null 2>&1 || true) &
 fi
 HOOK

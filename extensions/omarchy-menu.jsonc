@@ -30,6 +30,21 @@
     "label": "Toggle Theme Control Panel",
     "action": "omarchy-shell dandadan.theme-control toggle"
   },
+  "dandadan.music-toggle": {
+    "icon": "󰐊",
+    "label": "Music: Play / Pause",
+    "action": "python3 ~/.config/omarchy/current/theme/scripts/dandadan-music.py toggle"
+  },
+  "dandadan.music-radio": {
+    "icon": "󰝚",
+    "label": "Music: 24/7 Anime Lo-Fi Radio",
+    "action": "python3 ~/.config/omarchy/current/theme/scripts/dandadan-music.py radio"
+  },
+  "dandadan.fetch": {
+    "icon": "󰄛",
+    "label": "Dandadan Anime Fastfetch",
+    "action": "omarchy-launch-floating-terminal-with-presentation ~/.config/omarchy/current/theme/scripts/dandadan-fetch.sh"
+  },
   "dandadan.transparency": {
     "icon": "󰔎",
     "label": "Toggle Bar Transparency",

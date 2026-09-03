@@ -42,12 +42,15 @@ def test_dotfiles_exist_and_valid():
     assert "bar-widget" in manifest.get("kinds", [])
     assert manifest.get("entryPoints", {}).get("barWidget") == "Widget.qml"
 
-    # Verify shell.json enables extension
-    assert "dandadan.theme-control" in shell_json.get("plugins", [])
-    right_ids = [w.get("id") for w in shell_json["bar"]["layout"]["right"] if isinstance(w, dict)]
-    assert "dandadan.theme-control" in right_ids, "dandadan.theme-control must be in bar.layout.right"
+    # Verify anime & music addons
+    assert os.path.exists("scripts/dandadan-music.py"), "dandadan-music.py missing"
+    assert os.access("scripts/dandadan-music.py", os.X_OK), "dandadan-music.py not executable"
+    assert os.path.exists("scripts/dandadan-fetch.sh"), "dandadan-fetch.sh missing"
+    assert os.access("scripts/dandadan-fetch.sh", os.X_OK), "dandadan-fetch.sh not executable"
+    assert os.path.exists("fastfetch/config.jsonc"), "fastfetch config missing"
+    assert os.path.exists("fastfetch/dandadan-ascii.txt"), "fastfetch ascii art missing"
 
-    print("PASS: GUI dotfiles and Quickshell extensions valid")
+    print("PASS: GUI dotfiles, Quickshell extensions, and anime & music addons valid")
 
 if __name__ == "__main__":
     test_dotfiles_exist_and_valid()

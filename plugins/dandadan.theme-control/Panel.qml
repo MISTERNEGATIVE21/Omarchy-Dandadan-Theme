@@ -22,6 +22,37 @@ Panel {
   readonly property string currentIdx: widget ? widget.activeIndex : "01"
   readonly property string currentVibe: widget ? widget.activeVibe : "Dandadan Vibe"
 
+  property string musicStatus: "Stopped"
+  property string musicTitle: "No media playing"
+  property string musicArtist: "Idle"
+  property int animTick: 0
+
+  Process {
+    id: musicProc
+    command: ["python3", root.themeDir + "/scripts/dandadan-music.py", "status"]
+    stdout: StdioCollector {
+      onStreamFinished: {
+        try {
+          var d = JSON.parse(text)
+          root.musicStatus = d.status || "Stopped"
+          root.musicTitle = d.title || "No media playing"
+          root.musicArtist = d.artist || "Idle"
+        } catch (e) {}
+      }
+    }
+  }
+
+  Timer {
+    interval: 2000
+    running: root.opened
+    repeat: true
+    triggeredOnStart: true
+    onTriggered: {
+      root.animTick = (root.animTick + 1) % 100
+      if (!musicProc.running) musicProc.running = true
+    }
+  }
+
   KeyboardPanel {
     id: panel
     anchorItem: root.anchorItem
@@ -30,7 +61,7 @@ Panel {
     open: root.opened
     centerOnBar: true
     contentWidth: Style.space(380)
-    contentHeight: Style.space(460)
+    contentHeight: Style.space(530)
 
     Rectangle {
       anchors.fill: parent
@@ -188,6 +219,163 @@ Panel {
               color: modelData
               border.color: Qt.rgba(1, 1, 1, 0.15)
               border.width: 1
+            }
+          }
+        }
+
+        // Anime Music Player Card & Visualizer
+        Rectangle {
+          Layout.fillWidth: true
+          height: Style.space(64)
+          radius: Style.radius(8)
+          color: Qt.rgba(0, 0, 0, 0.3)
+          border.color: root.musicStatus === "Playing" ? Color.accent : Qt.rgba(1, 1, 1, 0.12)
+          border.width: 1
+
+          RowLayout {
+            anchors.fill: parent
+            anchors.margins: Style.space(8)
+            spacing: Style.space(10)
+
+            // Equalizer Bars Box
+            Rectangle {
+              width: Style.space(36)
+              height: Style.space(36)
+              radius: Style.radius(6)
+              color: root.musicStatus === "Playing" ? Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, 0.22) : Qt.rgba(1, 1, 1, 0.06)
+              border.color: root.musicStatus === "Playing" ? Color.accent : "transparent"
+              border.width: 1
+
+              Row {
+                anchors.centerIn: parent
+                spacing: 2.5
+
+                Repeater {
+                  model: 4
+                  Rectangle {
+                    required property int index
+                    width: 3
+                    height: root.musicStatus === "Playing" ? (6 + (((index + root.animTick) * 7) % 16)) : 4
+                    radius: 1
+                    color: root.musicStatus === "Playing" ? Color.accent : Color.popups.text
+
+                    Behavior on height {
+                      NumberAnimation { duration: 160 }
+                    }
+                  }
+                }
+              }
+            }
+
+            // Track & Artist Info
+            ColumnLayout {
+              Layout.fillWidth: true
+              spacing: 1
+
+              Text {
+                Layout.fillWidth: true
+                text: root.musicTitle
+                font.family: Style.font.family
+                font.pixelSize: Style.font.caption
+                font.bold: true
+                color: Color.popups.text
+                elide: Text.ElideRight
+              }
+
+              Text {
+                Layout.fillWidth: true
+                text: (root.musicArtist || "Dandadan Music") + (root.musicStatus === "Playing" ? " · 󰐊 Playing" : "")
+                font.family: Style.font.family
+                font.pixelSize: Style.font.caption * 0.85
+                color: Qt.darker(Color.popups.text, 1.4)
+                elide: Text.ElideRight
+              }
+            }
+
+            // Playback Controls
+            RowLayout {
+              spacing: Style.space(4)
+
+              // Prev
+              Rectangle {
+                width: Style.space(26)
+                height: Style.space(26)
+                radius: Style.radius(4)
+                color: mPrevMouse.containsMouse ? Qt.rgba(1, 1, 1, 0.15) : "transparent"
+
+                Text {
+                  anchors.centerIn: parent
+                  text: "󰒮"
+                  font.family: Style.font.family
+                  font.pixelSize: Style.font.caption
+                  color: Color.popups.text
+                }
+
+                MouseArea {
+                  id: mPrevMouse
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+                  onClicked: {
+                    Quickshell.execDetached(["python3", root.themeDir + "/scripts/dandadan-music.py", "prev"])
+                    musicProc.running = true
+                  }
+                }
+              }
+
+              // Play / Pause
+              Rectangle {
+                width: Style.space(30)
+                height: Style.space(30)
+                radius: Style.radius(6)
+                color: Color.accent
+
+                Text {
+                  anchors.centerIn: parent
+                  text: root.musicStatus === "Playing" ? "󰏤" : "󰐊"
+                  font.family: Style.font.family
+                  font.pixelSize: Style.font.body
+                  color: "#FFFFFF"
+                }
+
+                MouseArea {
+                  id: mPlayMouse
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+                  onClicked: {
+                    Quickshell.execDetached(["python3", root.themeDir + "/scripts/dandadan-music.py", "toggle"])
+                    musicProc.running = true
+                  }
+                }
+              }
+
+              // Next
+              Rectangle {
+                width: Style.space(26)
+                height: Style.space(26)
+                radius: Style.radius(4)
+                color: mNextMouse.containsMouse ? Qt.rgba(1, 1, 1, 0.15) : "transparent"
+
+                Text {
+                  anchors.centerIn: parent
+                  text: "󰒭"
+                  font.family: Style.font.family
+                  font.pixelSize: Style.font.caption
+                  color: Color.popups.text
+                }
+
+                MouseArea {
+                  id: mNextMouse
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+                  onClicked: {
+                    Quickshell.execDetached(["python3", root.themeDir + "/scripts/dandadan-music.py", "next"])
+                    musicProc.running = true
+                  }
+                }
+              }
             }
           }
         }
