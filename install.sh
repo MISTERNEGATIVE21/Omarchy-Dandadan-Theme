@@ -129,7 +129,7 @@ if [[ "$THEME" == "dandadan" || "$THEME" == "dandadan-theme" ]]; then
 
   if [[ "$SHELL_MODE" == "quickshell" || "$SHELL_MODE" == "dual" ]]; then
     # Backup default Quickshell config if not already backed up
-    if [[ ! -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]]; then
+    if [[ ! -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]] || grep -q "undercover\." "$HOME/.config/omarchy/shell.json.omarchy-default"; then
       if [[ -f "$HOME/.config/omarchy/shell.json" ]]; then
         cp -f "$HOME/.config/omarchy/shell.json" "$HOME/.config/omarchy/shell.json.omarchy-default"
       fi
@@ -208,7 +208,7 @@ else
   rm -f /tmp/dandadan-music.pid 2>/dev/null || true
 
   # 2. Restore standard Omarchy shell.json layout (removing dandadan.theme-control widget)
-  if [[ -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]]; then
+  if [[ -f "$HOME/.config/omarchy/shell.json.omarchy-default" ]] && ! grep -q "undercover\." "$HOME/.config/omarchy/shell.json.omarchy-default"; then
     cp -f "$HOME/.config/omarchy/shell.json.omarchy-default" "$HOME/.config/omarchy/shell.json"
   else
     python3 -c '
